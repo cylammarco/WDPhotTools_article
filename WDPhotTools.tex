@@ -1,0 +1,685 @@
+% rasti_template.tex 
+%
+% LaTeX template for creating an RASTI paper
+%
+% v1.0 released 12 November 2021
+% (version numbers match those of rasti.cls)
+%
+% Copyright (C) Royal Astronomical Society 2021
+% Authors:
+% Peter Jones (OUP, adapted from mnras_template.tex, author Keith T. Smith (Royal Astronomical Society))
+
+% Change log
+%
+% v1.0 November 2021
+%    Adapted from mnras_template.tex
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Basic setup. Most papers should leave these options alone.
+\documentclass[fleqn,usenatbib]{rasti}
+
+% RASTI is set in Times font. If you don't have this installed (most LaTeX
+% installations will be fine) or prefer the old Computer Modern fonts, comment
+% out the following line
+\usepackage{newtxtext,newtxmath}
+% Depending on your LaTeX fonts installation, you might get better results with one of these:
+%\usepackage{mathptmx}
+%\usepackage{txfonts}
+
+% Use vector fonts, so it zooms properly in on-screen viewing software
+% Don't change these lines unless you know what you are doing
+\usepackage[T1]{fontenc}
+
+% Allow "Thomas van Noord" and "Simon de Laguarde" and alike to be sorted by "N" and "L" etc. in the bibliography.
+% Write the name in the bibliography as "\VAN{Noord}{Van}{van} Noord, Thomas"
+\DeclareRobustCommand{\VAN}[3]{#2}
+\let\VANthebibliography\thebibliography
+\def\thebibliography{\DeclareRobustCommand{\VAN}[3]{##3}\VANthebibliography}
+
+
+%%%%% AUTHORS - PLACE YOUR OWN PACKAGES HERE %%%%%
+
+% Only include extra packages if you really need them. Common packages are:
+\usepackage{graphicx}	% Including figure files
+\usepackage{amsmath}	% Advanced maths commands
+%% \usepackage{amssymb}	% Extra maths symbols
+\usepackage{aas_macros}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%% AUTHORS - PLACE YOUR OWN COMMANDS HERE %%%%%
+
+% Please keep new commands to a minimum, and use \newcommand not \def to avoid
+% overwriting existing commands. Example:
+%\newcommand{\pcm}{\,cm$^{-2}$}	% per cm-squared
+\newcommand{\msun}{\mathcal{M}_{\sun}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%% TITLE PAGE %%%%%%%%%%%%%%%%%%%
+
+% Title of the paper, and the short title which is used in the headers.
+% Keep the title short and informative.
+\title[WD Photometric Toolkit]{WDPhotTools -- A White Dwarf Photometric Toolkit in Python}
+
+% The list of authors, and the short list which is used in the headers.
+% If you need two or more lines of authors, add an extra line using \newauthor
+\author[M. C. Lam et al.]{
+Marco C. Lam,$^{1}$\thanks{E-mail: lam@tau.ac.il}
+A. N. Other,$^{2}$
+and another Author$^{3}$
+\\
+% List of institutions
+$^{1}$School of Physics and Astronomy, Tel Aviv University, Tel Aviv, Israel 69978
+}
+
+% These dates will be filled out by the publisher
+\date{Accepted XXX. Received YYY; in original form ZZZ}
+
+% Enter the current year, for the copyright statements etc.
+\pubyear{2022}
+
+% Don't change these lines
+\begin{document}
+\label{firstpage}
+\pagerange{\pageref{firstpage}--\pageref{lastpage}}
+\maketitle
+
+% Abstract of the paper
+\begin{abstract}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+From data collection to generating a white dwarf luminosity function, it
+requires numerous Astrophysical, Mathematical and programming domain
+knowledge. The steep learning curve makes it difficult to enter the field and
+often individuals have to reinvent the wheel to perform identical data reduction
+and analysis tasks. We have gathered all the publicly available white dwarf
+cooling models and synthetic photometry to provide a toolkit that allows
+visualisation of various models, photometric fitting of white dwarf with or
+without parallax and reddening, and the computing of white dwarf luminosity
+functions with a choice of initial mass function, star formation history,
+initial-final mass relation, and white dwarf cooling models.
+
+\end{abstract}
+
+% Select between one and six entries from the list of approved keywords.
+% Don't make up new ones.
+\begin{keywords}
+keyword1 -- keyword2 -- keyword3
+\end{keywords}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% BODY OF PAPER %%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+White dwarfs~(WDs) are the final stage of stellar evolution of main
+sequence~(MS) stars with zero age MS~(ZAMS) mass less than $8\msun$. Since this
+mass range encompasses the vast majority of stars in the Galaxy, these
+degenerate remnants are the most common final product of stellar evolution,
+thus providing a good sample to study the history of stellar evolution and star
+formation in the Galaxy. In this state, there is little nuclear burning to
+replenish the energy they radiate away. As a consequence, the luminosity and
+temperature decrease monotonically with time. The electron degenerate nature
+means that a WD with a typical mass of $0.6\mathcal{M}_{\sun}$ has a similar
+size to the Earth, giving rise to their high densities, low luminosities, and
+large surface gravities.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The use of the white dwarf luminosity function~(WDLF) as cosmochronometer was
+first introduced by \citet{1959ApJ...129..243S}. Given a finite age of the
+Galaxy, there is a minimum temperature below which no white dwarfs can reach in
+a limited cooling time. This limit translates to an abrupt downturn in the WDLF
+at faint magnitudes. Evidence of such behaviour was observed by
+\citet{1979ApJ...233..226L}, however, it was not clear at the time whether it
+was due to incompleteness in the observations or to some defect in the
+theory~(e.g.,~\citealp{1984ApJ...282..615I}). A decade later,
+\citet{1987ApJ...315L..77W} gathered concrete evidence for the downturn and
+estimated the age\footnote{``Age'' refers to the total time since the oldest
+WD progenitor arrived at the zero-age main sequence.} of the disc to be
+$9.3 \pm 2.0$\,Gyr~(see also \citealt{1988ApJ...332..891L}). While most studies
+focused on the Galactic discs~\citep{1989LNP...328...15L, 1992ApJ...386..539W,
+1995LNP...443...24O, 1998ApJ...497..294L, 1999MNRAS.306..736K,
+2012ApJS..199...29G}, some worked with the stellar
+halo~\citep{2006AJ....131..571H, 2011MNRAS.417...93R, 2017AJ....153...10M,
+2019MNRAS.482..715L}. 
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Most WDs have similar broadband colour to main sequence stars, they cannot be
+identified using photometry alone. They were found from UV-excess, large
+proper motion and/or parallax. Because of the strongly peaked surface gravity
+distribution of white dwarf, photometric fitting for their intrinsic properties
+is possible by assuming a surface gravity. WDs fitted in such way are useful
+statistically provided that the sample is not strongly biased. This is
+demonstrated in various studies comparing photometric and spectroscopic
+solutions to calibrate atmosphere model, as well as from the agreeing shapes
+of the WDLFs from spectroscopic and photometric samples. The Gaia satellite
+provides parallactic measurement for over a billion point sources (references).
+of which $359,000$ are high confidence WD candidates. The availability of
+parallaxes allow much more accurate fitting, particularly without knowing
+the surface gravity for the photometric sample. This has completely 
+revolutionarized the field of WD sciences. In the forthcoming decade, the
+Simonyi Survey Telescope at the Vera C. Rubin Observatory will continue to
+discover more WDs at fainter magnitudes, but with only proper motion at best.
+Furthermore, at those magnitudes, it is infeasible to collect spectrum for
+most of them and thus studies will mostly rely on photometric methods.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In this generation of user-side Astronomy data handling and analysis, as well
+as the emphasis in computing courses for scientists, \texttt{Python} is among
+the most popular languages due to its ease to use with a shallow learning
+curve, readable syntax and simple way to "glue" different pieces of software
+together. Its flexibility to serve as a scripting and an object-oriented
+language makes it useful in many use cases: demonstrating with visual tools
+with little overhead, prototyping, web-serving, and it can be compiled if
+wanted. This broad range of functionality and high-level usage make it
+relatively inefficient. However, Python is an excellent choice of language to
+build wrappers over highly efficient and well-established codes. In fact,
+some of the most used packages, scipy~\citep{2020NatMe..17..261V} and
+numpy~\citep{2020Natur.585..357H}, are written in Fortran and C respectively.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In this paper, it is organised as follow: in Section \textsection2, we explain
+the reason behind this software and its structure. Section \textsection3 covers
+the photometric fitting procedures and the overview of the model used. Section
+\textsection4 explains the construction of a theoretical luminosity function
+including some descriptions of the models available. We conclude this
+work in Section \textsection5.
+
+\section{Software Organisation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The goal for this work is to ease researchers the effort in reinventing the
+wheel for trivial, repetitive but essential tasks in many aspect of data
+analysis for WD science. This also allow simpler setup to compare results as a
+result of the choice of models. There is already a spectroscopic version
+for a similar purpose, the \texttt{wdtools}
+\footnote{\url{https://github.com/vedantchandra/wdtools}}~
+\citep{2020MNRAS.497.2688C}.
+
+\textsc{WDPhotTools} can generate colour-colour diagram, colour-magnitude
+diagram in various photometric systems, plotting cooling profiles from
+different models, and compute theoretical white dwarf luminosity functions
+based on the built-in or supplied models. The core parts of this work are
+three-fold: (1)~the backbone of this work is the tailored-formatters that
+handle the output models from various works in the format as they were
+generated and downloaded. This allows the software to be updated with the
+newer models easily in the future; (2)~photometric fitter that solves for
+the WD parameters based on the photometry, with or without distance and
+reddening; and (3) a class to generate white dwarf luminosity function in
+bolometric magnitudes or in any of the photometric systems available from the
+atmosphere model.
+
+We host our source code on Github, which provides version control and other
+utilities to facilitate the development. It uses \textsc{git}, issue and bug
+tracking, high-level project management, automation with Github Actions upon
+each commit for:
+
+\begin{enumerate}
+    \item Continuous Integration (CI) to install the software in Linux, Mac
+    and Windows system, and then perform unit tests with \textsc{pytest}
+    (Krekel et al. 2004)
+    \item generating test coverage report with Coveralls which identifies
+    lines in the script that are missed from the tests,
+    \item Continuous Deployment (CD) through \textsc{PyPI} that allows
+    immediate availability of the latest numbered version, and
+    \item generating API documentation powered by \textsc{Sphinx} hosted on
+    Read the Docs.
+\end{enumerate}
+
+% 
+%@misc{pytestx.y,
+%  title =        {pytest x.y},
+%  author = {Krekel, Holger and Oliveira, Bruno and Pfannschmidt, Ronny and Bruynooghe, Floris and Laugher, Brianna and Bruhin, Florian},
+%  year =         {2004},
+%  url = {https://github.com/pytest-dev/pytest},
+%}
+
+\subsection{Visualisation Tools}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Plotting tools are available to visualise various parameters of different
+atmosphere and cooling models. Both the photometric fitting and WDLF generator
+come with potting functions for diagnostics and final results. See the
+respective sections for the example plots.
+
+\subsection{Photometric Fitting}
+Photometric fitting can be done by minimizing the $\chi^2$ with any method
+supported by \verb+scipy.optimize.minimize()+, or with a Markov chain Monte
+Carlo method powered by \texttt{emcee}~\citep{2013PASP..125..306F} with the
+option to refine the solution with \verb+minimize()+ at the end using the
+50-percentile as the initial guess and bounding the fit within a 1-sigma
+uncertainty limit. The H and He atmosphere type has little effect on the
+luminosity above around $6000$\,K. Below this, the assumption of an H
+atmosphere for an He atmosphere star will lead to an overestimation in the
+luminosity, and an underestimation in the distance. Optical spectra are
+not particularly useful in distinguishing the atmosphere type, because below
+$\sim$\,$5000$\,K, absorption lines starts to disappear. However, the
+broad spectral features, namely the collisionally induced absorption, in the
+infrared can distinguish the atmosphere type~(see Figure~12 of
+\citealt{2017ApJ...848...36B}). Therefore, readers are reminded to pay
+particular care when you arrive at a low temperature solution with only
+optical data. Since it is only possible to fit for $n-1$ variables, if there
+are only two photometric band, it is only possible to fit for a temperature
+(and luminosity) with an assumed surface gravity and a known distance. With
+three bands, it is mathematically possible to solve for an extra parameter,
+i.e. assuming a surface gravity and fit for the temperature and distance,
+or assuming a distance and fit for the temperature and surface gravity.
+This argument does not apply to fitting with or without interstellar reddening
+because it is merely a one-to-one lookup value that is a only a function of
+distance. When studying a population of WDs that are fitted for the
+distance, we should compare the photometric distance to the distances measured
+from other means, e.g. astrometry, spectroscopic distance etc. in order to
+assess the bias in the fit~(e.g. Section \textsection3.2.2
+in \citealt{2011MNRAS.417...93R}).
+
+\subsection{Theoretical WDLF}
+WDLF is a common tool for deriving the age of a stellar population. It is the
+number density of WD as a function of luminosity, which is an evolving function
+with time, with its shape and normalisation determined from only a few
+parameters. \citet{1987ApJ...315L..77W} compared an observed WDLF derived from
+the Luyten Half-Second~(LHS) catalogue with a theoretical WDLF to obtain an
+estimate of the age of the Galaxy for the first time with this technique.
+\citet{1990ApJ...352..605N} examined WDLFs with various SFH scenarios. They
+showed that WDLF is a sensitive probe of the star formation history~(SFH) as
+it shows signatures of irregularities in the SFH such as bursts and lulls.
+\citet{2013MNRAS.434.1549R} took it further to address this inverse problem
+mathematically and showed some success in recovering the SFH of the solar
+neighbourhood when compared against SFH computed from other methods.
+
+The mathematical construction of a WDLF is intuitively straightforward: stars
+were formed in a distribution of mass~($\mathcal{M}$), described by the initial
+mass function~(IMF, $\phi$). Then, they spend their lifetime carrying out
+nuclear burning~($t_{\mathrm{MS}}$), the time they spend depends mainly on
+their mass. Towards the end stage of stellar evolution stars shed most of the
+atmosphere, which is modelled by the initial-final mass relation~(IFMR,
+$\zeta$). Once they have become WDs, all is left is to know how long it has
+been cooling~($t_{\mathrm{cool}}$) in order to reach the current
+luminosity~($\mathrm{M}_\mathrm{bol}$). The heavy duty of these computations
+are coming from interpolation of pre-computed lookup tables. The important
+part of this work is to carefully interpolate and integrate over the model
+grids, because they are both susceptible to significant rounding errors given
+the huge dynamic ranges the variables cover. For example, in case of a simple
+star burst of $\mathcal{O}(10^6)$\,yrs, it requires a relative error
+tolerance of $10^{-10}$ in order to integrate properly for an old population.
+
+\section{photometric fit}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The effective temperature (and absolute bolometric magnitude) and the solid
+angle of a source can be obtained when the distance is known, through the
+relation $\Omega = \pi R^2 / D^2$. In the era of
+Gaia~\citep{2021A&A...649A...1G}, most WDs candidates have their parallaxes
+measured, and hence the distances derived~\citep{2021AJ....161..147B}. This
+allows much more reliable photometric fitting with broadband photometry alone,
+as compared to fitting with an assumed surface gravity~(see below). By using
+evolutionary model of WDs, the radius and the effective temperature can be used
+to obtain the mass (and surface gravity). This concept is embedded into the
+fitting procedure by interpolating the synthetic photometric grid models:
+we provide two means of fitting, the first one is by a least-squared method
+described by the equation
+
+\begin{equation}
+    \label{eq:lsq}
+    \mathrm{minimize} \left[ \dfrac{\mathrm{mag}_i - \mu - \mathrm{model}_i}{\sigma_i} \right]^2
+\end{equation}
+
+where the index i denotes the filters, mag is the ovserved magnitude, $\mu$ is
+the distance modulus, model is the syntehtic photometry in absolute magnitude,
+and
+\begin{equation}
+    \sigma_i^2 = \sigma^2_{\mathrm{mag}, i} + \left[ \dfrac{5 \log(e)}{\varpi} \right]^2 \sigma_\varpi^2
+\end{equation}
+where $\sigma_{\mathrm{mag}, i}$ is uncertainty in the filters,
+$\sigma_\varpi$ is that in parallax, and $\varpi$ is the parallax.
+
+The second method we provide is to sample the parameter space with an MCMC
+method. This method more useful in the case when distance is uncertain, or
+lacking. The likelihood that has to be maximised takes a similar form to
+Eq.~\ref{eq:lsq}:
+\begin{equation}
+    \label{eq:likelihood}
+    \mathcal{L} = -\dfrac{1}{2} \sum_{i} \left\{ \left[ \dfrac{\mathrm{mag}_i - \mu - \mathrm{model}_i}{\sigma_i} \right]^2 + \ln(2\pi\sigma_i^2) \right\}.
+\end{equation}
+
+
+\subsection*{Synthetic Photometry}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The only synthetic photometry publicly available over a smooth grid of wide
+ranges of temperature and surface gravity is the Montreal
+model\footnote{\url{https://www.astro.umontreal.ca/~bergeron/CoolingModels/}}.
+The tables are provided with bolometric and absolute magnitudes on various
+photometric systems in pure hydrogen~(DA) and pure-helium~(DB) in the range of
+$\log(g)=7.0 - 9.0$, as well as the effective temperature and total cooling
+time~(though this grid is sparse compared to their complementary cooling model
+grids). These include the Johnson-Kron-Cousins~($U, B, V, R \& I$),
+Two Micron All Sky Survey~(2MASS) $J, H \& K_{s}$, Mauna Kea Observatory~(MKO)
+$Y, J, H \& K$, Wide-field Infrared Survey Explorer~(WISE) $W1, W2, W3 \& W4$,
+Spitzer Space Telescope Infrared Array Camera~(IRAC)
+$[3.6], [4.5], [5.8] \& [8.0] \mu m$, Sloan Digital Sky Survey~(SDSS)
+$u, g, r, i \& z$, Panoramic Survey Telescope and Rapid Response
+System~(Pan-STARRS 1) $g, r, i, z \& y$,
+Gaia $G, G_{\mathrm{BP}} \& G_{\mathrm{RP}}$, and Galaxy Evolution
+Explorer~(GALEX) $FUV$ and $NUV$.
+
+The stellar masses and cooling ages are based on the latest generation of
+evolutionary sequences~\citep{2020ApJ...901...93B}. The choice of
+thick~($q_H \equiv \frac{M_H}{M*} = 10^{-4}$) and thin~($q_H = 10^{-10}$)
+hydrogen layers for the pure-hydrogen and pure-helium model atmospheres,
+respectively. Details of the colour calculations are described in
+\citet{1995PASP..107.1047B} and \citet{2006AJ....132.1221H}. The DA grid covers
+a temperature range $T_{\mathrm{eff}} = 2,500 - 150,000$\,K while the DB grid
+covers $T_{\mathrm{eff}} = 3,250 - 150,000$\,K. Both model are computed with
+surface gravities $\log(g) = 7.0 - 9.0$~\citep{2018ApJ...863..184B,
+2020ApJ...901...93B, 2011ApJ...730..128T, 2011ApJ...737...28B, 2006ApJ...651L.137K}.
+
+\subsection{Fitting Distance}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Singly evolved WDs are distributed in a small range of surface gravity, with a
+mean of $\left<\log(g)\right> = 7.998 \pm 0.011$ in the DA sample in SDSS
+DR16~\citep{2021MNRAS.507.4646K}, corresponding to a mean mass of
+$\left<M\right> = 0.618 \pm 0.006 \msun$. When studying a large sample of WDs,
+fitting the photometric distances for the study of a population is still
+useful when reporting an averaged quantity as the final results. The
+distributions of the solution are, however, mostly statistical noise and not
+representative to the true distribution when both the strongly degenerate
+parameters: surface gravity and distance are fitted simultaneous. Equation
+\ref{eq:lsq} and \ref{eq:likelihood} are reused in this case, however, the
+distance modulus which is a function of distance, is a free parameter to be
+fitted.
+
+\subsection{Interstellar Reddening}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+When interstellar reddening is included in the calculation, the likelihood
+function to be maximised becomes
+
+\begin{equation}
+    \mathcal{L} = -\dfrac{1}{2} \sum_{i} \left\{ \left[ \dfrac{\mathrm{mag}_i - \mu - \mathrm{model}_i - A_i(D)}{\sigma_i} \right]^2 + \ln(2\pi\sigma_i^2) \right\}
+\end{equation}
+
+where $A_i$ is the total extinction in filter $i$ at distance $D$. In the case
+when the distance is known, this is a scale value; when the distance is also
+to be fitted, $A$ is not directly provided but instead it is computed from the
+$E(B-V)$ at that distance and a choice of $R_{V}$, which is defaulted to $3.1$.
+The reddening vector is approximated by interpolating over the effective
+wavelengths of the broadband filters\footnote{CTIO $UBVRI$, UKIRT $JHKL'$,
+Gunn $griz$, SDSS $ugriz$, PS1 $grizy$, LSST $ugrizy$, DES $grizY$ and
+WFC3 $F218W, F225W$ and $F275W$. We note that LSST is now renamed as
+Simonyi Survey Telescope, at the Vera Rubin Observatory, but it was printed
+under the former designation in the referenced article.} available in Table~6 of
+\citet{2011ApJ...737..103S}. In this fitting, we strongly encourage the use of
+MCMC sampling with a good number of walkers to sample the parameter space
+properly as multiple local maxima of likelihood may exist.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Comparison against known work}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Joint Gaia EDR3--Pan-STARRS 1 reprocessing}
+
+
+\section{White Dwarf Luminosity Function}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The integral for a WDLF when parameterised with bolometric magnitude (as
+opposed to luminosity) can be written as
+
+\begin{equation}
+    n(\mathrm{M}_{\mathrm{bol}}) = \int_{\mathcal{M}_l}^{\mathcal{M}_u} \tau(\mathrm{M}_\mathrm{bol}, m) \psi(T_0, \mathrm{M}_\mathrm{bol}, \mathcal{M}, m, Z) \phi(\mathcal{M}) d\mathcal{M}
+\end{equation}
+where $n$ is the number density, $\tau$ is the inverse cooling rate, $\psi$ is
+the relative star formation rate, $\phi$ is the initial mass function; and their
+dependent variables: $\mathrm{M}_\mathrm{bol}$ is the absolute bolometric
+magnitude, $m$ is the WD mass, $T_0$ is the look-back time, $\mathcal{M}$ is
+the progenitor MS mass, $Z$ is the metallicity, $\mathcal{M}_l$ is the minimum
+progenitor MS mass that could have singly evolved into a WD in the given time,
+and $\mathcal{M}_u$ is the maximum progenitor MS mass.
+
+The inverse cooling rate
+\begin{equation}
+    \tau(\mathrm{M}_\mathrm{bol}, m) = \dfrac{dt_{\mathrm{cool}}}{d\mathrm{M}_\mathrm{bol}} \left( \mathrm{M}_\mathrm{bol}, m \right)
+\end{equation}
+is a quantity taken from the pre-computed grid of cooling models. 
+
+The relative star formation rate is expressed as a function of look-back time,
+\begin{equation}
+    \psi(T_0, \mathrm{M}_\mathrm{bol}, \mathcal{M}, m, Z) = \psi\left[T_0 - t_{\mathrm{cool}}\left(\mathrm{M}_\mathrm{bol}, m\right) - t_{\mathrm{MS}}\left(\mathcal{M}, Z\right)\right].
+\end{equation}
+The absolute normalisation is not needed when the total stellar mass is coming
+from observations; the theoretical WDLF only needs to multiply with a
+constant (the total number density) to account for the normalisation.
+
+The IFMR takes a simple form of
+\begin{equation}
+    m = \zeta(\mathcal{M}),
+\end{equation}
+although there are evidence that more metal rich stars lose more
+envelope~\citep{2007ApJ...671..761K}, there is insufficient empirical data to
+derive a IFMR at metallicity much lower or higher than solar abundance.
+
+\subsection{Initial Mass Function}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The IMF has little effect on the WDLF because of their similarity over the mass
+range that stars could have become WDs. Nevertheless, we are providing three
+of the most used IMFs, they differ slightly when the mass is less than $1\msun$.
+The effect can appear in the bright end of a WDLF for an old population. A
+callable function can be supplied as a manual IMF. This lists the four options
+that are available:
+
+\begin{enumerate}
+    \item \citet{2001MNRAS.322..231K}
+    \item \citet{2003PASP..115..763C}
+    \item \citet[][including binary]{2003PASP..115..763C}
+    \item Manual
+\end{enumerate}
+
+\subsection{Star Formation History}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The SFH has one of the strongest effect on the shape and normalisation of a
+WDLF. The default profiles are only three types of simple form SFH, however,
+exponential decay profile with an appropriate decay coefficient should give a
+first good guess for a disk population, while a burst profile would be useful
+for studying open or globular clusters. All three profiles are controlled by
+a few simple parameters, and the fourth option is to provide a callable
+function of star formation rate as a function of look back time:
+(1)~\textit{Constant} profile depends only on the age of the population,
+i.e. the look back time since the beginning of star formation,
+and \textbf{not} the time since the first WD was formed. (2)~\textit{Burst}
+profile which depends on the onset of start formation as well as the duration
+of a constant burst of star formation. (3)~An ~\textit{exponentially decaying}
+profile that is government by the onset of star formation, the decay coefficient
+and the duration of the star formation. By default it continues to decay
+indefinitely. (4)~A ~\textit{manually provided callable function} that can take
+any form, though users should be careful with the extrapolation setting,
+smoothly extrapolated value or zero should be returned. In case of \verb+NaN+
+or $\pm$inf being returned, we set the value to zero.
+
+Since we normalise the output WDLF by the total integrated number density at
+all luminosities, the absolute normalisation of the input SFH is discarded when
+provided manually.
+
+\subsection{Main Sequence Lifetime}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The MS lifetime has a strong effect on the bright end of a WDLF because the hot
+WDs spent most of their time since star formation as their progenitors.
+However, the MS lifetime has decreasing impact on the WDLF as we move towards
+the fainter end where WDs cooling time dominates over the MS lifetime. There is
+also a metallicity dependency on the MS lifetime. From the PARSEC
+models\citep{2013EPJWC..4303001B}, extremely metal poor solar mass star with
+$Z=0.001$ and solar-like star with $Z=0.017$ take $\sim$\,$6$\,Gyr and
+$\sim$\,$11$\,Gyr to go through the MS stage, respectively. Furthermore,
+the mass loss during the late stage of stellar evolution also differ at
+different metallicity, see the next part in this section. We provide the
+following interpolated MS lifetime models and the option of providing a
+callable function as a manual input:
+
+\begin{enumerate}
+    \item \citet{2013EPJWC..4303001B}
+    \item \citet{2016ApJ...823..102C}
+    \item Manual
+\end{enumerate}
+
+\subsection{Initial-Final Mass Relation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Human civilisation has existed a mere few thousand years, and modern astronomy
+(with digital aid) is no more than a hundred. We do not have direct
+observations on the total mass loss of a star at the end stage of stellar
+evolution. It depends on observations of WDs and giants in clusters and
+iteratively comparing with stellar evolution models. There are a number of
+IFMRs available from studying globular clusters~\citep{2004A&A...420..515M,
+2009ApJ...705..408K}, open clusters~\citep{2009ApJ...693..355W,
+2016ApJ...818...84C}, wide MS-WD binaries~\citep{2008A&A...477..213C,
+2012ApJ...746..144Z, 2018ApJ...860L..17E}, wide turnoff/subgiant-WD
+binaries~\citep{2021ApJ...923..181B}, wide WD-WD
+binaries~\citep{2015ASPC..493..325C, 2015ApJ...815...63A, 2018ApJ...866...21C}.
+We have chosen six (plus three with two-part fitting) works that have a
+good mass coverage to be included in this work, and just like the other
+functions above, a manualy provided callable function is also accepted:
+
+\begin{enumerate}
+    \item \citet{2008MNRAS.387.1693C}
+    \item \citet[][two-part]{2008MNRAS.387.1693C}
+    \item \citet{2009ApJ...692.1013S}
+    \item \citet[][two-part]{2009ApJ...692.1013S}
+    \item \citet{2009ApJ...693..355W}
+    \item \citet{2009ApJ...705..408K}
+    \item \citet[][two-part]{2009ApJ...705..408K}
+    \item \citet{2018ApJ...866...21C}
+    \item \citet{2018ApJ...860L..17E}
+    \item Manual
+\end{enumerate}
+
+
+\subsection{Cooling Models}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Most of the internal energy of a WD is the residual heat from the progenitor
+once it passed the planetary nebula phase. However, there are various physical
+processes that can provide an appreciable amount of energy and govern the
+cooling rate of a WD at different stages. Following the time sequence in which
+the physical processes that has direct effects to the photo-luminosity: (1)~in
+the first $10^8-10^9$ years, \textit{shell burning of hydrogen} via pp-chain
+can contribute up to $30\%$ of the total luminosity~\citep{2010ApJ...717..183R}.
+(2)~\textit{Neutrino losses} -- contribute to a significant fraction of energy
+loss in the early time of WDs when they were still hot, in the case of massive
+WDs, neutrino bremsstrahlung effect must also be taken into account
+\citep{1994ApJ...425..222H, 1996ApJS..102..411I}. (3)~\textit{Gravitational
+settling} of\ $^{22}$Ne in intermediate to massive WDs releases sufficient
+gravitational potential energy to prolong the cooling
+times~\citep{2002ApJ...580.1077D, 2008ApJ...677..473G, 2010ApJ...719..612A}.
+The heavier\ $^{22}$Ne relative to the environment that is dominated by carbon,
+oxygen and nitrogen leads to a slow settling towards the core. This effect is
+the most obvious in the old and metal-rich systems, such as NGC
+6791~\citep{2010Natur.465..194G, 2008ApJ...678.1279B}. (4)~In the late time of
+the WD evolution, convection plays a significant role in slowing down the
+cooling. As temperature decreases, the convective zone grows deeper into the
+interior and eventually reaches the degenerate core~(see Figure~11
+from~\citealt{2010A&ARv..18..471A}). This efficiently replenish the energy
+radiated away from the photosphere, thus this process known as the
+\textit{convective coupling}, modifies the relations between the WD luminosity
+and core temperature~\citep{1989ApJ...347..934D, 2001PASP..113..409F}.
+(5)~\textit{Crystallisation} occurs as the non-degenerate ions evolve from gas
+to fluid and eventually solid. The liquid-solid transition releases latent
+heat that slows down the cooling process. This also couples with the release
+of gravitational energy associated with changes in the carbon-oxygen
+profile~\citep{1997ApJ...486..413S} when the heavier oxygen-rich crystals
+displace carbon as a result of gravitational settling. (6)~\textit{Coulomb
+Interactions} modify the thermodynamical properties of the ionic gas, in
+particular the specific heat. Its strength is determined by the Coulomb
+coupling parameters. At first, the parameter is small, it slowly increases as
+an WD cools and the ions begins to change for gas to liquid and eventually
+forming lattice. This releases latent heat that contribute to $\sim$\,$5\%$
+of the total luminosity~\citep{1976A&A....51..383S}. At late time, few modes
+of the lattice are excited, the heat capacity drops according to the Debye law,
+this results in enhanced cooling. This process kicks in after $10^9$\,yr for a
+$1.0\,\msun$ WD and over a Hubble time for a $0.5\,\msun$ WD.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We have included 11 cooling models that cover different parts of the parameter
+space. See Table~\ref{tab:cooling_models} for the details of each model.
+
+\subsection{Comparison of various choice of models}
+
+\subsection{Reconstruction of WDLFs based on known SFH}
+
+
+\begin{table*}
+    \centering
+    \begin{tabular}{c|c|c|c|c|c|c|c}
+        Reference             &    Low     & Intermediate &    High    &  Core & Atmosphere &           Mass Range $\left(\mathcal{M}/\msun\right)$ & Extra Notes \\\hline\hline
+
+        \multicolumn{8}{c}{Montreal Model} \\\hline
+        \citet{2020ApJ...901...93B} & \checkmark &  \checkmark  & \checkmark &    CO &      DA/DB &            $0.2-1.3$             & -- \\
+        &&&&&&&\\
+
+        \multicolumn{8}{c}{La Plata Models} \\\hline
+        \citet{2007MNRAS.382..779P} & \checkmark &      --      &     --     & He/CO &         DA &          $0.187-0.448$           & -- \\
+        \citet{2009ApJ...704.1605A} & \checkmark &      --      &     --     &    He &         DA &          $0.220-0.521$           & -- \\
+        \citet{2010ApJ...717..183R} &     --     &  \checkmark  &     --     &    CO &         DA &          $0.505-0.934$           & $Z=0.001-0.01$ \\
+        {\citet{2015A&A...576A...9A}} &     --     &  \checkmark  &     --     &    CO &         DA &          $0.506-0.826$           & $Z=0.0003-0.001$ \\
+        {\citet{2017A&A...597A..67A}} & \checkmark &  \checkmark  &     --     &    CO &         DA &          $0.434-0.838$           & $Y=0.4$ \\
+        \citet{2017ApJ...839...11C} &     --     &  \checkmark  &     --     &    CO &         DB &           $0.51-1.0$             & -- \\
+        {\citet{2007A&A...465..249A}} &     --     &      --      & \checkmark &   ONe &         DA &           $1.06-1.28$            & -- \\
+        {\citet{2019A&A...625A..87C}} &     --     &      --      & \checkmark &   ONe &      DA/DB &           $1.10-1.29$            & -- \\
+        &&&&&&&\\
+
+        \multicolumn{8}{c}{BaSTI Models} \\\hline
+        \citet{2010ApJ...716.1241S} &     --     &  \checkmark  & \checkmark &    CO &      DA+DB &           $0.54-1.2$             & With and Without Phase Separate\\
+        &&&&&&&\\
+
+        \multicolumn{8}{c}{MESA Models} \\\hline
+        \citet{2018MNRAS.480.1547L} &     --     &      --      & \checkmark & CO/Ne &      DA/DB &          $1.012-1.308$           & --
+
+    \end{tabular}
+    \caption{The checkmarks in the low ($\mathcal{M}/\msun < 0.5$), intermediate
+    ($0.5 < \mathcal{M}/\msun < 1.0$) and high mass ($1.0 < \mathcal{M}/\msun$)
+    ranges denotes if the models are used for computation in that range.}
+    \label{tab:cooling_models}
+\end{table*}
+
+
+
+
+\section{Conclusions}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section*{Acknowledgements}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section*{Data Availability}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%% REFERENCES %%%%%%%%%%%%%%%%%%
+
+% The best way to enter references is to use BibTeX:
+
+\bibliographystyle{rasti}
+\bibliography{WDPhotTools} % if your bibtex file is called example.bib
+
+
+% Alternatively you could enter them by hand, like this:
+% This method is tedious and prone to error if you have lots of references
+%\begin{thebibliography}{99}
+%\bibitem[\protect\citeauthoryear{Author}{2012}]{Author2012}
+%Author A.~N., 2013, Journal of Improbable Astronomy, 1, 1
+%\bibitem[\protect\citeauthoryear{Others}{2013}]{Others2013}
+%Others S., 2012, Journal of Interesting Stuff, 17, 198
+%\end{thebibliography}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%% APPENDICES %%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+
+\section{Some extra material}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Don't change these lines
+\bsp	% typesetting comment
+\label{lastpage}
+\end{document}
+
+% End of rasti_template.tex
