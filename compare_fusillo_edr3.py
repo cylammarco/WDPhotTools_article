@@ -41,7 +41,6 @@ distance_error = distance**2. * parallax_error
 ftr = WDfitter()
 output = []
 length = len(G3)
-length = 10000
 teff_h = np.zeros(length)
 logg_h = np.zeros(length)
 teff_he = np.zeros(length)
@@ -77,6 +76,14 @@ for i in range(length):
     teff_he[i] = ftr.best_fit_params['He']['Teff']
     logg_he[i] = ftr.best_fit_params['He']['logg']
 
+
+np.save('compare_fusillo_edr3_output', output)
+np.save('compare_fusillo_edr3_teff_h', teff_h)
+np.save('compare_fusillo_edr3_logg_h', logg_h)
+np.save('compare_fusillo_edr3_teff_he', teff_he)
+np.save('compare_fusillo_edr3_logg_he', logg_he)
+
+
 plt.figure(1, figsize=(8, 8))
 plt.clf()
 plt.scatter(data[1].data['teff_H'][:length], teff_h, s=5)
@@ -85,12 +92,5 @@ plt.ylabel('Temperature / K (This work)')
 plt.title('DA')
 plt.grid()
 plt.tight_layout()
-
-plt.figure(2, figsize=(8, 8))
-plt.clf()
-plt.scatter(data[1].data['teff_He'][:length], teff_he, s=5)
-plt.xlabel('Temperature / K (Fusillo EDR3)')
-plt.ylabel('Temperature / K (This work)')
-plt.title('DB')
-plt.grid()
-plt.tight_layout()
+plt.savefig('compare_fusillo_edr3.png')
+plt.savefig('compare_fusillo_edr3.pdf')
