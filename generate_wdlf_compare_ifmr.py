@@ -381,7 +381,7 @@ ax6.axis('off')
 ax11.axis('off')
 ax14.axis('off')
 
-ax1.set_xlim(2, 20)
+ax1.set_xlim(0, 20)
 
 ax1.set_ylim(-6.5, 0)
 ax4.set_ylim(-6.5, 0)

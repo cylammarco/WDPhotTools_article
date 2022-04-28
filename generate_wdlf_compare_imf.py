@@ -78,6 +78,11 @@ else:
     np.save('wdlf_15Gyr_compare_imf', wdlf_15Gyr)
 
 
+# normalise the WDLFs relative to the density at 10 mag
+wdlf_11Gyr = [wdlf_11Gyr[i]/wdlf_11Gyr[i][Mag==10.0] for i in range(len(wdlf_11Gyr))]
+wdlf_13Gyr = [wdlf_13Gyr[i]/wdlf_13Gyr[i][Mag==10.0] for i in range(len(wdlf_13Gyr))]
+wdlf_15Gyr = [wdlf_15Gyr[i]/wdlf_15Gyr[i][Mag==10.0] for i in range(len(wdlf_15Gyr))]
+
 fig1, (ax1, ax2, ax3) = plt.subplots(
     3, 1, sharex=True, sharey=True, figsize=(10, 15)
 )

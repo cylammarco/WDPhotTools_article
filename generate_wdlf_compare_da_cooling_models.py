@@ -9,7 +9,6 @@ wdlf = theoretical_lf.WDLF()
 
 Mag = np.arange(0.0, 20.0, 0.1)
 
-
 if os.path.exists('wdlf_5Gyr_compare_da_cooling_models.npy'):
 
     wdlf_5Gyr = np.load('wdlf_5Gyr_compare_da_cooling_models.npy')
@@ -21,7 +20,7 @@ if os.path.exists('wdlf_5Gyr_compare_da_cooling_models.npy'):
 
 else:
 
-    # default montreal
+    # default montreal (A)
     wdlf.set_sfr_model(mode="burst", age=5.0e9, duration=1e8)
     wdlf.compute_density(Mag=Mag)
     wdlf_montreal_5Gyr = copy.deepcopy(wdlf.number_density)
@@ -41,32 +40,8 @@ else:
     wdlf.compute_density(Mag=Mag)
     wdlf_montreal_15Gyr = copy.deepcopy(wdlf.number_density)
 
-    # lpcode_he_da_09, lpcode_co_da_10_z001, lpcode_one_da_19
+    # lpcode_he_da_09, lpcode_co_da_10_z001, lpcode_one_da_19 (B, interpolate over all 3)
     wdlf.set_low_mass_cooling_model("lpcode_he_da_09")
-    wdlf.set_intermediate_mass_cooling_model("lpcode_co_da_10_z001")
-    wdlf.set_high_mass_cooling_model("lpcode_one_da_19")
-    wdlf.compute_cooling_age_interpolator()
-    wdlf.set_sfr_model(mode="burst", age=5.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
-    wdlf_lpcode_he_co_one_5Gyr = copy.deepcopy(wdlf.number_density)
-    wdlf.set_sfr_model(mode="burst", age=7.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
-    wdlf_lpcode_he_co_one_7Gyr = copy.deepcopy(wdlf.number_density)
-    wdlf.set_sfr_model(mode="burst", age=9.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
-    wdlf_lpcode_he_co_one_9Gyr = copy.deepcopy(wdlf.number_density)
-    wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
-    wdlf_lpcode_he_co_one_11Gyr = copy.deepcopy(wdlf.number_density)
-    wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
-    wdlf_lpcode_he_co_one_13Gyr = copy.deepcopy(wdlf.number_density)
-    wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
-    wdlf_lpcode_he_co_one_15Gyr = copy.deepcopy(wdlf.number_density)
-
-    # lpcode_co_da_07, lpcode_co_da_10_z001, lpcode_one_da_19
-    wdlf.set_low_mass_cooling_model("lpcode_co_da_07")
     wdlf.set_intermediate_mass_cooling_model("lpcode_co_da_10_z001")
     wdlf.set_high_mass_cooling_model("lpcode_one_da_19")
     wdlf.compute_cooling_age_interpolator()
@@ -89,7 +64,76 @@ else:
     wdlf.compute_density(Mag=Mag)
     wdlf_lpcode_co_co_one_15Gyr = copy.deepcopy(wdlf.number_density)
 
-    # montreal_co_da_20, basti_co_da_10, basti_co_da_10
+    # lpcode_he_da_09, lpcode_co_da_10_z001, lpcode_one_da_19 (C, interpolate separately)
+    wdlf.set_low_mass_cooling_model("lpcode_he_da_09")
+    wdlf.set_intermediate_mass_cooling_model(None)
+    wdlf.set_high_mass_cooling_model(None)
+    wdlf.compute_cooling_age_interpolator()
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_5Gyr = copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=7.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_7Gyr = copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=9.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_9Gyr = copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_11Gyr = copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_13Gyr = copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_15Gyr = copy.deepcopy(wdlf.number_density)
+
+    wdlf.set_low_mass_cooling_model(None)
+    wdlf.set_intermediate_mass_cooling_model("lpcode_co_da_10_z001")
+    wdlf.set_high_mass_cooling_model(None)
+    wdlf.compute_cooling_age_interpolator()
+    wdlf.set_sfr_model(mode="burst", age=5.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_5Gyr += copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=7.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_7Gyr += copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=9.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_9Gyr =+ copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_11Gyr += copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_13Gyr += copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_15Gyr += copy.deepcopy(wdlf.number_density)
+
+    wdlf.set_low_mass_cooling_model(None)
+    wdlf.set_intermediate_mass_cooling_model(None)
+    wdlf.set_high_mass_cooling_model("lpcode_one_da_19")
+    wdlf.compute_cooling_age_interpolator()
+    wdlf.set_sfr_model(mode="burst", age=5.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_5Gyr += copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=7.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_7Gyr += copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=9.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_9Gyr =+ copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_11Gyr += copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_13Gyr += copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_lpcode_co_co_one_separately_15Gyr += copy.deepcopy(wdlf.number_density)
+
+    # montreal_co_da_20, basti_co_da_10, basti_co_da_10 (D)
     wdlf.set_low_mass_cooling_model("montreal_co_da_20")
     wdlf.set_intermediate_mass_cooling_model("basti_co_da_10")
     wdlf.set_high_mass_cooling_model("basti_co_da_10")
@@ -113,7 +157,7 @@ else:
     wdlf.compute_density(Mag=Mag)
     wdlf_montreal_basti_15Gyr = copy.deepcopy(wdlf.number_density)
 
-    # montreal_co_da_20, basti_co_da_10_nps, basti_co_da_10_nps
+    # montreal_co_da_20, basti_co_da_10_nps, basti_co_da_10_nps (E)
     wdlf.set_low_mass_cooling_model("montreal_co_da_20")
     wdlf.set_intermediate_mass_cooling_model("basti_co_da_10_nps")
     wdlf.set_high_mass_cooling_model("basti_co_da_10_nps")
@@ -137,88 +181,59 @@ else:
     wdlf.compute_density(Mag=Mag)
     wdlf_montreal_basti_nps_15Gyr = copy.deepcopy(wdlf.number_density)
 
-    # lpcode_he_da_09, basti_co_da_10, mesa_one_da_18
-    wdlf.set_low_mass_cooling_model("lpcode_he_da_09")
-    wdlf.set_intermediate_mass_cooling_model("basti_co_da_10")
-    wdlf.set_high_mass_cooling_model("mesa_one_da_18")
-    wdlf.compute_cooling_age_interpolator()
-    wdlf.set_sfr_model(mode="burst", age=5.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
-    wdlf_lp_basti_mesa_5Gyr = copy.deepcopy(wdlf.number_density)
-    wdlf.set_sfr_model(mode="burst", age=7.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
-    wdlf_lp_basti_mesa_7Gyr = copy.deepcopy(wdlf.number_density)
-    wdlf.set_sfr_model(mode="burst", age=9.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
-    wdlf_lp_basti_mesa_9Gyr = copy.deepcopy(wdlf.number_density)
-    wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
-    wdlf_lp_basti_mesa_11Gyr = copy.deepcopy(wdlf.number_density)
-    wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
-    wdlf_lp_basti_mesa_13Gyr = copy.deepcopy(wdlf.number_density)
-    wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
-    wdlf_lp_basti_mesa_15Gyr = copy.deepcopy(wdlf.number_density)
 
     wdlf_5Gyr = np.vstack(
         (
             wdlf_montreal_5Gyr,
-            wdlf_lpcode_he_co_one_5Gyr,
             wdlf_lpcode_co_co_one_5Gyr,
+            wdlf_lpcode_co_co_one_separately_5Gyr,
             wdlf_montreal_basti_5Gyr,
             wdlf_montreal_basti_nps_5Gyr,
-            wdlf_lp_basti_mesa_5Gyr,
         )
     )
     wdlf_7Gyr = np.vstack(
         (
             wdlf_montreal_7Gyr,
-            wdlf_lpcode_he_co_one_7Gyr,
             wdlf_lpcode_co_co_one_7Gyr,
+            wdlf_lpcode_co_co_one_separately_7Gyr,
             wdlf_montreal_basti_7Gyr,
             wdlf_montreal_basti_nps_7Gyr,
-            wdlf_lp_basti_mesa_7Gyr,
         )
     )
     wdlf_9Gyr = np.vstack(
         (
             wdlf_montreal_9Gyr,
-            wdlf_lpcode_he_co_one_9Gyr,
             wdlf_lpcode_co_co_one_9Gyr,
+            wdlf_lpcode_co_co_one_separately_9Gyr,
             wdlf_montreal_basti_9Gyr,
             wdlf_montreal_basti_nps_9Gyr,
-            wdlf_lp_basti_mesa_9Gyr,
         )
     )
     wdlf_11Gyr = np.vstack(
         (
             wdlf_montreal_11Gyr,
-            wdlf_lpcode_he_co_one_11Gyr,
             wdlf_lpcode_co_co_one_11Gyr,
+            wdlf_lpcode_co_co_one_separately_11Gyr,
             wdlf_montreal_basti_11Gyr,
             wdlf_montreal_basti_nps_11Gyr,
-            wdlf_lp_basti_mesa_11Gyr,
         )
     )
     wdlf_13Gyr = np.vstack(
         (
             wdlf_montreal_13Gyr,
-            wdlf_lpcode_he_co_one_13Gyr,
             wdlf_lpcode_co_co_one_13Gyr,
+            wdlf_lpcode_co_co_one_separately_13Gyr,
             wdlf_montreal_basti_13Gyr,
             wdlf_montreal_basti_nps_13Gyr,
-            wdlf_lp_basti_mesa_13Gyr,
         )
     )
     wdlf_15Gyr = np.vstack(
         (
             wdlf_montreal_15Gyr,
-            wdlf_lpcode_he_co_one_15Gyr,
             wdlf_lpcode_co_co_one_15Gyr,
+            wdlf_lpcode_co_co_one_separately_15Gyr,
             wdlf_montreal_basti_15Gyr,
             wdlf_montreal_basti_nps_15Gyr,
-            wdlf_lp_basti_mesa_15Gyr,
         )
     )
 
@@ -314,7 +329,7 @@ ax6.axis('off')
 ax11.axis('off')
 ax14.axis('off')
 
-ax1.set_xlim(2, 20)
+ax1.set_xlim(0, 20)
 
 ax1.set_ylim(-3, 3.5)
 ax4.set_ylim(-3, 3.5)
@@ -323,12 +338,12 @@ ax9.set_ylim(-3, 3.5)
 ax12.set_ylim(-3, 3.5)
 ax15.set_ylim(-3, 3.5)
 
-ax2.set_ylim(-0.65, 0.65)
-ax5.set_ylim(-0.65, 0.65)
-ax8.set_ylim(-0.65, 0.65)
-ax10.set_ylim(-0.65, 0.65)
-ax13.set_ylim(-0.65, 0.65)
-ax16.set_ylim(-0.65, 0.65)
+ax2.set_ylim(-1, 1)
+ax5.set_ylim(-1, 1)
+ax8.set_ylim(-1, 1)
+ax10.set_ylim(-1, 1)
+ax13.set_ylim(-1, 1)
+ax16.set_ylim(-1, 1)
 
 ax9.set_yticklabels([""])
 ax10.set_yticklabels([""])
