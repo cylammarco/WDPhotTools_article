@@ -840,7 +840,12 @@ functions above, a manualy provided callable function is also accepted:
     \includegraphics[width=\columnwidth]{ifmrs.png}
     \caption{Comparing the three IFMRs provided in this package. They follow
     a similar trend and they are mostly lying on top of each other. S09 and S09b
-    have the shallowest IFMRs at the massive end of the initial mass among all.}
+    have the shallowest IFMRs at the massive end of the initial mass among all.
+    However, given the steep decline of the initial mass function, $7\,\msun$
+    MS stars are about 10 times less common than $3\,\msun$ MS stars and about
+    100 times less common than $1\,\msun$ MS stars. Hence, the discrepency also
+    only attribute to a small effect in the final WDLFs~(See
+    Figure~\ref{fig:wdlf_compare_ifmr})}
     \label{fig:ifmrs}
 \end{figure}
 
@@ -889,7 +894,42 @@ contribute to $\sim$\,$5\%$ of the total luminosity~\citep{1976A&A....51..383S}.
 At late time, few modes of the lattice are excited, the heat capacity drops
 according to the Debye law, this results in enhanced cooling. This process
 kicks in after $10^9$\,yr for a $1.0\,\msun$ WD and over a Hubble time for a
-$0.5\,\msun$ WD.
+$0.5\,\msun$ WD. The list of the available models and their properties can be
+refferred to Table~\ref{tab:cooling_models}.
+
+\begin{table*}
+    \centering
+    \begin{tabular}{c|c|c|c|c|c|c|c}
+        Reference             &    Low     & Intermediate &    High    &  Core & Atmosphere &           Mass Range $\left(\mathcal{M}_f/\msun\right)$ & Extra Notes \\\hline\hline
+
+        \multicolumn{8}{c}{Montreal Model} \\\hline
+        \citet{2020ApJ...901...93B} & \checkmark &  \checkmark  & \checkmark &    CO &      DA/DB &            $0.2-1.3$             & -- \\
+        &&&&&&&\\
+
+        \multicolumn{8}{c}{La Plata Models} \\\hline
+        \citet{2007MNRAS.382..779P} & \checkmark &      --      &     --     & He/CO &         DA &          $0.187-0.448$           & -- \\
+        \citet{2009ApJ...704.1605A} & \checkmark &      --      &     --     &    He &         DA &          $0.220-0.521$           & -- \\
+        \citet{2010ApJ...717..183R} &     --     &  \checkmark  &     --     &    CO &         DA &          $0.505-0.934$           & $Z=0.001-0.01$ \\
+        {\citet{2015A&A...576A...9A}} &     --     &  \checkmark  &     --     &    CO &         DA &          $0.506-0.826$           & $Z=0.0003-0.001$ \\
+        {\citet{2017A&A...597A..67A}} & \checkmark &  \checkmark  &     --     &    CO &         DA &          $0.434-0.838$           & $Y=0.4$ \\
+        \citet{2017ApJ...839...11C} &     --     &  \checkmark  &     --     &    CO &         DB &           $0.51-1.0$             & -- \\
+        {\citet{2007A&A...465..249A}} &     --     &      --      & \checkmark &   ONe &         DA &           $1.06-1.28$            & -- \\
+        {\citet{2019A&A...625A..87C}} &     --     &      --      & \checkmark &   ONe &      DA/DB &           $1.10-1.29$            & -- \\
+        &&&&&&&\\
+
+        \multicolumn{8}{c}{BaSTI Models} \\\hline
+        \citet{2010ApJ...716.1241S} &     --     &  \checkmark  & \checkmark &    CO &      DA+DB &           $0.54-1.2$             & With/Without Phase Separation\\
+        &&&&&&&\\
+
+        \multicolumn{8}{c}{MESA Models} \\\hline
+        \citet{2018MNRAS.480.1547L} &     --     &      --      & \checkmark & CO/Ne &      DA/DB &          $1.012-1.308$           & --
+
+    \end{tabular}
+    \caption{The checkmarks in the low ($\mathcal{M}_f/\msun < 0.5$), intermediate
+    ($0.5 < \mathcal{M}_f/\msun < 1.0$) and high mass ($1.0 < \mathcal{\mathcal{M}_f}/\msun$)
+    ranges denotes if the models are used for computation in that range.}
+    \label{tab:cooling_models}
+\end{table*}
 
 \subsection{Class: \texttt{WDLF}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -909,7 +949,12 @@ function of age~(Figure~\ref{fig:input_model}).
 \begin{figure*}
     \centering
     \includegraphics[width=\textwidth]{input_model.pdf}
-    \caption{Caption}
+    \caption{Top left: input initial mass function. Top right: Input star
+    formation history. Middle left: Input MS lifetime model. Middle right:
+    Input IFMR model. Bottom left: Input cooling model showing the absolute
+    bolometric magnitude as a function of mass and age. Bottom right: Input
+    cooling model showing the rate of change of bolometric magnitude as a
+    function of mass and age.}
     \label{fig:input_model}
 \end{figure*}
 
@@ -969,9 +1014,20 @@ or uncertainties in other models and observations.
 The WDLFs in the range of $9$--$14$\,mag line up almost perfectly at any age.
 This is because WDs at any typical mass does not have any mass-dependent
 physical phenomenon that affects the WD evolution. They all cool similarly at
-roughly the same rate across the mass range of the models. 
+roughly the same rate across the mass range of the models. However, the
+difference is still measurable and obvious by eye when the systems have
+sufficient time to evolve and for the WDs to cool. In 
+Figure~\ref{fig:wdlf_compare_ifmr}, the $5$\,Gyr comparison plot is exhibiting
+the dip in the EB18 IFMR just above $5\,\msun$ at $14.5$\,mag. While the strong
+feature at $14.0$--$14.5$\,mag in S09~(red), K09~(brown), K09b~(pink), and
+C18~(grey) are when the respective IFMRs are crossing the C09 IFMR from a higher
+final mass than C08's to a lower final mass. Such effect can be seen propagating
+down the WDLFs from the younger populations to the older at about $1$\,mag every
+$2$\,Gyr. Similarly, in the oldest system, we can see that when $0.9\,\msun$
+have recently become WDs in the $13$ and $15$\,Gyr, only the S09b~(red) and
+W09~(purple) models that returns lower WD mass than that from C08 are showing
+deficiencies at the brightest end. 
 
-Figure~\ref{fig:wdlf_compare_ifmr}
 \begin{figure*}
     \centering
     \includegraphics[width=\textwidth]{wdlf_compare_ifmr.png}
@@ -981,7 +1037,9 @@ Figure~\ref{fig:wdlf_compare_ifmr}
 
 \subsubsection{Cooling Models}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Figure~\ref{fig:wdlf_compare_da_cooling_models}
+There are too many possible combination of cooling models, so in Figure~\ref{fig:wdlf_compare_da_cooling_models}, only a few representative
+
+
 \begin{figure*}
     \centering
     \includegraphics[width=\textwidth]{wdlf_compare_da_cooling_models.png}
@@ -989,39 +1047,6 @@ Figure~\ref{fig:wdlf_compare_da_cooling_models}
     \label{fig:wdlf_compare_da_cooling_models}
 \end{figure*}
 
-\begin{table*}
-    \centering
-    \begin{tabular}{c|c|c|c|c|c|c|c}
-        Reference             &    Low     & Intermediate &    High    &  Core & Atmosphere &           Mass Range $\left(\mathcal{M}_f/\msun\right)$ & Extra Notes \\\hline\hline
-
-        \multicolumn{8}{c}{Montreal Model} \\\hline
-        \citet{2020ApJ...901...93B} & \checkmark &  \checkmark  & \checkmark &    CO &      DA/DB &            $0.2-1.3$             & -- \\
-        &&&&&&&\\
-
-        \multicolumn{8}{c}{La Plata Models} \\\hline
-        \citet{2007MNRAS.382..779P} & \checkmark &      --      &     --     & He/CO &         DA &          $0.187-0.448$           & -- \\
-        \citet{2009ApJ...704.1605A} & \checkmark &      --      &     --     &    He &         DA &          $0.220-0.521$           & -- \\
-        \citet{2010ApJ...717..183R} &     --     &  \checkmark  &     --     &    CO &         DA &          $0.505-0.934$           & $Z=0.001-0.01$ \\
-        {\citet{2015A&A...576A...9A}} &     --     &  \checkmark  &     --     &    CO &         DA &          $0.506-0.826$           & $Z=0.0003-0.001$ \\
-        {\citet{2017A&A...597A..67A}} & \checkmark &  \checkmark  &     --     &    CO &         DA &          $0.434-0.838$           & $Y=0.4$ \\
-        \citet{2017ApJ...839...11C} &     --     &  \checkmark  &     --     &    CO &         DB &           $0.51-1.0$             & -- \\
-        {\citet{2007A&A...465..249A}} &     --     &      --      & \checkmark &   ONe &         DA &           $1.06-1.28$            & -- \\
-        {\citet{2019A&A...625A..87C}} &     --     &      --      & \checkmark &   ONe &      DA/DB &           $1.10-1.29$            & -- \\
-        &&&&&&&\\
-
-        \multicolumn{8}{c}{BaSTI Models} \\\hline
-        \citet{2010ApJ...716.1241S} &     --     &  \checkmark  & \checkmark &    CO &      DA+DB &           $0.54-1.2$             & With/Without Phase Separation\\
-        &&&&&&&\\
-
-        \multicolumn{8}{c}{MESA Models} \\\hline
-        \citet{2018MNRAS.480.1547L} &     --     &      --      & \checkmark & CO/Ne &      DA/DB &          $1.012-1.308$           & --
-
-    \end{tabular}
-    \caption{The checkmarks in the low ($\mathcal{M}_f/\msun < 0.5$), intermediate
-    ($0.5 < \mathcal{M}_f/\msun < 1.0$) and high mass ($1.0 < \mathcal{\mathcal{M}_f}/\msun$)
-    ranges denotes if the models are used for computation in that range.}
-    \label{tab:cooling_models}
-\end{table*}
 
 
 \section{Other utilities}
