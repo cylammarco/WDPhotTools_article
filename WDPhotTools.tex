@@ -671,9 +671,10 @@ derive a IFMR at metallicity much lower or higher than solar abundance.
 The IMF has little effect on the WDLF because of their similarity over the mass
 range that stars could have become WDs. Nevertheless, we are providing three
 of the most used IMFs, they differ very slightly when the mass is less than
-$1\,\msun$. The effect can appear in the bright end of a WDLF for an old
-population. A callable function can be supplied as a manual IMF. This lists the
-four options that are available:
+$1\,\msun$. The effect can appear in the bright end of a WDLF for old
+populations~(See Figure~\ref{fig:imfs} and \ref{fig:wdlf_compare_imf}). A
+callable function can be supplied as a manual IMF. This lists the four options
+that are available:
 
 \begin{enumerate}
     \item \citet{2001MNRAS.322..231K} is a three-part power law that only the
@@ -701,6 +702,18 @@ four options that are available:
     \end{equation}
     \item Manual provided interpolated function that return the initial mass density as list or array (even if a single point is returned).
 \end{enumerate}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{imfs.png}
+    \caption{Comparing the three IMFs provided in this package. They are
+    identical in the mass range above $1\,\msun$, while under this mass
+    limit, the differences are small in the mass range ($\gtrapprox0.9\,\msun$)
+    that is relevant to singly evolved MS that had enough time to evolve into a
+    WD given the finite age of the Universe.}
+    \label{fig:imfs}
+\end{figure}
 
 \subsection{Star Formation History (SFH)}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -822,6 +835,14 @@ functions above, a manualy provided callable function is also accepted:
     \item Manually provided interpolated function that return the final mass as list or array (even if a single point is returned).
 \end{enumerate}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{ifmrs.png}
+    \caption{Comparing the three IFMRs provided in this package. They follow
+    a similar trend and they are mostly lying on top of each other. S09 and S09b
+    have the shallowest IFMRs at the massive end of the initial mass among all.}
+    \label{fig:ifmrs}
+\end{figure}
 
 \subsection{Cooling Models}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
