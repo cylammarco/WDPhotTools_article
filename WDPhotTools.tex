@@ -66,12 +66,13 @@
 % The list of authors, and the short list which is used in the headers.
 % If you need two or more lines of authors, add an extra line using \newauthor
 \author[M. C. Lam et al.]{
-Marco C. Lam,$^{1}$\thanks{E-mail: lam@tau.ac.il}
-A. N. Other,$^{2}$
+M. C. Lam$^{1}$\thanks{E-mail: lam@tau.ac.il},
+K. W. Yuen$^{2}$,
 and another Author$^{3}$
 \\
 % List of institutions
-$^{1}$School of Physics and Astronomy, Tel Aviv University, Tel Aviv, Israel 69978
+$^{1}$School of Physics and Astronomy, Tel Aviv University, Tel Aviv, Israel 69978\\
+$^{2}$Department of Computing, Goldsmith, The University of London, New Cross, London, UK SE14 6NW
 }
 
 % These dates will be filled out by the publisher
@@ -319,11 +320,14 @@ is defaulted to $8.0$. There are two choices of interpolator:
 \verb+scipy.interpolate.RBFInterpolator()+. The former is faster but it is less
 stable at the grid boundaries, it also does not support extrapolation. The
 latter is slower\footnote{This method is available since \textsc{scipy}
-version 1.7, however, we strongly recommend using version 1.8.1 or above where
-there is a significant performance gain.} but it is more stable against
-irregularly sampled data as well as at the boundaries and it performs
-extrapolation beyond the grid. The choice depends on the usage. The default
-is choosing stability over speed.
+version 1.7, however, we strongly recommend using version 1.9 or above where
+there is a significant performance gain in the RBFInterpolator.} but it is more
+stable against irregularly sampled data as well as at the boundaries and it
+performs extrapolation beyond the grid. The choice depends on the usage. The
+default is choosing speed over stability, users are encouraged to switch to
+the more stable interpolation if strange features appear in the output WDLFs.
+Alternatively, the error tolerance limit of the interpolator can be set to a
+more restrictive value.
 
 \begin{figure}
     \centering
@@ -529,7 +533,7 @@ This class inherits from the \verb+AtmosphereModelReader+. For basic usage,
 users are only required to provide the atmospheric type, the magnitudes and
 uncertainties in the respective filters. For more advanced usage, other
 fine tuning can be performed by providing distance, extinction, independent
-variables\footnote{fitting using \testtt{Mbol} and \texttt{Teff} can give slightly
+variables\footnote{fitting using \texttt{Mbol} and \texttt{Teff} can give slightly
 different results due to interpolation.}, choice of interpolator and their
 fine-tuning parameters, minimisers and their fine-tuning parameters,
 solution refinement within a bounding box (only if \verb+emcee+ was used).
@@ -903,22 +907,22 @@ refferred to Table~\ref{tab:cooling_models}.
         Reference             &    Low     & Intermediate &    High    &  Core & Atmosphere &           Mass Range $\left(\mathcal{M}_f/\msun\right)$ & Extra Notes \\\hline\hline
 
         \multicolumn{8}{c}{Montreal Model} \\\hline
-        \citet{2020ApJ...901...93B} & \checkmark &  \checkmark  & \checkmark &    CO &      DA/DB &            $0.2-1.3$             & -- \\
+        \citet[][B20]{2020ApJ...901...93B} & \checkmark &  \checkmark  & \checkmark &    CO &      DA/DB &            $0.2-1.3$             & -- \\
         &&&&&&&\\
 
-        \multicolumn{8}{c}{La Plata Models} \\\hline
+        \multicolumn{8}{c}{LPCODE} \\\hline
         \citet{2007MNRAS.382..779P} & \checkmark &      --      &     --     & He/CO &         DA &          $0.187-0.448$           & -- \\
-        \citet{2009ApJ...704.1605A} & \checkmark &      --      &     --     &    He &         DA &          $0.220-0.521$           & -- \\
-        \citet{2010ApJ...717..183R} &     --     &  \checkmark  &     --     &    CO &         DA &          $0.505-0.934$           & $Z=0.001-0.01$ \\
+        \citet[][A09]{2009ApJ...704.1605A} & \checkmark &      --      &     --     &    He &         DA &          $0.220-0.521$           & -- \\
+        \citet[][R10]{2010ApJ...717..183R}&     --     &  \checkmark  &     --     &    CO &         DA &          $0.505-0.934$           & $Z=0.001-0.01$ \\
         {\citet{2015A&A...576A...9A}} &     --     &  \checkmark  &     --     &    CO &         DA &          $0.506-0.826$           & $Z=0.0003-0.001$ \\
         {\citet{2017A&A...597A..67A}} & \checkmark &  \checkmark  &     --     &    CO &         DA &          $0.434-0.838$           & $Y=0.4$ \\
         \citet{2017ApJ...839...11C} &     --     &  \checkmark  &     --     &    CO &         DB &           $0.51-1.0$             & -- \\
         {\citet{2007A&A...465..249A}} &     --     &      --      & \checkmark &   ONe &         DA &           $1.06-1.28$            & -- \\
-        {\citet{2019A&A...625A..87C}} &     --     &      --      & \checkmark &   ONe &      DA/DB &           $1.10-1.29$            & -- \\
+        {\citet[][C19]{2019A&A...625A..87C}}&     --     &      --      & \checkmark &   ONe &      DA/DB &           $1.10-1.29$            & -- \\
         &&&&&&&\\
 
-        \multicolumn{8}{c}{BaSTI Models} \\\hline
-        \citet{2010ApJ...716.1241S} &     --     &  \checkmark  & \checkmark &    CO &      DA+DB &           $0.54-1.2$             & With/Without Phase Separation\\
+        \multicolumn{8}{c}{BaSTI} \\\hline
+        \citet[][S10]{2010ApJ...716.1241S}&     --     &  \checkmark  & \checkmark &    CO &      DA+DB &           $0.54-1.2$             & W/wO Phase Separation\\
         &&&&&&&\\
 
         \multicolumn{8}{c}{MESA Models} \\\hline
@@ -1037,8 +1041,43 @@ deficiencies at the brightest end.
 
 \subsubsection{Cooling Models}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-There are too many possible combination of cooling models, so in Figure~\ref{fig:wdlf_compare_da_cooling_models}, only a few representative
+There are too many possible combination of cooling models, so in
+Figure~\ref{fig:wdlf_compare_da_cooling_models}, only five example
+(combinations) of models are shown, the combinations are listed in
+Table~\ref{tab:cooling_model_combination}. In order to use cooling models from
+different group for different WD mass ranges, we should separately compute the
+respective contribution to the total WDLF by setting the models with
+\texttt{set\_low\_mass\_cooling\_model(None)},
+\texttt{set\_intermediate\_mass\_cooling\_model(None)}, and/or
+\texttt{set\_high\_mass\_cooling\_model(None)} depending on which models are
+to be ignored.
 
+In combination A, we use the pure Montreal stack. This naturally gives the
+smoothest interpolated grid across the entire parameter space because of the
+homogeneous choice of input physics and computation tools. Combination B makes
+use of the most recent low, intermediate and high mass models from the LPCODE.
+Although they are all produced by the same group, in C, we are computing the
+low, intermediate and high mass contribution of the constituent WDLFs
+separately before summing up the combination at the end to show the difference
+in the two choices of interpolation schemes. In combination D and E, the low
+mass model is adopting that from the Montreal group, while the intermediate and
+high mass models are from the BaSTI with and without the inclusion of phase
+separation in the computation.
+
+\begin{table}
+    \centering
+    \begin{tabular}{c|ccc}
+        Combination & Low Mass & Intermediate Mass & High Mass \\ \hline\hline
+        A     & B20      & B20               & B20 \\
+        B     & A09      & R10               & C19 \\
+        C     & A09      & R10               & C19 \\
+        D     & B20      & S10               & S10 \\
+        E     & B20      & S10~(nps)         & S10~(nps) \\
+    \end{tabular}
+    \caption{Combination of the models used. Refer to
+    Table~\ref{tab:cooling_models} for the model names and properties.}
+    \label{tab:cooling_model_combination}
+\end{table}
 
 \begin{figure*}
     \centering
@@ -1046,7 +1085,6 @@ There are too many possible combination of cooling models, so in Figure~\ref{fig
     \caption{Comparing WDLFs with different input cooling models.}
     \label{fig:wdlf_compare_da_cooling_models}
 \end{figure*}
-
 
 
 \section{Other utilities}
@@ -1061,10 +1099,6 @@ from \citet{2011ApJ...737..103S} is used; or with the
 \verb+scipy.interpolate.RegularGridInterpolator+ if the spectral type corrected
 extinction values are chosen for dereddening. The other background module,
 \texttt{util}, supplies the customised 2D spline.
-
-
-\section{Conclusions}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \section*{Acknowledgements}
