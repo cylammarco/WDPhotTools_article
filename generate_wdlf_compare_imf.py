@@ -1,44 +1,81 @@
+import copy
+import os
+
 from matplotlib import pyplot as plt
 import numpy as np
-import copy
 from WDPhotTools import theoretical_lf
 
 wdlf = theoretical_lf.WDLF()
 
-Mag = np.arange(2.0, 20.0, 0.1)
+Mag = np.arange(0.0, 20.0, 0.1)
 
-# default
-wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
-wdlf.compute_density(Mag=Mag)
-wdlf_C03_11Gyr = copy.deepcopy(wdlf.number_density)
-wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
-wdlf.compute_density(Mag=Mag)
-wdlf_C03_13Gyr = copy.deepcopy(wdlf.number_density)
-wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
-wdlf.compute_density(Mag=Mag)
-wdlf_C03_15Gyr = copy.deepcopy(wdlf.number_density)
 
-wdlf.set_imf_model("C03b")
-wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
-wdlf.compute_density(Mag=Mag)
-wdlf_C03b_11Gyr = copy.deepcopy(wdlf.number_density)
-wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
-wdlf.compute_density(Mag=Mag)
-wdlf_C03b_13Gyr = copy.deepcopy(wdlf.number_density)
-wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
-wdlf.compute_density(Mag=Mag)
-wdlf_C03b_15Gyr = copy.deepcopy(wdlf.number_density)
+if os.path.exists('wdlf_5Gyr_compare_imf.npy'):
 
-wdlf.set_imf_model("K01")
-wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
-wdlf.compute_density(Mag=Mag)
-wdlf_K01_11Gyr = copy.deepcopy(wdlf.number_density)
-wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
-wdlf.compute_density(Mag=Mag)
-wdlf_K01_13Gyr = copy.deepcopy(wdlf.number_density)
-wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
-wdlf.compute_density(Mag=Mag)
-wdlf_K01_15Gyr = copy.deepcopy(wdlf.number_density)
+    wdlf_11Gyr = np.load('wdlf_11Gyr_compare_imf.npy')
+    wdlf_13Gyr = np.load('wdlf_13Gyr_compare_imf.npy')
+    wdlf_15Gyr = np.load('wdlf_15Gyr_compare_imf.npy')
+
+else:
+
+    # default
+    wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_C03_11Gyr = copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_C03_13Gyr = copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_C03_15Gyr = copy.deepcopy(wdlf.number_density)
+
+    wdlf.set_imf_model("C03b")
+    wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_C03b_11Gyr = copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_C03b_13Gyr = copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_C03b_15Gyr = copy.deepcopy(wdlf.number_density)
+
+    wdlf.set_imf_model("K01")
+    wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_K01_11Gyr = copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_K01_13Gyr = copy.deepcopy(wdlf.number_density)
+    wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
+    wdlf.compute_density(Mag=Mag)
+    wdlf_K01_15Gyr = copy.deepcopy(wdlf.number_density)
+
+    wdlf_11Gyr = np.vstack(
+        (
+            wdlf_C03_11Gyr,
+            wdlf_C03b_11Gyr,
+            wdlf_K01_11Gyr,
+        )
+    )
+    wdlf_13Gyr = np.vstack(
+        (
+            wdlf_C03_13Gyr,
+            wdlf_C03b_13Gyr,
+            wdlf_K01_13Gyr,
+        )
+    )
+    wdlf_15Gyr = np.vstack(
+        (
+            wdlf_C03_15Gyr,
+            wdlf_C03b_15Gyr,
+            wdlf_K01_15Gyr,
+        )
+    )
+
+    np.save('wdlf_11Gyr_compare_imf', wdlf_11Gyr)
+    np.save('wdlf_13Gyr_compare_imf', wdlf_13Gyr)
+    np.save('wdlf_15Gyr_compare_imf', wdlf_15Gyr)
 
 
 fig1, (ax1, ax2, ax3) = plt.subplots(
@@ -47,48 +84,48 @@ fig1, (ax1, ax2, ax3) = plt.subplots(
 
 # Burst SFR 11 Gyr
 ax1.plot(
-    Mag, np.log10(wdlf_C03_11Gyr)-np.log10(wdlf_C03_11Gyr), label="C03")
+    Mag, np.log10(wdlf_11Gyr[0])-np.log10(wdlf_11Gyr[0]), label="C03"
 )
 ax1.plot(
-    Mag, np.log10(wdlf_C03b_11Gyr)-np.log10(wdlf_C03_11Gyr), label="C03b")
+    Mag, np.log10(wdlf_11Gyr[1])-np.log10(wdlf_11Gyr[0]), label="C03b"
 )
 ax1.plot(
-    Mag, np.log10(wdlf_K01_11Gyr)-np.log10(wdlf_C03_11Gyr), label="K01")
+    Mag, np.log10(wdlf_11Gyr[2])-np.log10(wdlf_11Gyr[0]), label="K01"
 )
 
 # Burst SFR 13 Gyr
 ax2.plot(
-    Mag, np.log10(wdlf_C03_13Gyr)-np.log10(wdlf_C03_13Gyr), label="C03")
+    Mag, np.log10(wdlf_13Gyr[0])-np.log10(wdlf_13Gyr[0])
 )
 ax2.plot(
-    Mag, np.log10(wdlf_C03b_13Gyr)-np.log10(wdlf_C03_13Gyr), label="C03b")
+    Mag, np.log10(wdlf_13Gyr[1])-np.log10(wdlf_13Gyr[0])
 )
 ax2.plot(
-    Mag, np.log10(wdlf_K01_13Gyr)-np.log10(wdlf_C03_13Gyr), label="K01")
+    Mag, np.log10(wdlf_13Gyr[2])-np.log10(wdlf_13Gyr[0])
 )
 
 # Burst SFR 13 Gyr
 ax3.plot(
-    Mag, np.log10(wdlf_C03_15Gyr)-np.log10(wdlf_C03_15Gyr))
+    Mag, np.log10(wdlf_15Gyr[0])-np.log10(wdlf_15Gyr[0]))
 ax3.plot(
-    Mag, np.log10(wdlf_C03b_15Gyr)-np.log10(wdlf_C03_15Gyr))
+    Mag, np.log10(wdlf_15Gyr[1])-np.log10(wdlf_15Gyr[0]))
 ax3.plot(
-    Mag, np.log10(wdlf_K01_15Gyr)-np.log10(wdlf_C03_15Gyr))
+    Mag, np.log10(wdlf_15Gyr[2])-np.log10(wdlf_15Gyr[0]))
 
 ax1.legend()
 ax1.grid()
-ax1.set_xlim(2, 20)
+ax1.set_xlim(0, 20)
 ax1.set_ylim(-0.01, 0.01)
 ax1.set_title("11 Gyr")
 
 ax2.grid()
-ax2.set_xlim(2, 20)
+ax2.set_xlim(0, 20)
 ax2.set_ylim(-0.01, 0.01)
 ax2.set_ylabel(r"log(n / n$_{C03}$)")
 ax2.set_title("13 Gyr")
 
 ax3.grid()
-ax3.set_xlim(2, 20)
+ax3.set_xlim(0, 20)
 ax3.set_ylim(-0.01, 0.01)
 ax3.set_xlabel(r"M$_{\mathrm{bol}}$ / mag")
 ax3.set_title("15 Gyr")

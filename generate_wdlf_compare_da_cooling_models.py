@@ -229,6 +229,15 @@ else:
     np.save('wdlf_13Gyr_compare_da_cooling_models', wdlf_13Gyr)
     np.save('wdlf_15Gyr_compare_da_cooling_models', wdlf_15Gyr)
 
+
+# normalise the WDLFs relative to the density at 10 mag
+wdlf_5Gyr = [wdlf_5Gyr[i]/wdlf_5Gyr[i][Mag==10.0] for i in range(len(wdlf_5Gyr))]
+wdlf_7Gyr = [wdlf_7Gyr[i]/wdlf_7Gyr[i][Mag==10.0] for i in range(len(wdlf_7Gyr))]
+wdlf_9Gyr = [wdlf_9Gyr[i]/wdlf_9Gyr[i][Mag==10.0] for i in range(len(wdlf_9Gyr))]
+wdlf_11Gyr = [wdlf_11Gyr[i]/wdlf_11Gyr[i][Mag==10.0] for i in range(len(wdlf_11Gyr))]
+wdlf_13Gyr = [wdlf_13Gyr[i]/wdlf_13Gyr[i][Mag==10.0] for i in range(len(wdlf_13Gyr))]
+wdlf_15Gyr = [wdlf_15Gyr[i]/wdlf_15Gyr[i][Mag==10.0] for i in range(len(wdlf_15Gyr))]
+
 ifmr_list = ["A", "B", "C", "D", "E", "F"]
 
 fig1, ((ax1, ax9), (ax2, ax10), (ax3, ax11), (ax4, ax12), (ax5, ax13), (ax6, ax14), (ax7, ax15), (ax8, ax16)) = plt.subplots(
@@ -307,12 +316,12 @@ ax14.axis('off')
 
 ax1.set_xlim(2, 20)
 
-ax1.set_ylim(-6.5, 0)
-ax4.set_ylim(-6.5, 0)
-ax7.set_ylim(-6.5, 0)
-ax9.set_ylim(-6.5, 0)
-ax12.set_ylim(-6.5, 0)
-ax15.set_ylim(-6.5, 0)
+ax1.set_ylim(-3, 3.5)
+ax4.set_ylim(-3, 3.5)
+ax7.set_ylim(-3, 3.5)
+ax9.set_ylim(-3, 3.5)
+ax12.set_ylim(-3, 3.5)
+ax15.set_ylim(-3, 3.5)
 
 ax2.set_ylim(-0.65, 0.65)
 ax5.set_ylim(-0.65, 0.65)
