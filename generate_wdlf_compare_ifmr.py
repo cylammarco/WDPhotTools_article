@@ -420,6 +420,14 @@ ax5.set_ylabel(r"log(n/n$_{C08}$)")
 ax7.set_ylabel("log(n)")
 ax8.set_ylabel(r"log(n/n$_{C08}$)")
 
+ax2.set_ylim(-1, 1)
+ax5.set_ylim(-1, 1)
+ax8.set_ylim(-1, 1)
+ax10.set_ylim(-1, 1)
+ax13.set_ylim(-1, 1)
+ax16.set_ylim(-1, 1)
+
+
 fig1.supxlabel(r"M$_{\mathrm{bol}}$ / mag")
 
 plt.subplots_adjust(
