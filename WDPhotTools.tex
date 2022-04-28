@@ -193,6 +193,12 @@ of the models available. Section \textsection5 goes through the other tools
 that are essential to the software. We conclude this work in Section
 \textsection6.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Throughout this work, we use $m$ to denote apparent magnitude, $M$ for
+absolute magnitude, curly $\mathcal{M}$ to denote mass, where $\mathcal{M}_i$
+for the (initial) zero-age main sequence mass, and $\mathcal{M}_f$ for the
+(final) white dwarf mass.
+
 \section{Software and Development Organisation}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The goal for this work is to ease researchers the effort in reinventing the
@@ -282,7 +288,7 @@ Explorer~(GALEX) $FUV$ and $NUV$.
 
 The stellar masses and cooling ages are based on the latest generation of
 evolutionary sequences~\citep{2020ApJ...901...93B}. The choice of
-thick~($q_H \equiv \frac{M_H}{M*} = 10^{-4}$) and thin~($q_H = 10^{-10}$)
+thick~($q_H \equiv \frac{\mathcal{M}_H}{\mathcal{M}*} = 10^{-4}$) and thin~($q_H = 10^{-10}$)
 hydrogen layers for the pure-hydrogen and pure-helium model atmospheres,
 respectively. Details of the colour calculations are described in
 \citet{1995PASP..107.1047B} and \citet{2006AJ....132.1221H}. The DA grid covers
@@ -418,11 +424,12 @@ square of the weighted difference between model and observation.
     \label{eq:lsq}
     \left(\dfrac{F_{\mathrm{model}, i} - F_{i}}{\sigma_{F, i}}\right)^{2}
 \end{equation}
-where $F_{\mathrm{model}, i}$ is the model flux in filter $i$, $F$ is
-the observed flux adjusted to it would be if it were at a distance of
-$10\,$pc, and $\sigma$ is the combined uncertainty in the flux and distance
-which can be found from the formal propagation of uncertainties from
-magnitude and distance to flux with equation \ref{eq:mag_to_flux_err} and
+where $F_{\mathrm{model}, i}$ is the model flux in filter $i$, $F$ is the
+absolute flux (coming from the observed flux adjusted to it would be if it
+were at a distance of $10\,$pc), and $\sigma$ is the combined uncertainty in
+the flux and distance which can be found from the formal propagation of
+uncertainties from magnitude and distance to flux with
+equation \ref{eq:mag_to_flux_err} and
 \ref{eq:propagation_of_err}:
 \begin{equation}
     \label{eq:mag_to_flux_err}
@@ -440,7 +447,7 @@ applying the distance-magnitude relation $M = m - 5\log(D)$, it simplifies to
     \sigma_{M}^2 = \sigma^2_{m} + \left[ \dfrac{5 D}{\ln(10)} \right]^2 \sigma_{D}^2.
 \end{equation}
 Substituting in also the flux-magnitude relation, using the parametrisation
-independent of the photometric system: $m - m_{\mathrm{ZP}}=-2.5\log(F/F_{\mathrm{ZP}})$,
+independent of the response of the photometric system: $m - m_{\mathrm{ZP}}=-2.5\log(F/F_{\mathrm{ZP}})$,
 we arrive at the $\chi^2$ function to be minimized in the magnitude space weighted
 by the formally propagated uncertainties:
 \begin{equation}
@@ -461,7 +468,7 @@ a similar form to Equation~\ref{eq:chi2}:
 
 \subsection{Interstellar Reddening}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-When interstellar reddening is included in the calculation, the $chi^2$
+When interstellar reddening is included in the calculation, the $\chi^2$
 minimisation function becomes
 \begin{equation}
     \label{eq:chi2}
@@ -506,7 +513,7 @@ can be found in the Github repository.
 Singly evolved WDs are distributed in a small range of surface gravity, with a
 mean of $\left<\log(g)\right> = 7.998 \pm 0.011$ in the DA sample in SDSS
 DR16~\citep{2021MNRAS.507.4646K}, corresponding to a mean mass of
-$\left<M\right> = 0.618 \pm 0.006 \msun$. When studying a large sample of WDs,
+$\left<\mathcal{M}_i\right> = 0.618 \pm 0.006 \msun$. When studying a large sample of WDs,
 fitting the photometric distances for the study of a population is still
 useful when reporting an averaged quantity as the final results. The
 distributions of the solution are, however, mostly statistical noise and not
@@ -522,9 +529,9 @@ This class inherits from the \verb+AtmosphereModelReader+. For basic usage,
 users are only required to provide the atmospheric type, the magnitudes and
 uncertainties in the respective filters. For more advanced usage, other
 fine tuning can be performed by providing distance, extinction, independent
-variables\footnote{fitting using \verb+Mbol+ and \verb+Teff+ can give slightly
+variables\footnote{fitting using \testtt{Mbol} and \texttt{Teff} can give slightly
 different results due to interpolation.}, choice of interpolator and their
-fine-tuning parameters, minimizers and their fine-tuning parameters,
+fine-tuning parameters, minimisers and their fine-tuning parameters,
 solution refinement within a bounding box (only if \verb+emcee+ was used).
 A few arguments are worth extra attention because of the similar terms used
 by different methods, we are only pointing out the potential confusion with
@@ -533,8 +540,8 @@ itself:
 \begin{enumerate}
     \item The argument \verb+extinction_convolved+ refers to the used of
     tabulated values from convolving the filter response function with DA
-    spectr to compute the extinction corrected for the spectral shape.
-    When it is set to \verb+False+, it interpolates the tablulated values
+    spectra to compute the extinction corrected for the spectral shape.
+    When it is set to \verb+False+, it interpolates the tabulated values
     from \citet{2011ApJ...737..103S}
     \item \verb+kind+ is the kind of interpolation for the extinction.
     \item \verb+logg+ is used if only one independent variable is
@@ -562,14 +569,14 @@ good number of filters are provided.
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{PSOJ1801p6254_emcee.png}
-    \caption{Best fit DA and DB solutions in for PSO\,J1801+6254.}
+    \caption{Best fit DA and DB solutions in for PSO\,J1801+6254~\citep{2020MNRAS.493.6001L}.}
     \label{fig:best_fit}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{PSOJ1801p6254_emcee_corner.png}
-    \caption{The corner plot of the sampling using DA model for PSO\,J1801+6254.}
+    \caption{The corner plot of the sampling using DA model for PSO\,J1801+6254~\citep{2020MNRAS.493.6001L}.}
     \label{fig:emcee_corner}
 \end{figure}
 
@@ -592,19 +599,23 @@ showed that WDLF is a sensitive probe of the star formation history~(SFH) as
 it shows signatures of irregularities in the SFH such as bursts and lulls.
 \citet{2013MNRAS.434.1549R} took it further to address this inverse problem
 mathematically and showed some success in recovering the SFH of the solar
-neighbourhood when compared against SFH computed from other methods.
+neighbourhood when compared against SFH computed from other methods. By
+decomposing the disks and halo components of the Milky Way, we can have an
+independent view of the past star formation history revealed by only the
+WD populations, where they are most useful in deriving the SFH of old
+stellar populations~\citep{2011MNRAS.417...93R, 2017ASPC..509...25L}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The mathematical construction of a WDLF is intuitively straightforward: stars
-were formed in a distribution of mass~($\mathcal{M}$), described by the initial
+were formed in a distribution of mass~($\mathcal{M}_i$), described by the initial
 mass function~(IMF, $\phi$). Then, they spend their lifetime carrying out
 nuclear burning~($t_{\mathrm{MS}}$), the time they spend depends mainly on
 their mass. Towards the end stage of stellar evolution stars shed most of the
 atmosphere, which is modelled by the initial-final mass relation~(IFMR,
 $\zeta$). Once they have become WDs, all is left is to know how long it has
 been cooling~($t_{\mathrm{cool}}$) in order to reach the current
-luminosity~($\mathrm{M}_\mathrm{bol}$). The heavy duty of these computations
+luminosity~($M_\mathrm{bol}$). The heavy duty of these computations
 are coming from interpolation of pre-computed lookup tables. The important
 part of this work is to carefully interpolate and integrate over the model
 grids, because they are both susceptible to significant rounding errors given
@@ -617,12 +628,15 @@ The integral for a WDLF when parameterised with bolometric magnitude (as
 opposed to luminosity) can be written as
 
 \begin{equation}
-    n(\mathrm{M}_{\mathrm{bol}}) = \int_{\mathcal{M}_l}^{\mathcal{M}_u} \tau(\mathrm{M}_\mathrm{bol}, m) \psi(T_0, \mathrm{M}_\mathrm{bol}, \mathcal{M}, m, Z) \phi(\mathcal{M}) d\mathcal{M}
+    n(M_{\mathrm{bol}}) = \int_{\mathcal{M}_l}^{\mathcal{M}_u}
+        \tau(M_\mathrm{bol}, \mathcal{M}_f)
+        \psi(T_0, M_\mathrm{bol}, \mathcal{M}_i, m, Z)
+        \phi(\mathcal{M}_i) d\mathcal{M}_i
 \end{equation}
 where $n$ is the number density, $\tau$ is the inverse cooling rate, $\psi$ is
 the relative star formation rate, $\phi$ is the initial mass function; and their
-dependent variables: $\mathrm{M}_\mathrm{bol}$ is the absolute bolometric
-magnitude, $m$ is the WD mass, $T_0$ is the look-back time, $\mathcal{M}$ is
+dependent variables: $M_\mathrm{bol}$ is the absolute bolometric
+magnitude, $\mathcal{M}_f$ is the WD mass, $T_0$ is the look-back time, $\mathcal{M}_i$ is
 the progenitor MS mass, $Z$ is the metallicity, $\mathcal{M}_l$ is the minimum
 progenitor MS mass that could have singly evolved into a WD in the given time,
 and $\mathcal{M}_u$ is the maximum progenitor MS mass.
@@ -630,14 +644,15 @@ and $\mathcal{M}_u$ is the maximum progenitor MS mass.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The inverse cooling rate
 \begin{equation}
-    \tau(\mathrm{M}_\mathrm{bol}, m) = \dfrac{dt_{\mathrm{cool}}}{d\mathrm{M}_\mathrm{bol}} \left( \mathrm{M}_\mathrm{bol}, m \right)
+    \tau(M_\mathrm{bol}, \mathcal{M}_f) = \dfrac{dt_{\mathrm{cool}}}{dM_\mathrm{bol}} \left( M_\mathrm{bol}, \mathcal{M}_f \right)
 \end{equation}
 is a quantity taken from the pre-computed grid of cooling models. 
 
 The relative star formation rate is expressed as a function of look-back time,
-\begin{equation}
-    \psi(T_0, \mathrm{M}_\mathrm{bol}, \mathcal{M}, m, Z) = \psi\left[T_0 - t_{\mathrm{cool}}\left(\mathrm{M}_\mathrm{bol}, m\right) - t_{\mathrm{MS}}\left(\mathcal{M}, Z\right)\right].
-\end{equation}
+\begin{align}
+    &\psi(T_0, M_\mathrm{bol}, \mathcal{M}_i, \mathcal{M}_f, Z) =\\
+    &\qquad\psi\left[T_0 - t_{\mathrm{cool}}\left(M_\mathrm{bol}, \mathcal{M}_f\right) - t_{\mathrm{MS}}\left(\mathcal{M}_i, Z\right)\right].
+\end{align}
 The absolute normalisation is not needed when the total stellar mass is coming
 from observations; the theoretical WDLF only needs to multiply with a
 constant (the total number density) to account for the normalisation.
@@ -645,29 +660,49 @@ constant (the total number density) to account for the normalisation.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The IFMR takes a simple form of
 \begin{equation}
-    m = \zeta(\mathcal{M}),
+    \mathcal{M}_f = \zeta(\mathcal{M}_i),
 \end{equation}
 although there are evidence that more metal rich stars lose more
 envelope~\citep{2007ApJ...671..761K}, there is insufficient empirical data to
 derive a IFMR at metallicity much lower or higher than solar abundance.
 
-\subsection{Initial Mass Function}
+\subsection{Initial Mass Function (IMF)}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The IMF has little effect on the WDLF because of their similarity over the mass
 range that stars could have become WDs. Nevertheless, we are providing three
-of the most used IMFs, they differ slightly when the mass is less than $1\msun$.
-The effect can appear in the bright end of a WDLF for an old population. A
-callable function can be supplied as a manual IMF. This lists the four options
-that are available:
+of the most used IMFs, they differ very slightly when the mass is less than
+$1\,\msun$. The effect can appear in the bright end of a WDLF for an old
+population. A callable function can be supplied as a manual IMF. This lists the
+four options that are available:
 
 \begin{enumerate}
-    \item \citet{2001MNRAS.322..231K}
-    \item \citet{2003PASP..115..763C}
-    \item \citet[][including binary]{2003PASP..115..763C}
-    \item Manual
+    \item \citet{2001MNRAS.322..231K} is a three-part power law that only the
+    more massive two are of relevance to this work, with
+    $\xi(\mathcal{M}_i) = \mathcal{M}_i^{-\alpha}$ where
+    \begin{equation}
+        \alpha =
+        \begin{cases}
+            0.3, \quad \mathcal{M}_i \leq 0.08\,\msun\\
+            1.3, \quad 0.08 \leq \mathcal{M}_i \leq 0.5\,\msun\\
+            2.3, \quad \mathcal{M}_i \geq 0.5\,\msun.
+        \end{cases}
+    \end{equation}
+    \item \citet{2003PASP..115..763C} shares the same power law with
+    \citet{2001MNRAS.322..231K} for mass above $1\,\msun$, at lower mass,
+    the IMF follows a log-normal form with
+    \begin{equation}
+        \xi(\mathcal{M}_i) = \dfrac{0.158^{+0.051}_{-0.046}}{\mathcal{M}_i \ln(10)} \times
+            \exp{\left\{\dfrac{\left[\log(\mathcal{M}_i) - \log\left(0.079^{-0.016}_{+0.021}\right)\right]^2}{2 \times (0.69^{-0.01}_{+0.05})^2}\right\}}
+    \end{equation}
+    \item \citet[][including binary]{2003PASP..115..763C} also consider the correction for binaries which gives a much shallower IMF at the low mass end
+    \begin{equation}
+        \xi(\mathcal{M}_i) = \dfrac{0.086}{\mathcal{M}_i \ln(10)} \times
+            \exp{\left\{\dfrac{\left[\log(\mathcal{M}_i) - \log\left(0.022\right)\right]^2}{2 \times (0.57)^2}\right\}}
+    \end{equation}
+    \item Manual provided interpolated function that return the initial mass density as list or array (even if a single point is returned).
 \end{enumerate}
 
-\subsection{Star Formation History}
+\subsection{Star Formation History (SFH)}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The SFH has one of the strongest effect on the shape and normalisation of a
 WDLF. The default profiles are only three types of simple form SFH, however,
@@ -700,13 +735,16 @@ WDs spent most of their time since star formation as their progenitors.
 However, the MS lifetime has decreasing impact on the WDLF as we move towards
 the fainter end where WDs cooling time dominates over the MS lifetime. There is
 also a metallicity dependency on the MS lifetime. From the PARSEC
-models~\citep{2013EPJWC..4303001B}, extremely metal poor solar mass star with
-$Z=0.001$ and solar-like star with $Z=0.017$ take $\sim$\,$6$\,Gyr and
+models~\citep{2013EPJWC..4303001B}, extremely metal poor $1\,\msun$ star with
+$Z=0.001$ and solar-metallicity star with $Z=0.017$ take $\sim$\,$6$\,Gyr and
 $\sim$\,$11$\,Gyr to go through the MS stage, respectively. Furthermore,
 the mass loss during the late stage of stellar evolution also differ at
-different metallicity, see the next part in this section. We provide the
-following interpolated MS lifetime models and the option of providing a
-callable function as a manual input:
+different metallicity. However, we are only providing solar-metallicity
+MS lifetime model because the IFMR models are all derived from WDs that
+were once progenitors with an unknown metallicity, and the solar metallicity
+is only slightly more abundant than the average metallicity in the Milky Way
+in the vicinity of the Sun. The following MS lifetime models are interpolated and
+the option of providing a callable function is also a possible form as input:
 
 \begin{enumerate}
     \item \citet{2013EPJWC..4303001B}
@@ -714,7 +752,7 @@ callable function as a manual input:
     \item Manual
 \end{enumerate}
 
-\subsection{Initial-Final Mass Relation}
+\subsection{Initial-Final Mass Relation (IFMR)}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Human civilisation has existed a mere few thousand years, and modern astronomy
 (with digital aid) is no more than a hundred. We do not have direct
@@ -732,16 +770,56 @@ good mass coverage to be included in this work, and just like the other
 functions above, a manualy provided callable function is also accepted:
 
 \begin{enumerate}
-    \item \citet{2008MNRAS.387.1693C}
-    \item \citet[][two-part]{2008MNRAS.387.1693C}
-    \item \citet{2009ApJ...692.1013S}
-    \item \citet[][two-part]{2009ApJ...692.1013S}
-    \item \citet{2009ApJ...693..355W}
-    \item \citet{2009ApJ...705..408K}
-    \item \citet[][two-part]{2009ApJ...705..408K}
-    \item \citet{2018ApJ...866...21C}
-    \item \citet{2018ApJ...860L..17E}
-    \item Manual
+    \item \citet{2008MNRAS.387.1693C} -- this work reanalysed all the known WDs in clusters and MS-WD binaries homogeneously by using a single stellar evolution model and a single WD cooling model. The sample covers a mass range of $1.5-6.4\,\msun$, giving a best-fit IFMR of
+    \begin{equation}
+        \mathcal{M}_f = (0.117 \pm 0.004)\,\mathcal{M}_i + (0.384 \pm 0.011)\,\msun.
+    \end{equation}
+    \item \citet[][two-part]{2008MNRAS.387.1693C} -- in the same work, they also fitted with a 2-part IFMR with a break point at $2.7\,\msun$, which gives a steeper relation at the high mass end with
+    \begin{equation}
+        \mathcal{M}_f = \begin{cases}
+                  (0.096 \pm 0.005)\,\mathcal{M}_i + (0.429 \pm 0.015)\,\msun,\\
+                  \qquad(\mathcal{M}_i \leq 2.7\,\msun)\\
+                  (0.137 \pm 0.007)\,\mathcal{M}_i + (0.318 \pm 0.018)\,\msun,\\
+                  \qquad(\mathcal{M}_i \geq 2.7\,\msun)
+              \end{cases}
+    \end{equation}
+    \item \citet{2009ApJ...692.1013S} -- by using 10 (young) open clusters, this relation is probing the high mass end of the population that can turn into WDs. They, however, do not have enough time for the lower mass stars to evolve into WDs hence this relation is unconstrained below $1.7\,\msun$ and we extrapolate if the given initial mass is below $1.7\,\msun$. The upper limit of the data set is $8.5\,\msun$:
+    \begin{equation}
+        \mathcal{M}_f = 0.084 \mathcal{M}_i \pm 0.466\,\msun.
+    \end{equation}
+    \item \citet[][two-part]{2009ApJ...692.1013S} -- in the same work, they also fitted with a 2-part IFMR with a break point at $4\,\msun$.
+    \begin{equation}
+        \mathcal{M}_f = \begin{cases}
+                  0.134\,\mathcal{M}_i + 0.331\,\msun, &1.7\,\msun \leq \mathcal{M}_i \leq 4.0\,\msun\\
+                  0.047\,\mathcal{M}_i + 0.679\,\msun, &\mathcal{M}_i \geq 4.0\,\msun
+              \end{cases}
+    \end{equation}
+    \item \citet{2009ApJ...693..355W} is an extension to \citet{2009ApJ...692.1013S} by including M41 to the collection of open clusters, covering a reliable mass range of $1.25-8.0\,\msun$,
+    \begin{equation}
+        \mathcal{M}_f = (0.129 \pm 0.004) \mathcal{M}_i + (0.339 \pm 0.015)\,\msun.
+    \end{equation}
+    \item \citet{2009ApJ...705..408K} reanalysed with all the available open clusters covering a mass range of $1.1-6.5\,\msun$ to give a relation of
+    \begin{equation}
+        \mathcal{M}_f = (0.109 \pm 0.007) \mathcal{M}_i + (0.428 \pm 0.025)\,\msun.
+    \end{equation}
+    \item \citet[][extended]{2009ApJ...705..408K} includes also the WDs from the globular cluster, M4, to give a shallower relation.
+    \begin{equation}
+        \mathcal{M}_f = (0.101 \pm 0.006) \mathcal{M}_i + (0.463 \pm 0.018)\,\msun.
+    \end{equation}
+    However, having only metal richer open cluster data at the high mass end and only the metal poor globular cluster data at the low mass end is likely to lead to a shallower fit expected due to the metallicity dependency in the total mass loss at the late stage of stellar evolution.
+    \item \citet{2018ApJ...866...21C} has fitted and compared various theoretical and empirical models, we are only providing the 3-part-solution that the authors preferred, which is based on the MIST stellar evolution model,
+    \begin{equation}
+        \mathcal{M}_f = \begin{cases}
+                  (0.080 \pm 0.016)\,\mathcal{M}_i + (0.489 \pm 0.030)\,\msun,\\
+                  \qquad(0.83\,\msun \leq \mathcal{M}_i \leq 2.85\,\msun)\\
+                  (0.187 \pm 0.061)\,\mathcal{M}_i + (0.184 \pm 0.199)\,\msun,\\
+                  \qquad(2.85\,\msun \leq \mathcal{M}_i \leq 3.6\,\msun)\\
+                  (0.107 \pm 0.016)\,\mathcal{M}_i + (0.471 \pm 0.077)\,\msun,\\
+                  \qquad(3.6\,\msun \leq \mathcal{M}_i \leq 7.2\,\msun)\\
+              \end{cases}
+    \end{equation}
+    \item \citet{2018ApJ...860L..17E} reports the relations by fitting the colour-magnitude diagram of the clean Gaia DR2 WD sequence. It is a 5-point piecewise-linear function going through the following (initial mass, final mass) coordinates: $(0.95, 0.5^{+0.01}_{-0.01})$, $(2.75^{+0.36}_{-0.31}$, $0.67^{+0.02}_{-0.02})$, $(3.54^{+0.55}_{-0.43}$, $0.81^{+0.03}_{-0.03})$, $(5.21^{+1.06}_{-0.71}$, $0.91^{+0.10}_{-0.03})$ and $(8.0, 1.37^{+0.06}_{-0.21})$.
+    \item Manually provided interpolated function that return the final mass as list or array (even if a single point is returned).
 \end{enumerate}
 
 
@@ -777,28 +855,35 @@ to fluid and eventually solid. The liquid-solid transition releases latent
 heat that slows down the cooling process. This also couples with the release
 of gravitational energy associated with changes in the carbon-oxygen
 profile~\citep{1997ApJ...486..413S} when the heavier oxygen-rich crystals
-displace carbon as a result of gravitational settling. (6)~\textit{Coulomb
-Interactions} modify the thermodynamical properties of the ionic gas, in
-particular the specific heat. Its strength is determined by the Coulomb
-coupling parameters. At first, the parameter is small, it slowly increases as
-an WD cools and the ions begins to change for gas to liquid and eventually
-forming lattice. This releases latent heat that contribute to $\sim$\,$5\%$
-of the total luminosity~\citep{1976A&A....51..383S}. At late time, few modes
-of the lattice are excited, the heat capacity drops according to the Debye law,
-this results in enhanced cooling. This process kicks in after $10^9$\,yr for a
-$1.0\,\msun$ WD and over a Hubble time for a $0.5\,\msun$ WD.
+displace carbon as a result of gravitational settling. Depending on the
+changes in the carbon-oxygen abundance profile, and the choice of phase
+diagram of a carbon-oxygen mixture, it modifies the rate of cooling and this
+specific effect is colloquially known as the (6)~\textit{Phase Separation}
+effect. (7)~\textit{Coulomb Interactions} modify the thermodynamical
+properties of the ionic gas, in particular the specific heat. Its strength is
+determined by the Coulomb coupling parameters. At first, the parameter is
+small, it slowly increases as an WD cools and the ions begins to change for
+gas to liquid and eventually forming lattice. This releases latent heat that
+contribute to $\sim$\,$5\%$ of the total luminosity~\citep{1976A&A....51..383S}.
+At late time, few modes of the lattice are excited, the heat capacity drops
+according to the Debye law, this results in enhanced cooling. This process
+kicks in after $10^9$\,yr for a $1.0\,\msun$ WD and over a Hubble time for a
+$0.5\,\msun$ WD.
 
 \subsection{Class: \texttt{WDLF}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 This class inherits from the \verb+AtmosphereModelReader+ and the
 \verb+CoolingModelReader+.
 
-
-We have included 22 cooling models from 11 works that cover different parts of
-the parameter space. See Table~\ref{tab:cooling_models} for the details of
-each model. This comes with a diagnostic plot to inspect all the input models:
-the IMF, the SFH, the MS lifetime as a function of mass, the IFMR, and the
-cooling model in two formats: 
+A \texttt{WDLF} object takes requires six models for computation: (1)~IMF,
+(2)~IFMR, (3)~MS lifetime model, and (4-6) low, intermediate and high mass WD
+cooling models. We have included 22 cooling models from 11 works that cover
+different parts of the parameter space. See Table~\ref{tab:cooling_models} for
+the details of each model. This comes with a diagnostic plot to inspect all
+the input models: the IMF, the SFH, the MS lifetime as a function of mass,
+the IFMR, and the cooling model in two formats: bolometric magnitude as a
+function of age, and the rate of change of the bolometric magnitude as a
+function of age~(Figure~\ref{fig:input_model}).
 
 \begin{figure*}
     \centering
@@ -807,7 +892,30 @@ cooling model in two formats:
     \label{fig:input_model}
 \end{figure*}
 
+In the following comparisons, the default configuration uses the (1)~IMF
+from \citet{2003PASP..115..763C} for single stars, (2)~IFMR from
+\citet{2008MNRAS.387.1693C}, and (3)~cooling models from the Montreal group,
+and (4)~SFH is a star burst of $10^8$ starting at the labelled time.
+While comparing the theoretical WDLFs, we are altering one variable at a time.
+All WDLFs are normalised at $10$\,mag to a log-number density of $0.0$.
+
 \subsubsection{Star Formation History}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+This WDLFs with various star formation history are shown in
+Figure~\ref{fig:compare_sfr_age_type}. The bright edge of the WDLFs line up
+almost perfectly because WDs arrive at the corresponding bolometric magnitudes
+at a constant rate. The gradient is most sensitive to a time-dependent
+variable, for example, a change in the SFR. The sudden increase in the number
+density at $M_\mathrm{bol}=14.5$ corresponds to the slow down in the cooling
+due to crystallisation that releases a significant amount of heat. This bump
+is the most prominent in the star burst profile at $6$\,Gyr old because WDs
+with $\sim0.8-1.0\,\msun$ have the the lowest cooling rates, they corresponds
+to $3-5\msun$ ZAMS mass that spends $0.1-0.5$\,Gyr in the MS and $5-6$\,Gyr
+to reach $14.5$\,mag~($\sim 5500$\,K, \citealp{2019ApJ...876...67B}). The
+detailed description of the shape of the WDLFs due to various cooling
+mechanism should be referred to  Figure~5 and Section~3
+of \citep{2001PASP..113..409F}.
+
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{wdlf_compare_sfr.png}
@@ -816,8 +924,18 @@ cooling model in two formats:
     \label{fig:compare_sfr_age_type}
 \end{figure}
 
-
 \subsubsection{Initial Mass Functions}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+There is a very weak dependency on the IMF in because the three IMFs are only
+different at mass below $1\,\msun$, which has a MS lifetime of $11.72$\,Gyr.
+Hence, we only start to see a difference in the WDLF at ages above
+$11$\,Gyr~(Figure~\ref{fig:wdlf_compare_imf}. The IMFs only diverge significant
+well into the M-dwarf brown dwarf regime,at a computed age of $15$\,Gyr
+we are only including stars with ZAM masses as low as $\sim$ $0.96\,\msun$.
+Nevertheless, if a metal poor MS lifetime model is used, this can change the
+picture slightly, although, the effect would still be much smaller than another
+or uncertainties in other models and observations.
+
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{wdlf_compare_imf.png}
@@ -826,6 +944,13 @@ cooling model in two formats:
 \end{figure}
 
 \subsubsection{Initial-Final Mass Relations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The WDLFs in the range of $9$--$14$\,mag line up almost perfectly at any age.
+This is because WDs at any typical mass does not have any mass-dependent
+physical phenomenon that affects the WD evolution. They all cool similarly at
+roughly the same rate across the mass range of the models. 
+
+Figure~\ref{fig:wdlf_compare_ifmr}
 \begin{figure*}
     \centering
     \includegraphics[width=\textwidth]{wdlf_compare_ifmr.png}
@@ -833,10 +958,20 @@ cooling model in two formats:
     \label{fig:wdlf_compare_ifmr}
 \end{figure*}
 
+\subsubsection{Cooling Models}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Figure~\ref{fig:wdlf_compare_da_cooling_models}
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth]{wdlf_compare_da_cooling_models.png}
+    \caption{Comparing WDLFs with different input cooling models.}
+    \label{fig:wdlf_compare_da_cooling_models}
+\end{figure*}
+
 \begin{table*}
     \centering
     \begin{tabular}{c|c|c|c|c|c|c|c}
-        Reference             &    Low     & Intermediate &    High    &  Core & Atmosphere &           Mass Range $\left(\mathcal{M}/\msun\right)$ & Extra Notes \\\hline\hline
+        Reference             &    Low     & Intermediate &    High    &  Core & Atmosphere &           Mass Range $\left(\mathcal{M}_f/\msun\right)$ & Extra Notes \\\hline\hline
 
         \multicolumn{8}{c}{Montreal Model} \\\hline
         \citet{2020ApJ...901...93B} & \checkmark &  \checkmark  & \checkmark &    CO &      DA/DB &            $0.2-1.3$             & -- \\
@@ -861,8 +996,8 @@ cooling model in two formats:
         \citet{2018MNRAS.480.1547L} &     --     &      --      & \checkmark & CO/Ne &      DA/DB &          $1.012-1.308$           & --
 
     \end{tabular}
-    \caption{The checkmarks in the low ($\mathcal{M}/\msun < 0.5$), intermediate
-    ($0.5 < \mathcal{M}/\msun < 1.0$) and high mass ($1.0 < \mathcal{M}/\msun$)
+    \caption{The checkmarks in the low ($\mathcal{M}_f/\msun < 0.5$), intermediate
+    ($0.5 < \mathcal{M}_f/\msun < 1.0$) and high mass ($1.0 < \mathcal{\mathcal{M}_f}/\msun$)
     ranges denotes if the models are used for computation in that range.}
     \label{tab:cooling_models}
 \end{table*}
@@ -881,15 +1016,20 @@ from \citet{2011ApJ...737..103S} is used; or with the
 extinction values are chosen for dereddening. The other background module,
 \texttt{util}, supplies the customised 2D spline.
 
+
 \section{Conclusions}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \section*{Acknowledgements}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+MCL is supported by a European Research Council (ERC) grant under the European
+Union’s Horizon 2020 research and innovation program (grant agreement number
+833031).
 
+This research has made use of the Spanish Virtual Observatory
+(http://svo.cab.inta-csic.es) supported from the Spanish MICINN/FEDER through
+grant AyA2017-84089.
 
-\section*{Data Availability}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
