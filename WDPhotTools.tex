@@ -67,12 +67,12 @@
 % If you need two or more lines of authors, add an extra line using \newauthor
 \author[M. C. Lam et al.]{
 M. C. Lam$^{1}$\thanks{E-mail: lam@tau.ac.il},
-K. W. Yuen$^{2}$,
-and another Author$^{3}$
-\\
+M. Green$^{1}$,
+K. W. Yuen$^{2, 3}$\\
 % List of institutions
 $^{1}$School of Physics and Astronomy, Tel Aviv University, Tel Aviv, Israel 69978\\
-$^{2}$Department of Computing, Goldsmith, The University of London, New Cross, London, UK SE14 6NW
+$^{2}$Department of Ophthalmology \& Visual Sciences, Faculty of Medicine, The Chinese University of Hong Kong\\
+$^{3}$Goldsmith, The University of London, New Cross, London, UK SE14 6NW
 }
 
 % These dates will be filled out by the publisher
@@ -91,7 +91,7 @@ $^{2}$Department of Computing, Goldsmith, The University of London, New Cross, L
 \begin{abstract}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 From data collection to generating a white dwarf luminosity function, it
-requires numerous Astrophysical, Mathematical and programming domain
+requires numerous Astrophysical, Mathematical and Computational domain
 knowledge. The steep learning curve makes it difficult to enter the field and
 often individuals have to reinvent the wheel to perform identical data reduction
 and analysis tasks. We have gathered all the publicly available white dwarf
@@ -899,7 +899,13 @@ At late time, few modes of the lattice are excited, the heat capacity drops
 according to the Debye law, this results in enhanced cooling. This process
 kicks in after $10^9$\,yr for a $1.0\,\msun$ WD and over a Hubble time for a
 $0.5\,\msun$ WD. The list of the available models and their properties can be
-refferred to Table~\ref{tab:cooling_models}.
+referred to Table~\ref{tab:cooling_models}. We divide the models into three
+groups: low~($\mathcal{M}/\msun < 0.5$),
+intermediate~($0.5 < \mathcal{M}/\msun < 1.0$) and
+high mass~($\mathcal{M}/\msun > 1.0$). For the lowest mass one, it is only
+used in the cases where the the IFMR gives WDs reaching such mass, and a
+population that can be old enough to produce these low mass singly evolved
+WDs.
 
 \begin{table*}
     \centering
@@ -1009,7 +1015,9 @@ or uncertainties in other models and observations.
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{wdlf_compare_imf.png}
-    \caption{Comparing WDLFs with different input IMFs.}
+    \caption{Comparing WDLFs with different input IMFs relative to the C03
+    model. Due to the identical mass function above $1\,\msun$}, only the
+    oldest populations show differences in the bright end of the WDLFs.
     \label{fig:wdlf_compare_imf}
 \end{figure}
 
@@ -1044,13 +1052,12 @@ deficiencies at the brightest end.
 There are too many possible combination of cooling models, so in
 Figure~\ref{fig:wdlf_compare_da_cooling_models}, only five example
 (combinations) of models are shown, the combinations are listed in
-Table~\ref{tab:cooling_model_combination}. In order to use cooling models from
-different group for different WD mass ranges, we should separately compute the
-respective contribution to the total WDLF by setting the models with
-\texttt{set\_low\_mass\_cooling\_model(None)},
-\texttt{set\_intermediate\_mass\_cooling\_model(None)}, and/or
-\texttt{set\_high\_mass\_cooling\_model(None)} depending on which models are
-to be ignored.
+Table~\ref{tab:cooling_model_combination}. In order to assess the quality of
+the interpolation at the model boundaries at the three mass ranges, we can
+compute the total WDLF by summing the constituent low, intermediate and high
+mass WDLFs by setting two of three models to \texttt{None} each time, and then
+compared it to a WDLF computed from using a single interpolated grid across
+all three mass ranges.
 
 In combination A, we use the pure Montreal stack. This naturally gives the
 smoothest interpolated grid across the entire parameter space because of the
@@ -1058,11 +1065,16 @@ homogeneous choice of input physics and computation tools. Combination B makes
 use of the most recent low, intermediate and high mass models from the LPCODE.
 Although they are all produced by the same group, in C, we are computing the
 low, intermediate and high mass contribution of the constituent WDLFs
-separately before summing up the combination at the end to show the difference
-in the two choices of interpolation schemes. In combination D and E, the low
-mass model is adopting that from the Montreal group, while the intermediate and
-high mass models are from the BaSTI with and without the inclusion of phase
-separation in the computation.
+separately before summing up the combination at the end to show that there
+is no difference in the two choices of interpolation schemes in this case.
+In combination D and E, the low mass model is adopting that from the Montreal
+group, while the intermediate and high mass models are from the BaSTI with and
+without the inclusion of phase separation in the computation.
+
+In B and C, the lump at the faintest end is due to the choice of ONe WDs for
+$>1\,\msun$ WDs. They have different thermal properties to CO WDs so
+they do not accumulate at the same bolometric magnitudes as the CO WDs when
+cooling down. While at the bright end, the gaps come from 
 
 \begin{table}
     \centering
@@ -1105,6 +1117,9 @@ extinction values are chosen for dereddening. The other background module,
 MCL is supported by a European Research Council (ERC) grant under the European
 Union’s Horizon 2020 research and innovation program (grant agreement number
 833031).
+
+MCL thanks Dr. P.-E. Tremblay and Dr. N. Gentile-Fusillo for cross-checking
+some data.
 
 This research has made use of the Spanish Virtual Observatory
 (http://svo.cab.inta-csic.es) supported from the Spanish MICINN/FEDER through
