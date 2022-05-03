@@ -23,190 +23,460 @@ else:
 
     # default C08
     wdlf.set_sfr_model(mode="burst", age=5.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C08_5Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=7.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C08_7Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=9.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C08_9Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C08_11Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C08_13Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C08_15Gyr = copy.deepcopy(wdlf.number_density)
 
     # C08b
     wdlf.set_ifmr_model("C08b")
     wdlf.set_sfr_model(mode="burst", age=5.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C08b_5Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=7.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C08b_7Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=9.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C08b_9Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C08b_11Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C08b_13Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C08b_15Gyr = copy.deepcopy(wdlf.number_density)
 
     # S09
     wdlf.set_ifmr_model("S09")
     wdlf.set_sfr_model(mode="burst", age=5.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_S09_5Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=7.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_S09_7Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=9.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_S09_9Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_S09_11Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_S09_13Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_S09_15Gyr = copy.deepcopy(wdlf.number_density)
 
     # S09b
     wdlf.set_ifmr_model("S09b")
     wdlf.set_sfr_model(mode="burst", age=5.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_S09b_5Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=7.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_S09b_7Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=9.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_S09b_9Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_S09b_11Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_S09b_13Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_S09b_15Gyr = copy.deepcopy(wdlf.number_density)
 
     # W09
     wdlf.set_ifmr_model("W09")
     wdlf.set_sfr_model(mode="burst", age=5.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_W09_5Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=7.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_W09_7Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=9.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_W09_9Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_W09_11Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_W09_13Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_W09_15Gyr = copy.deepcopy(wdlf.number_density)
 
     # K09
     wdlf.set_ifmr_model("K09")
     wdlf.set_sfr_model(mode="burst", age=5.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_K09_5Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=7.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_K09_7Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=9.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_K09_9Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_K09_11Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_K09_13Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_K09_15Gyr = copy.deepcopy(wdlf.number_density)
 
     # K09b
     wdlf.set_ifmr_model("K09b")
     wdlf.set_sfr_model(mode="burst", age=5.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_K09b_5Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=7.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_K09b_7Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=9.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_K09b_9Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_K09b_11Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_K09b_13Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_K09b_15Gyr = copy.deepcopy(wdlf.number_density)
 
     # C18
     wdlf.set_ifmr_model("C18")
     wdlf.set_sfr_model(mode="burst", age=5.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C18_5Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=7.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C18_7Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=9.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C18_9Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C18_11Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C18_13Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_C18_15Gyr = copy.deepcopy(wdlf.number_density)
 
     # EB18
     wdlf.set_ifmr_model("EB18")
     wdlf.set_sfr_model(mode="burst", age=5.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_EB18_5Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=7.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_EB18_7Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=9.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_EB18_9Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=11.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_EB18_11Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=13.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_EB18_13Gyr = copy.deepcopy(wdlf.number_density)
     wdlf.set_sfr_model(mode="burst", age=15.0e9, duration=1e8)
-    wdlf.compute_density(Mag=Mag)
+    wdlf.compute_density(
+        Mag=Mag,
+        n_points=1000,
+        epsabs=1e-10,
+        epsrel=1e-10,
+    )
     wdlf_EB18_15Gyr = copy.deepcopy(wdlf.number_density)
 
     wdlf_5Gyr = np.vstack(
