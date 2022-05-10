@@ -92,7 +92,7 @@ mbol_he = np.zeros(n_data)
 logg_he = np.zeros(n_data)
 chi2_he = np.zeros(n_data)
 
-for i in range(ith_by_rank):
+for i in ith_by_rank:
 
     sys.stdout.write("{} of {}".format(i + 1, n_data))
     ebv = Av[i] / reddening(wave_GBR, 3.1)
