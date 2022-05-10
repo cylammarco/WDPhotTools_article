@@ -65,7 +65,7 @@ else:
     distance_error = None
 
 G3 = comm.bcast(G3, root=0)
-G3_error = comm.bcast(G3_err0r, root=0)
+G3_error = comm.bcast(G3_error, root=0)
 G3_BP = comm.bcast(G3_BP, root=0)
 G3_BP_error = comm.bcast(G3_BP_error, root=0)
 G3_RP = comm.bcast(G3_RP, root=0)

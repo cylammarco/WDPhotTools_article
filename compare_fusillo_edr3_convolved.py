@@ -54,7 +54,7 @@ if my_rank == 0:
 else:
 
     G3 = None
-    G3_err = None
+    G3_error = None
     G3_BP = None
     G3_BP_error = None
     G3_RP = None
@@ -65,7 +65,7 @@ else:
     distance_error = None
 
 G3 = comm.bcast(G3, root=0)
-G3_err = comm.bcast(G3_err, root=0)
+G3_error = comm.bcast(G3_error, root=0)
 G3_BP = comm.bcast(G3_BP, root=0)
 G3_BP_error = comm.bcast(G3_BP_error, root=0)
 G3_RP = comm.bcast(G3_RP, root=0)
