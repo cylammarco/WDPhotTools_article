@@ -54,7 +54,7 @@ if my_rank == 0:
 else:
 
     G3 = None
-    G3_err = None
+    G3_error = None
     G3_BP = None
     G3_BP_error = None
     G3_RP = None
@@ -65,7 +65,7 @@ else:
     distance_error = None
 
 G3 = comm.bcast(G3, root=0)
-G3_err = comm.bcast(G3_err, root=0)
+G3_error = comm.bcast(G3_err0r, root=0)
 G3_BP = comm.bcast(G3_BP, root=0)
 G3_BP_error = comm.bcast(G3_BP_error, root=0)
 G3_RP = comm.bcast(G3_RP, root=0)
@@ -94,7 +94,7 @@ chi2_he = np.zeros(n_data)
 
 for i in range(ith_by_rank):
 
-    print("{} of {}".format(i + 1, n_data))
+    sys.stdout.write("{} of {}".format(i + 1, n_data))
     ebv = Av[i] / reddening(wave_GBR, 3.1)
     ftr.fit(
         filters=["G3", "G3_BP", "G3_RP"],
@@ -110,7 +110,10 @@ for i in range(ith_by_rank):
         ebv=ebv,
         initial_guess=[10000.0, 8.0],
     )
-    print(teff_H_GF21[i], ftr.best_fit_params["H"]["Teff"])
+    sys.stdout.write("GF21: {} K".format(teff_H_GF21[i]))
+    sys.stdout.write(
+        "This work: {} K".format(ftr.best_fit_params["H"]["Teff"])
+    )
     teff_h[i] = ftr.best_fit_params["H"]["Teff"]
     mbol_h[i] = ftr.best_fit_params["H"]["Mbol"]
     logg_h[i] = ftr.best_fit_params["H"]["logg"]
