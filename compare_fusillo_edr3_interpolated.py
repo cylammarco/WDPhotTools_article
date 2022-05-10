@@ -111,7 +111,7 @@ for i in ith_by_rank:
         ebv=ebv,
         initial_guess=[10000.0, 8.0],
     )
-    sys.stdout.write("GF21: {} K {}".format(teff_H_GF21[i]), os.linesep)
+    sys.stdout.write("GF21: {} K {}".format(teff_H_GF21[i], os.linesep))
     sys.stdout.write(
         "This work: {} K {}".format(
             ftr.best_fit_params["H"]["Teff"], os.linesep
