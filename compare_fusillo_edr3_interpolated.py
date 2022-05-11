@@ -31,22 +31,22 @@ if my_rank == 0:
     # data = fits.open('GaiaEDR3_WD_SDSSspec.FITS')
     data = fits.open("gaiaedr3_wd_main.fits.gz")
 
-    G3 = copy.deepcopy(data[1].data["phot_g_mean_mag_corrected"])[:100]
-    G3_error = copy.deepcopy(data[1].data["phot_g_mean_mag_error_corrected"])[:100]
-    G3_BP = copy.deepcopy(data[1].data["phot_bp_mean_mag"])[:100]
-    G3_BP_error = copy.deepcopy(data[1].data["phot_bp_mean_mag_error"])[:100]
-    G3_RP = copy.deepcopy(data[1].data["phot_rp_mean_mag"])[:100]
-    G3_RP_error = copy.deepcopy(data[1].data["phot_rp_mean_mag_error"])[:100]
+    G3 = copy.deepcopy(data[1].data["phot_g_mean_mag_corrected"])[:100000]
+    G3_error = copy.deepcopy(data[1].data["phot_g_mean_mag_error_corrected"])[:100000]
+    G3_BP = copy.deepcopy(data[1].data["phot_bp_mean_mag"])[:100000]
+    G3_BP_error = copy.deepcopy(data[1].data["phot_bp_mean_mag_error"])[:100000]
+    G3_RP = copy.deepcopy(data[1].data["phot_rp_mean_mag"])[:100000]
+    G3_RP_error = copy.deepcopy(data[1].data["phot_rp_mean_mag_error"])[:100000]
 
-    Av = copy.deepcopy(data[1].data["meanAV"])[:100]
+    Av = copy.deepcopy(data[1].data["meanAV"])[:100000]
 
-    teff_H_GF21 = copy.deepcopy(data[1].data["teff_H"])[:100]
+    teff_H_GF21 = copy.deepcopy(data[1].data["teff_H"])[:100000]
 
     distance = 1.0 / copy.deepcopy(
-        (data[1].data["parallax"][:100] + data[1].data["ZP_CORRECTION"])[:100] / 1000.0
+        (data[1].data["parallax"][:100000] + data[1].data["ZP_CORRECTION"][:100000]) / 1000.0
     )
     distance_error = distance**2.0 * copy.deepcopy(
-        data[1].data["parallax_error"][:100] / 1000.0
+        data[1].data["parallax_error"][:100000] / 1000.0
     )
 
     del data
