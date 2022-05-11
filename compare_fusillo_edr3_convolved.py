@@ -126,15 +126,53 @@ for i in ith_by_rank:
     logg_he[i] = ftr.best_fit_params["He"]["logg"]
     chi2_he[i] = ftr.best_fit_params["He"]["chi2"]
 
-comm.Reduce([teff_h, MPI.DOUBLE], [teff_h, MPI.DOUBLE], op=MPI.SUM, root=0)
-comm.Reduce([mbol_h, MPI.DOUBLE], [mbol_h, MPI.DOUBLE], op=MPI.SUM, root=0)
-comm.Reduce([logg_h, MPI.DOUBLE], [logg_h, MPI.DOUBLE], op=MPI.SUM, root=0)
-comm.Reduce([chi2_h, MPI.DOUBLE], [chi2_h, MPI.DOUBLE], op=MPI.SUM, root=0)
+if my_rank == 0:
 
-comm.Reduce([teff_he, MPI.DOUBLE], [teff_he, MPI.DOUBLE], op=MPI.SUM, root=0)
-comm.Reduce([mbol_he, MPI.DOUBLE], [mbol_he, MPI.DOUBLE], op=MPI.SUM, root=0)
-comm.Reduce([logg_he, MPI.DOUBLE], [logg_he, MPI.DOUBLE], op=MPI.SUM, root=0)
-comm.Reduce([chi2_he, MPI.DOUBLE], [chi2_he, MPI.DOUBLE], op=MPI.SUM, root=0)
+    teff_h_total = np.zeros_like(teff_h)
+    mbol_h_total = np.zeros_like(mbol_h)
+    logg_h_total = np.zeros_like(logg_h)
+    chi2_h_total = np.zeros_like(chi2_h)
+    teff_he_total = np.zeros_like(teff_he)
+    mbol_he_total = np.zeros_like(mbol_he)
+    logg_he_total = np.zeros_like(logg_he)
+    chi2_he_total = np.zeros_like(chi2_he)
+
+else:
+
+    teff_h_total = None
+    mbol_h_total = None
+    logg_h_total = None
+    chi2_h_total = None
+    teff_he_total = None
+    mbol_he_total = None
+    logg_he_total = None
+    chi2_he_total = None
+
+comm.Reduce(
+    [teff_h, MPI.DOUBLE], [teff_h_total, MPI.DOUBLE], op=MPI.SUM, root=0
+)
+comm.Reduce(
+    [mbol_h, MPI.DOUBLE], [mbol_h_total, MPI.DOUBLE], op=MPI.SUM, root=0
+)
+comm.Reduce(
+    [logg_h, MPI.DOUBLE], [logg_h_total, MPI.DOUBLE], op=MPI.SUM, root=0
+)
+comm.Reduce(
+    [chi2_h, MPI.DOUBLE], [chi2_h_total, MPI.DOUBLE], op=MPI.SUM, root=0
+)
+
+comm.Reduce(
+    [teff_he, MPI.DOUBLE], [teff_he_total, MPI.DOUBLE], op=MPI.SUM, root=0
+)
+comm.Reduce(
+    [mbol_he, MPI.DOUBLE], [mbol_he_total, MPI.DOUBLE], op=MPI.SUM, root=0
+)
+comm.Reduce(
+    [logg_he, MPI.DOUBLE], [logg_he_total, MPI.DOUBLE], op=MPI.SUM, root=0
+)
+comm.Reduce(
+    [chi2_he, MPI.DOUBLE], [chi2_he_total, MPI.DOUBLE], op=MPI.SUM, root=0
+)
 
 
 if my_rank == 0:
