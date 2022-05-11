@@ -178,10 +178,14 @@ comm.Reduce(
 
 if my_rank == 0:
 
-    np.save("compare_fusillo_edr3_teff_h_interpolated", teff_h)
-    np.save("compare_fusillo_edr3_logg_h_interpolated", logg_h)
-    np.save("compare_fusillo_edr3_teff_he_interpolated", teff_he)
-    np.save("compare_fusillo_edr3_logg_he_interpolated", logg_he)
+    np.save("compare_fusillo_edr3_teff_h_interpolated", teff_h_total)
+    np.save("compare_fusillo_edr3_mbol_h_interpolated", mbol_h_total)
+    np.save("compare_fusillo_edr3_logg_h_interpolated", logg_h_total)
+    np.save("compare_fusillo_edr3_chi2_h_interpolated", chi2_h_total)
+    np.save("compare_fusillo_edr3_teff_he_interpolated", teff_he_total)
+    np.save("compare_fusillo_edr3_mbol_he_interpolated", mbol_he_total)
+    np.save("compare_fusillo_edr3_logg_he_interpolated", logg_he_total)
+    np.save("compare_fusillo_edr3_chi2_he_interpolated", chi2_he_total)
 
     plt.figure(1, figsize=(8, 8))
     plt.clf()
