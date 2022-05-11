@@ -67,12 +67,11 @@
 % If you need two or more lines of authors, add an extra line using \newauthor
 \author[M. C. Lam et al.]{
 M. C. Lam$^{1}$\thanks{E-mail: lam@tau.ac.il},
-M. Green$^{1}$,
-K. W. Yuen$^{2, 3}$\\
+K. W. Yuen$^{2}$,
+M. J. Green$^{1}$\\
 % List of institutions
 $^{1}$School of Physics and Astronomy, Tel Aviv University, Tel Aviv, Israel 69978\\
-$^{2}$Department of Ophthalmology \& Visual Sciences, Faculty of Medicine, The Chinese University of Hong Kong\\
-$^{3}$Goldsmith, The University of London, New Cross, London, UK SE14 6NW
+$^{2}$Department of Ophthalmology \& Visual Sciences, Faculty of Medicine, The Chinese University of Hong Kong
 }
 
 % These dates will be filled out by the publisher
@@ -158,11 +157,11 @@ model~\citep{2019ApJ...871..169G, 2019ApJ...882..106G}, as well as from the
 agreeing shapes of the WDLFs from spectroscopic and photometric samples. The
 Gaia satellite provides parallactic measurement for over a billion point
 sources~\citep{2021A&A...649A...1G, 2021AJ....161..147B} of which $359,000$
-are high confidence WD candidates~\citep{2021MNRAS.508.3877G}. The availability
-of parallaxes allow much more accurate fitting, particularly without knowing
-the surface gravity for the photometric sample. This has completely 
-revolutionarized the field of WD sciences. In the forthcoming decade, the
-Simonyi Survey Telescope at the Vera C. Rubin Observatory will continue to
+are high confidence WD candidates~\citep[][hereafter, GF21]{2021MNRAS.508.3877G}.
+The availability of parallaxes allow much more accurate fitting, particularly
+without knowing the surface gravity for the photometric sample. This has
+completely  revolutionarized the field of WD sciences. In the forthcoming decade,
+the Simonyi Survey Telescope at the Vera C. Rubin Observatory will continue to
 discover more WDs at fainter magnitudes, but only accompanied with proper
 motion measurement at best. Furthermore, at those magnitudes, it is infeasible
 to collect spectrum for most of them and thus studies will mostly rely on
@@ -585,9 +584,29 @@ good number of filters are provided.
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Comparison against \citet{2021MNRAS.508.3877G}}
+\subsection{Comparison against EDR3 catalogue of WDs}
 
+The catalogue available form GF21 has presented an
+excellent sample of WDs for comparison. The models available online is slightly
+different from the set available from their work~(priv. comm.). Furthermore,
+we are correcting for the interstellar reddening at the instantaneous
+temperature in each step of the fit, as opposed to using the interpolated
+values for a $7000$\,K source from \citet{2011ApJ...737..103S}. Therefore,
+some scattering is expected when the fitted values are compared against
+each other. The solutions are fitted with the three Gaia filters,
+distance, and reddening with using the catalogued value as provided from
+their work. The distribution of the fitted effective
+temperatures~(Fig.~\ref{fig:comparison}) are aligned with the identity line
+with a Pearson correlation coefficient of 0.817 and 0.884 for the subset with
+$10\sigma$ parallax.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{comparison_placeholder.png}
+    \caption{Comparison of the effective temperature fitting against GF21. The blue scattered points show all the fitted
+    data, while the orange shows the subset with $10\sigma$ parallax.}
+    \label{fig:comparison}
+\end{figure}
 
 
 \section{White Dwarf Luminosity Function}
@@ -1016,8 +1035,8 @@ or uncertainties in other models and observations.
     \centering
     \includegraphics[width=\columnwidth]{wdlf_compare_imf.png}
     \caption{Comparing WDLFs with different input IMFs relative to the C03
-    model. Due to the identical mass function above $1\,\msun$}, only the
-    oldest populations show differences in the bright end of the WDLFs.
+    model. Due to the identical mass function above $1\,\msun$, only the
+    oldest populations show differences in the bright end of the WDLFs.}
     \label{fig:wdlf_compare_imf}
 \end{figure}
 
