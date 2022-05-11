@@ -31,22 +31,22 @@ if my_rank == 0:
     # data = fits.open('GaiaEDR3_WD_SDSSspec.FITS')
     data = fits.open("gaiaedr3_wd_main.fits.gz")
 
-    G3 = copy.deepcopy(data[1].data["phot_g_mean_mag_corrected"])
-    G3_error = copy.deepcopy(data[1].data["phot_g_mean_mag_error_corrected"])
-    G3_BP = copy.deepcopy(data[1].data["phot_bp_mean_mag"])
-    G3_BP_error = copy.deepcopy(data[1].data["phot_bp_mean_mag_error"])
-    G3_RP = copy.deepcopy(data[1].data["phot_rp_mean_mag"])
-    G3_RP_error = copy.deepcopy(data[1].data["phot_rp_mean_mag_error"])
+    G3 = copy.deepcopy(data[1].data["phot_g_mean_mag_corrected"])[:100]
+    G3_error = copy.deepcopy(data[1].data["phot_g_mean_mag_error_corrected"])[:100]
+    G3_BP = copy.deepcopy(data[1].data["phot_bp_mean_mag"])[:100]
+    G3_BP_error = copy.deepcopy(data[1].data["phot_bp_mean_mag_error"])[:100]
+    G3_RP = copy.deepcopy(data[1].data["phot_rp_mean_mag"])[:100]
+    G3_RP_error = copy.deepcopy(data[1].data["phot_rp_mean_mag_error"])[:100]
 
-    Av = copy.deepcopy(data[1].data["meanAV"])
+    Av = copy.deepcopy(data[1].data["meanAV"])[:100]
 
-    teff_H_GF21 = copy.deepcopy(data[1].data["teff_H"])
+    teff_H_GF21 = copy.deepcopy(data[1].data["teff_H"])[:100]
 
     distance = 1.0 / copy.deepcopy(
-        (data[1].data["parallax"] + data[1].data["ZP_CORRECTION"]) / 1000.0
+        (data[1].data["parallax"][:100] + data[1].data["ZP_CORRECTION"])[:100] / 1000.0
     )
     distance_error = distance**2.0 * copy.deepcopy(
-        data[1].data["parallax_error"] / 1000.0
+        data[1].data["parallax_error"][:100] / 1000.0
     )
 
     del data
@@ -95,7 +95,7 @@ chi2_he = np.zeros(n_data)
 
 for i in ith_by_rank:
 
-    sys.stdout.write("{} of {}".format(i + 1, n_data))
+    sys.stdout.write("{} of {}{}".format(i + 1, n_data, os.linesep))
     ebv = Av[i] / reddening(wave_GBR, 3.1)
     ftr.fit(
         filters=["G3", "G3_BP", "G3_RP"],
@@ -126,15 +126,35 @@ for i in ith_by_rank:
     logg_he[i] = ftr.best_fit_params["He"]["logg"]
     chi2_he[i] = ftr.best_fit_params["He"]["chi2"]
 
-comm.Reduce([teff_h, MPI.DOUBLE], [teff_h, MPI.DOUBLE], op=MPI.SUM, root=0)
-comm.Reduce([mbol_h, MPI.DOUBLE], [mbol_h, MPI.DOUBLE], op=MPI.SUM, root=0)
-comm.Reduce([logg_h, MPI.DOUBLE], [logg_h, MPI.DOUBLE], op=MPI.SUM, root=0)
-comm.Reduce([chi2_h, MPI.DOUBLE], [chi2_h, MPI.DOUBLE], op=MPI.SUM, root=0)
 
-comm.Reduce([teff_he, MPI.DOUBLE], [teff_he, MPI.DOUBLE], op=MPI.SUM, root=0)
-comm.Reduce([mbol_he, MPI.DOUBLE], [mbol_he, MPI.DOUBLE], op=MPI.SUM, root=0)
-comm.Reduce([logg_he, MPI.DOUBLE], [logg_he, MPI.DOUBLE], op=MPI.SUM, root=0)
-comm.Reduce([chi2_he, MPI.DOUBLE], [chi2_he, MPI.DOUBLE], op=MPI.SUM, root=0)
+if my_rank == 0:
+    teff_h_total = np.zeros_like(teff_h)
+    mbol_h_total = np.zeros_like(mbol_h)
+    logg_h_total = np.zeros_like(logg_h)
+    chi2_h_total = np.zeros_like(chi2_h)
+    teff_he_total = np.zeros_like(teff_he)
+    mbol_he_total = np.zeros_like(mbol_he)
+    logg_he_total = np.zeros_like(logg_he)
+    chi2_he_total = np.zeros_like(chi2_he)
+else:
+    teff_h_total = None
+    mbol_h_total = None
+    logg_h_total = None
+    chi2_h_total = None
+    teff_he_total = None
+    mbol_he_total = None
+    logg_he_total = None
+    chi2_he_total = None
+
+comm.Reduce([teff_h, MPI.DOUBLE], [teff_h_total, MPI.DOUBLE], op=MPI.SUM, root=0)
+comm.Reduce([mbol_h, MPI.DOUBLE], [mbol_h_total, MPI.DOUBLE], op=MPI.SUM, root=0)
+comm.Reduce([logg_h, MPI.DOUBLE], [logg_h_total, MPI.DOUBLE], op=MPI.SUM, root=0)
+comm.Reduce([chi2_h, MPI.DOUBLE], [chi2_h_total, MPI.DOUBLE], op=MPI.SUM, root=0)
+
+comm.Reduce([teff_he, MPI.DOUBLE], [teff_he_total, MPI.DOUBLE], op=MPI.SUM, root=0)
+comm.Reduce([mbol_he, MPI.DOUBLE], [mbol_he_total, MPI.DOUBLE], op=MPI.SUM, root=0)
+comm.Reduce([logg_he, MPI.DOUBLE], [logg_he_total, MPI.DOUBLE], op=MPI.SUM, root=0)
+comm.Reduce([chi2_he, MPI.DOUBLE], [chi2_he_total, MPI.DOUBLE], op=MPI.SUM, root=0)
 
 
 if my_rank == 0:

@@ -95,7 +95,7 @@ chi2_he = np.zeros(n_data)
 
 for i in ith_by_rank:
 
-    sys.stdout.write("{} of {}".format(i + 1, n_data))
+    sys.stdout.write("{} of {}{}".format(i + 1, n_data, os.linesep))
     ebv = Av[i] / reddening(wave_GBR, 3.1)
     ftr.fit(
         filters=["G3", "G3_BP", "G3_RP"],
