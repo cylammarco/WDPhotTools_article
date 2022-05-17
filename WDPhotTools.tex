@@ -330,7 +330,7 @@ more restrictive value.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{DA_cooling_tracks_from_plotter.png}
+    \includegraphics[width=\columnwidth]{DA_cooling_tracks_from_plotter.pdf}
     \caption{Default figures showing the cooling tracks at different surface
     gravities in the Gaia $G$, $G_{\mathrm{BP}}$ and $G_{\mathrm{RP}}$ filters.
     The colours scale shows the effective temperature.}
@@ -571,14 +571,14 @@ good number of filters are provided.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{PSOJ1801p6254_emcee.png}
+    \includegraphics[width=\columnwidth]{PSOJ1801p6254_emcee.pdf}
     \caption{Best fit DA and DB solutions in for PSO\,J1801+6254~\citep{2020MNRAS.493.6001L}.}
     \label{fig:best_fit}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{PSOJ1801p6254_emcee_corner.png}
+    \includegraphics[width=\columnwidth]{PSOJ1801p6254_emcee_corner.pdf}
     \caption{The corner plot of the sampling using DA model for PSO\,J1801+6254~\citep{2020MNRAS.493.6001L}.}
     \label{fig:emcee_corner}
 \end{figure}
@@ -586,25 +586,32 @@ good number of filters are provided.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Comparison against EDR3 catalogue of WDs}
 
-The catalogue available form GF21 has presented an
-excellent sample of WDs for comparison. The models available online is slightly
-different from the set available from their work~(priv. comm.). Furthermore,
-we are correcting for the interstellar reddening at the instantaneous
-temperature in each step of the fit, as opposed to using the interpolated
-values for a $7000$\,K source from \citet{2011ApJ...737..103S}. Therefore,
-some scattering is expected when the fitted values are compared against
-each other. The solutions are fitted with the three Gaia filters,
-distance, and reddening with using the catalogued value as provided from
-their work. The distribution of the fitted effective
-temperatures~(Fig.~\ref{fig:comparison}) are aligned with the identity line
-with a Pearson correlation coefficient of 0.817 and 0.884 for the subset with
-$10\sigma$ parallax.
+The catalogue available form GF21 has presented an excellent sample of WDs for
+comparison. The models available online is slightly different from the set
+available from their work~(priv. comm.). Furthermore, we are correcting for the
+interstellar reddening at the instantaneous temperature in each iteration of
+the fit, as opposed to using a global average of the extinction per filter,
+namely using the relations $A_{G}=0.835A_{V}$,
+$A_{G_{\mathrm{BP}}}=0.6496A_{V}$, and $A_{G_{\mathrm{RP}}}=1.13894A_{V}$.
+Therefore, some scattering is expected when the fitted values are compared
+against each other. Particularly among the hotter WDs, their colour deviates
+much more from the global average than the average population. Their blue
+spectral energy distribution should be more extincted than the average cooler
+WDs, hence it is expected that the solutions found in this work tend to have
+slightly higher effective temperature as the fitted effective temperature
+increases~(see the deviation to the right in Fig.~\ref{fig:comparison}).
+Otherwise, we follow as closely to their reduction method as
+possible: the solutions are fitted with the three Gaia filters, distance, and
+reddening with using the catalogued value as provided from their work. The
+distribution of the fitted effective temperatures are aligned well with the
+identity line, the Pearson correlation coefficient of the fitted effective
+temperature (for all 'fit-table' WDs regardless of the quality of fit) is
+$0.95$ between this and GF21.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{comparison_placeholder.png}
-    \caption{Comparison of the effective temperature fitting against GF21. The blue scattered points show all the fitted
-    data, while the orange shows the subset with $10\sigma$ parallax.}
+    \includegraphics[width=\columnwidth]{compare_fusillo_edr3.pdf}
+    \caption{Comparison of the effective temperature fitting against GF21. The blue scattered points show all the fitted using our preferred reddening treatment adopting the the interpolated reddening computed for each filter at each temperature available from the collection from \citet{2010MmSAI..81..921K}. The red points shows the comparison when the reddening is interpolated directly using the table from \citet{2011ApJ...737..103S} computed for a blackbody source at $7000$\,K. The colour lines show the density of scattered points that cannot be resolved, each level of inter-contour space includes $5\%$ of the total data.}
     \label{fig:comparison}
 \end{figure}
 
@@ -729,7 +736,7 @@ that are available:
 
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{imfs.png}
+    \includegraphics[width=\columnwidth]{imfs.pdf}
     \caption{Comparing the three IMFs provided in this package. They are
     identical in the mass range above $1\,\msun$, while under this mass
     limit, the differences are small in the mass range ($\gtrapprox0.9\,\msun$)
@@ -860,7 +867,7 @@ functions above, a manualy provided callable function is also accepted:
 
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{ifmrs.png}
+    \includegraphics[width=\columnwidth]{ifmrs.pdf}
     \caption{Comparing the three IFMRs provided in this package. They follow
     a similar trend and they are mostly lying on top of each other. S09 and S09b
     have the shallowest IFMRs at the massive end of the initial mass among all.
@@ -1013,7 +1020,7 @@ of \citep{2001PASP..113..409F}.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{wdlf_compare_sfr.png}
+    \includegraphics[width=\columnwidth]{wdlf_compare_sfr.pdf}
     \caption{Comparing WDLFs with the three default types of star formation
     history from $2$ to $14\,$Gyr in increment of $2$\,Gyr.}
     \label{fig:compare_sfr_age_type}
@@ -1033,7 +1040,7 @@ or uncertainties in other models and observations.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{wdlf_compare_imf.png}
+    \includegraphics[width=\columnwidth]{wdlf_compare_imf.pdf}
     \caption{Comparing WDLFs with different input IMFs relative to the C03
     model. Due to the identical mass function above $1\,\msun$, only the
     oldest populations show differences in the bright end of the WDLFs.}
@@ -1061,7 +1068,7 @@ deficiencies at the brightest end.
 
 \begin{figure*}
     \centering
-    \includegraphics[width=\textwidth]{wdlf_compare_ifmr.png}
+    \includegraphics[width=\textwidth]{wdlf_compare_ifmr.pdf}
     \caption{Comparing WDLFs with different input IFMRs.}
     \label{fig:wdlf_compare_ifmr}
 \end{figure*}
@@ -1112,7 +1119,7 @@ cooling down. While at the bright end, the gaps come from
 
 \begin{figure*}
     \centering
-    \includegraphics[width=\textwidth]{wdlf_compare_da_cooling_models.png}
+    \includegraphics[width=\textwidth]{wdlf_compare_da_cooling_models.pdf}
     \caption{Comparing WDLFs with different input cooling models.}
     \label{fig:wdlf_compare_da_cooling_models}
 \end{figure*}
