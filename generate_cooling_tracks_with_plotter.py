@@ -17,4 +17,5 @@ plotter.plot_atmosphere_model(
     savefig=True,
     folder=".",
     filename="DA_cooling_tracks_from_plotter",
+    ext=['png', 'pdf'],
 )

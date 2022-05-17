@@ -67,11 +67,12 @@ ftr.show_best_fit(
     savefig=True,
     folder=os.path.join(HERE, "."),
     filename="PSOJ1801p6254",
+    ext=['png', 'pdf'],
 )
 
 
 ftr = WDfitter()
-# Fitting for logg and Mbol with 8 filters for both DA and DB
+# Fitting for logg and Mbol with 8 filters for DA
 ftr.fit(
     atmosphere="H",
     filters=[
@@ -130,6 +131,7 @@ ftr.show_best_fit(
     savefig=True,
     folder=os.path.join(HERE, "."),
     filename="PSOJ1801p6254_emcee",
+    ext=['png', 'pdf'],
 )
 ftr.show_corner_plot(
     figsize=(10, 10),
@@ -137,6 +139,7 @@ ftr.show_corner_plot(
     savefig=True,
     folder=os.path.join(HERE, "."),
     filename="PSOJ1801p6254_emcee_corner",
+    ext=['png', 'pdf'],
     kwarg={
         "quantiles": [0.158655, 0.5, 0.841345],
         "show_titles": True,
