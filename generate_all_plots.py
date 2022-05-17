@@ -1,9 +1,5 @@
 import numpy as np
 from WDPhotTools import theoretical_lf
-from matplotlib.pyplot import *
-
-ion()
-
 
 wdlf = theoretical_lf.WDLF()
 
@@ -21,7 +17,3 @@ fig_input_models = wdlf.plot_input_models(
     ext=["png", "pdf"],
     savefig=True,
 )
-
-wdlf.compute_density(Mag=Mag)
-
-fig_wdlf = wdlf.plot_wdlf(display=True)
