@@ -17,6 +17,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Basic setup. Most papers should leave these options alone.
+%\documentclass[fleqn,usenatbib,referee]{rasti}
 \documentclass[fleqn,usenatbib]{rasti}
 
 % RASTI is set in Times font. If you don't have this installed (most LaTeX
@@ -45,6 +46,7 @@
 \usepackage{amsmath}	% Advanced maths commands
 %% \usepackage{amssymb}	% Extra maths symbols
 \usepackage{aas_macros}
+\usepackage{svg}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -54,6 +56,7 @@
 % overwriting existing commands. Example:
 %\newcommand{\pcm}{\,cm$^{-2}$}	% per cm-squared
 \newcommand{\msun}{\mathcal{M}_{\sun}}
+\newcommand{\orcid}[1]{\href{https://orcid.org/#1}{\includesvg[width=10pt]{orcid}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -66,10 +69,10 @@
 % The list of authors, and the short list which is used in the headers.
 % If you need two or more lines of authors, add an extra line using \newauthor
 \author[M. C. Lam et al.]{
-M. C. Lam$^{1}$\thanks{E-mail: lam@tau.ac.il},
+M. C. Lam$^{1\,\orcid{0000-0002-9347-2298}}$\thanks{Contact e-mail: \href{mailto:lam@tau.ac.il}{lam@tau.ac.il}},
 K. W. Yuen$^{2}$,
-W. Li$^{1}$,
-M. J. Green$^{1}$\\
+W. Li$^{1\,\orcid{0000-0002-0096-3523}}$, and
+M. J. Green$^{1\,\orcid{0000-0002-0948-4801}}$\\
 % List of institutions
 $^{1}$School of Physics and Astronomy, Tel Aviv University, Tel Aviv, Israel 69978\\
 $^{2}$Department of Ophthalmology \& Visual Sciences, Faculty of Medicine, The Chinese University of Hong Kong
@@ -221,13 +224,14 @@ handle the output models from various works in the format as they were
 generated and downloaded. This allows the software to be updated to handle
 future releases of the models easily; (2)~photometric fitter that solves for
 the WD parameters based on the photometry, with or without distance and
-reddening; and (3) to generate white dwarf luminosity function in
+reddening; and (3)~to generate white dwarf luminosity function in
 bolometric magnitudes or in any of the photometric systems available from the
 atmosphere models.
 
 We host our source code on Github\footnote{\url{https://github.com/cylammarco/WDPhotTools}},
 which provides version control and other utilities to facilitate the
-development. It offers issue and bug tracking, high-level project management,
+development; the numbered releases are also deposited on Zenodo to allow
+referencing of a specific version\footnote{\url{https://doi.org/10.5281/zenodo.6595029}}. It offers issue and bug tracking, high-level project management,
 automation with Github Actions upon each commit for:
 
 \begin{enumerate}
@@ -245,13 +249,7 @@ automation with Github Actions upon each commit for:
     Read the Docs\footnote{\url{https://wdphottools.readthedocs.io}}.
 \end{enumerate}
 
-% 
-%@misc{pytestx.y,
-%  title =        {pytest x.y},
-%  author = {Krekel, Holger and Oliveira, Bruno and Pfannschmidt, Ronny and Bruynooghe, Floris and Laugher, Brianna and Bruhin, Florian},
-%  year =         {2004},
-%  url = {https://github.com/pytest-dev/pytest},
-%}
+
 The following is not serving as an API, it is only describing some of the key
 arguments and parameters, as well as the usage that may seem convoluted but
 necessary to keep the structure simple without providing multiple methods to
@@ -356,8 +354,6 @@ the model files already contained in the package. In this class, the same two
 interpolators, \verb+scipy.interpolator.CloughTocher2DInterpolator()+ and 
 \verb+scipy.interpolate.RBFInterpolator()+, are available for use. See appendix
 for the complete listing of the available models.
-
-(Add description and figure about phase separation and the Q-branch here.)
 
 \section{Photometric fitting}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -581,12 +577,21 @@ reddening is strong. This statement only holds under the assumption that
 the WD atmosphere type is typical, photometry is of good quality and a
 good number of filters are provided.
 
+% toggle for referee mode
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=0.75\columnwidth]{PSOJ1801p6254_emcee.png}
+%    \includegraphics[width=0.75\columnwidth]{PSOJ1801p6254_emcee_corner.png}
+%    \caption{Best fit DA solutions found using MCMC with \texttt{emcee} and the associated corner plot of the
+%    sampling for PSO\,J1801+6254~\citep[][they found a spectroscopic of T$_\mathrm{eff}=3550$\,K]{2020MNRAS.493.6001L}.}
+%    \label{fig:best_fit}
+%\end{figure}
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{PSOJ1801p6254_emcee.png}
     \includegraphics[width=\columnwidth]{PSOJ1801p6254_emcee_corner.png}
-    \caption{Best fit DA solutions and the associated corner plot of the
-    sampling for PSO\,J1801+6254~\citep{2020MNRAS.493.6001L}.}
+    \caption{Best fit DA solutions found using MCMC with \texttt{emcee} and the associated corner plot of the
+    sampling for PSO\,J1801+6254~\citep[][they found a spectroscopic of T$_\mathrm{eff}=3550$\,K]{2020MNRAS.493.6001L}.}
     \label{fig:best_fit}
 \end{figure}
 
@@ -1085,6 +1090,14 @@ the effect of SFH on their shapes, they illustrate that the faint end
 of a WDLF is the most important and sensitive in revealing the past
 star formation history of a stellar population.
 
+% toggle for referee mode
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=0.8\columnwidth]{wdlf_compare_sfr.png}
+%    \caption{Comparing WDLFs with the three default types of star formation
+%    history from $2$ to $14\,$Gyr in increment of $2$\,Gyr.}
+%    \label{fig:compare_sfr_age_type}
+%\end{figure}
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{wdlf_compare_sfr.png}
@@ -1107,14 +1120,23 @@ picture slightly by introducing the effect earlier. This effect would still
 be much smaller than the other uncertainties in both models and observations
 by orders of magnitude.
 
+% toggle for referee mode
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{wdlf_compare_imf.png}
+    \includegraphics[width=0.8\columnwidth]{wdlf_compare_imf.png}
     \caption{Comparing WDLFs with different input IMFs relative to the C03
     model. Due to the identical mass function above $1\,\msun$, only the
     oldest populations show differences in the bright end of the WDLFs.}
     \label{fig:wdlf_compare_imf}
 \end{figure}
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=\columnwidth]{wdlf_compare_imf.png}
+%    \caption{Comparing WDLFs with different input IMFs relative to the C03
+%    model. Due to the identical mass function above $1\,\msun$, only the
+%    oldest populations show differences in the bright end of the WDLFs.}
+%    \label{fig:wdlf_compare_imf}
+%\end{figure}
 
 \subsubsection{Initial-Final Mass Relations}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1174,8 +1196,8 @@ constrained.
 \subsubsection{Cooling Models}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 There are too many possible combinations of cooling models, so in
-Figure~\ref{fig:wdlf_compare_da_cooling_models}, only five example
-(combinations) of models are shown, the combinations are listed in
+Figure~\ref{fig:wdlf_compare_da_cooling_models}, only four example
+sets of models are shown, the combinations are listed in
 Table~\ref{tab:cooling_model_combination}. In order to assess the quality of
 the interpolation at the model boundaries at the three mass ranges, we can
 compute the total WDLF by summing the constituent low, intermediate and high
@@ -1290,6 +1312,26 @@ has been provided by national institutions, in particular the institutions
 participating in the {\it Gaia} Multilateral Agreement.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Data Availability}
+The source code underlying this article are available on Github and Zenodo, at \url{https://github.com/cylammarco/WDPhotTools}, \url{https://doi.org/10.5281/zenodo.6570263}. The data and scripts for generating all the figures and analysis in this article, and the article itself, can be found at \url{https://github.com/cylammarco/WDPhotTools_article}.
+
+The comparison data from \citet{2021MNRAS.508.3877G} can be found in the public domain at \url{https://cdsarc.cds.unistra.fr/viz-bin/cat/J/MNRAS/508/3877}.
+
+The filter profile used in this work can be found in the public domain at \url{http://svo2.cab.inta-csic.es/theory/fps3/}.
+
+The white dwarf theoretical spectra can be found in the public domain at \url{http://svo2.cab.inta-csic.es/theory/newov2/index.php?models=koester2}.
+
+The Montreal models used in this work can be found in the public domain at \url{https://www.astro.umontreal.ca/~bergeron/CoolingModels/}.
+
+The BASTI models used in this work can be found in the public domain at \url{http://albione.oa-teramo.inaf.it/}.
+
+The LPCODE models used in this work can be found in the public domain at \url{http://evolgroup.fcaglp.unlp.edu.ar/TRACKS/tracks.html}.
+
+The GENEVA stellar evolution models used in this work can be found in the public domain at \url{https://obswww.unige.ch/Research/evol/tables_grids2011/}.
+
+The PARSEC stellar evolution models used in this work can be found in the public domain at \url{http://dx.doi.org/10.5281/zenodo.61584}.
+
+The MIST stellar evolution models used in this work can be found in the public domain at \url{http://waps.cfa.harvard.edu/MIST/model_grids.html}.
 
 
 %%%%%%%%%%%%%%%%%%%% REFERENCES %%%%%%%%%%%%%%%%%%
