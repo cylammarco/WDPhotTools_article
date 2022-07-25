@@ -33,5 +33,5 @@ plt.xlabel(r"Initial (ZAMS Mass) / M$_\odot$")
 plt.ylabel(r"Total Stellar Evolution Time / yr")
 
 plt.tight_layout()
-plt.savefig("total_stellar_lifetime.png")
-plt.savefig("total_stellar_lifetime.pdf")
+plt.savefig("fig_05_total_stellar_lifetime.png")
+plt.savefig("fig_05_total_stellar_lifetime.pdf")

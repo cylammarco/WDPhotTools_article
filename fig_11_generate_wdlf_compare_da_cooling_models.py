@@ -431,17 +431,17 @@ ax9.set_title("11 Gyr")
 ax12.set_title("13 Gyr")
 ax15.set_title("15 Gyr")
 
-ax1.set_ylabel("log(n)")
-ax2.set_ylabel(r"log(n/n$_{C08}$)")
-ax4.set_ylabel("log(n)")
-ax5.set_ylabel(r"log(n/n$_{C08}$)")
-ax7.set_ylabel("log(n)")
-ax8.set_ylabel(r"log(n/n$_{C08}$)")
+ax1.set_ylabel("log(arbitrary number density)")
+ax2.set_ylabel(r"log(n/n$_{Combination A}$)")
+ax4.set_ylabel("log(arbitrary number density)")
+ax5.set_ylabel(r"log(n/n$_{Combination A}$)")
+ax7.set_ylabel("log(arbitrary number density)")
+ax8.set_ylabel(r"log(n/n$_{Combination A}$)")
 
 fig1.supxlabel(r"M$_{\mathrm{bol}}$ / mag")
 
 plt.subplots_adjust(
     left=0.1, right=0.98, top=0.96, bottom=0.075, hspace=0.00, wspace=0.01
 )
-plt.savefig("wdlf_compare_da_cooling_models.png")
-plt.savefig("wdlf_compare_da_cooling_models.pdf")
+plt.savefig("fig_11_wdlf_compare_da_cooling_models.png")
+plt.savefig("fig_11_wdlf_compare_da_cooling_models.pdf")

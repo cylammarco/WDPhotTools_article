@@ -14,6 +14,7 @@ fig_input_models = wdlf.plot_input_models(
     imf_log=True,
     display=True,
     folder=".",
+    filename="fig_07_input_models",
     ext=["png", "pdf"],
     savefig=True,
 )

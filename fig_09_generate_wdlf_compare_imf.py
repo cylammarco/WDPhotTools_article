@@ -10,11 +10,11 @@ wdlf = theoretical_lf.WDLF()
 Mag = np.arange(0.0, 20.0, 0.1)
 
 
-if os.path.exists('wdlf_5Gyr_compare_imf.npy'):
+if os.path.exists("wdlf_11Gyr_compare_imf.npy"):
 
-    wdlf_11Gyr = np.load('wdlf_11Gyr_compare_imf.npy')
-    wdlf_13Gyr = np.load('wdlf_13Gyr_compare_imf.npy')
-    wdlf_15Gyr = np.load('wdlf_15Gyr_compare_imf.npy')
+    wdlf_11Gyr = np.load("wdlf_11Gyr_compare_imf.npy")
+    wdlf_13Gyr = np.load("wdlf_13Gyr_compare_imf.npy")
+    wdlf_15Gyr = np.load("wdlf_15Gyr_compare_imf.npy")
 
 else:
 
@@ -73,49 +73,40 @@ else:
         )
     )
 
-    np.save('wdlf_11Gyr_compare_imf', wdlf_11Gyr)
-    np.save('wdlf_13Gyr_compare_imf', wdlf_13Gyr)
-    np.save('wdlf_15Gyr_compare_imf', wdlf_15Gyr)
+    np.save("wdlf_11Gyr_compare_imf", wdlf_11Gyr)
+    np.save("wdlf_13Gyr_compare_imf", wdlf_13Gyr)
+    np.save("wdlf_15Gyr_compare_imf", wdlf_15Gyr)
 
 
 # normalise the WDLFs relative to the density at 10 mag
-wdlf_11Gyr = [wdlf_11Gyr[i]/wdlf_11Gyr[i][Mag==10.0] for i in range(len(wdlf_11Gyr))]
-wdlf_13Gyr = [wdlf_13Gyr[i]/wdlf_13Gyr[i][Mag==10.0] for i in range(len(wdlf_13Gyr))]
-wdlf_15Gyr = [wdlf_15Gyr[i]/wdlf_15Gyr[i][Mag==10.0] for i in range(len(wdlf_15Gyr))]
+wdlf_11Gyr = [
+    wdlf_11Gyr[i] / wdlf_11Gyr[i][Mag == 10.0] for i in range(len(wdlf_11Gyr))
+]
+wdlf_13Gyr = [
+    wdlf_13Gyr[i] / wdlf_13Gyr[i][Mag == 10.0] for i in range(len(wdlf_13Gyr))
+]
+wdlf_15Gyr = [
+    wdlf_15Gyr[i] / wdlf_15Gyr[i][Mag == 10.0] for i in range(len(wdlf_15Gyr))
+]
 
 fig1, (ax1, ax2, ax3) = plt.subplots(
     3, 1, sharex=True, sharey=True, figsize=(10, 15)
 )
 
 # Burst SFR 11 Gyr
-ax1.plot(
-    Mag, np.log10(wdlf_11Gyr[0])-np.log10(wdlf_11Gyr[0]), label="C03"
-)
-ax1.plot(
-    Mag, np.log10(wdlf_11Gyr[1])-np.log10(wdlf_11Gyr[0]), label="C03b"
-)
-ax1.plot(
-    Mag, np.log10(wdlf_11Gyr[2])-np.log10(wdlf_11Gyr[0]), label="K01"
-)
+ax1.plot(Mag, np.log10(wdlf_11Gyr[0]) - np.log10(wdlf_11Gyr[0]), label="C03")
+ax1.plot(Mag, np.log10(wdlf_11Gyr[1]) - np.log10(wdlf_11Gyr[0]), label="C03b")
+ax1.plot(Mag, np.log10(wdlf_11Gyr[2]) - np.log10(wdlf_11Gyr[0]), label="K01")
 
 # Burst SFR 13 Gyr
-ax2.plot(
-    Mag, np.log10(wdlf_13Gyr[0])-np.log10(wdlf_13Gyr[0])
-)
-ax2.plot(
-    Mag, np.log10(wdlf_13Gyr[1])-np.log10(wdlf_13Gyr[0])
-)
-ax2.plot(
-    Mag, np.log10(wdlf_13Gyr[2])-np.log10(wdlf_13Gyr[0])
-)
+ax2.plot(Mag, np.log10(wdlf_13Gyr[0]) - np.log10(wdlf_13Gyr[0]))
+ax2.plot(Mag, np.log10(wdlf_13Gyr[1]) - np.log10(wdlf_13Gyr[0]))
+ax2.plot(Mag, np.log10(wdlf_13Gyr[2]) - np.log10(wdlf_13Gyr[0]))
 
 # Burst SFR 13 Gyr
-ax3.plot(
-    Mag, np.log10(wdlf_15Gyr[0])-np.log10(wdlf_15Gyr[0]))
-ax3.plot(
-    Mag, np.log10(wdlf_15Gyr[1])-np.log10(wdlf_15Gyr[0]))
-ax3.plot(
-    Mag, np.log10(wdlf_15Gyr[2])-np.log10(wdlf_15Gyr[0]))
+ax3.plot(Mag, np.log10(wdlf_15Gyr[0]) - np.log10(wdlf_15Gyr[0]))
+ax3.plot(Mag, np.log10(wdlf_15Gyr[1]) - np.log10(wdlf_15Gyr[0]))
+ax3.plot(Mag, np.log10(wdlf_15Gyr[2]) - np.log10(wdlf_15Gyr[0]))
 
 ax1.legend()
 ax1.grid()
@@ -135,6 +126,15 @@ ax3.set_ylim(-0.01, 0.01)
 ax3.set_xlabel(r"M$_{\mathrm{bol}}$ / mag")
 ax3.set_title("15 Gyr")
 
+ax1.set_xticks(range(2, 21), minor=True)
+ax1.set_xticks(range(5, 21, 5), minor=False)
+
+ax2.set_xticks(range(2, 21), minor=True)
+ax2.set_xticks(range(5, 21, 5), minor=False)
+
+ax3.set_xticks(range(2, 21), minor=True)
+ax3.set_xticks(range(5, 21, 5), minor=False)
+
 plt.subplots_adjust(left=0.15, right=0.98, top=0.96, bottom=0.075)
-plt.savefig('wdlf_compare_imf.png')
-plt.savefig('wdlf_compare_imf.pdf')
+plt.savefig("fig_09_wdlf_compare_imf.png")
+plt.savefig("fig_09_wdlf_compare_imf.pdf")

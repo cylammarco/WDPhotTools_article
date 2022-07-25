@@ -66,7 +66,7 @@ ftr.show_best_fit(
     display=False,
     savefig=True,
     folder=os.path.join(HERE, "."),
-    filename="PSOJ1801p6254",
+    filename="fig_02_NOT_USED_PSOJ1801p6254",
     ext=['png', 'pdf'],
 )
 
@@ -130,7 +130,7 @@ ftr.show_best_fit(
     display=False,
     savefig=True,
     folder=os.path.join(HERE, "."),
-    filename="PSOJ1801p6254_emcee",
+    filename="fig_02_PSOJ1801p6254_emcee",
     ext=['png', 'pdf'],
 )
 ftr.show_corner_plot(
@@ -138,7 +138,7 @@ ftr.show_corner_plot(
     display=True,
     savefig=True,
     folder=os.path.join(HERE, "."),
-    filename="PSOJ1801p6254_emcee_corner",
+    filename="fig_02_PSOJ1801p6254_emcee_corner",
     ext=['png', 'pdf'],
     kwarg={
         "quantiles": [0.158655, 0.5, 0.841345],

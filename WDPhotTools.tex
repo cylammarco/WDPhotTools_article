@@ -345,7 +345,7 @@ shown for the Montreal DA model in Figure~\ref{fig:cooling_tracks_default}.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{DA_cooling_tracks_from_plotter.png}
+    \includegraphics[width=\columnwidth]{fig_01_DA_cooling_tracks_from_plotter.png}
     \caption{Default figures showing the cooling tracks at different surface
     gravities in the Gaia $G$, $G_{\mathrm{BP}}$ and $G_{\mathrm{RP}}$ filters.
     The colours scale shows the effective temperature.}
@@ -615,8 +615,8 @@ good number of filters are provided.
 %\end{figure}
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{PSOJ1801p6254_emcee.png}
-    \includegraphics[width=\columnwidth]{PSOJ1801p6254_emcee_corner.png}
+    \includegraphics[width=\columnwidth]{fig_02_PSOJ1801p6254_emcee.png}
+    \includegraphics[width=\columnwidth]{fig_02_PSOJ1801p6254_emcee_corner.png}
     \caption{Best fit DA solutions found using MCMC with \texttt{emcee} and the associated corner plot of the
     sampling for PSO\,J1801+6254~\citep[][they found a spectroscopic of T$_\mathrm{eff}=3550$\,K]{2020MNRAS.493.6001L}.}
     \label{fig:best_fit}
@@ -649,7 +649,7 @@ $3\,500$\,K, in line with the GF21 criteria when publishing their catalogue.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{compare_fusillo_edr3.png}
+    \includegraphics[width=\columnwidth]{fig_03_compare_fusillo_edr3.png}
     \caption{Comparison of the effective temperature fitting against GF21. The blue scattered points show all the fitted \textcolor{red}{temperatures} using our preferred reddening treatment adopting the interpolated reddening computed for each filter at each temperature available from the collection from \citet{2010MmSAI..81..921K}. The red points \textcolor{red}{compares} when the reddening is interpolated directly using the table from \citet{2011ApJ...737..103S} computed for a blackbody source at $7000$\,K. The colour lines show the density of scattered points that cannot be resolved, each level of inter-contour space includes $5\%$ of the total data. The contour lines appear skewed is due to the use of log-axes.}
     \label{fig:comparison}
 \end{figure}
@@ -779,7 +779,7 @@ that are available:
 
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{imfs.png}
+    \includegraphics[width=\columnwidth]{fig_04_imfs.png}
     \caption{Comparing the three IMFs provided in this package. They are
     identical in the mass range above $1\,\msun$, while under this mass
     limit, the differences are small in the mass range ($\gtrapprox0.9\,\msun$)
@@ -880,7 +880,7 @@ function is also a possible form as input:
 
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{total_stellar_lifetime.png}
+    \includegraphics[width=\columnwidth]{fig_05_total_stellar_lifetime.png}
     \caption{Comparing seven of the 33 available models: PARSEC is shown with
     metallicity at z=0.0001, 0.001, 0.01, 0.017 (i.e. solar) and 0.06; Geneva
     and MIST solar metallicity model is plotted for comparison. The low
@@ -966,7 +966,7 @@ callable function is also accepted:
 
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{ifmrs.png}
+    \includegraphics[width=\columnwidth]{fig_06_ifmrs.png}
     \caption{Comparing the three IFMRs provided in this package. They follow
     a similar trend and they are mostly lying on top of each other. S09 and S09b
     have the shallowest IFMRs at the massive end of the initial mass among all.
@@ -1091,7 +1091,7 @@ age~(Figure~\ref{fig:input_model} \textcolor{red}{is an example of this diagnost
 
 \begin{figure*}
     \centering
-    \includegraphics[width=\textwidth]{input_model.png}
+    \includegraphics[width=\textwidth]{fig_07_input_model.png}
     \caption{Top left: input initial mass function. Top right: Input star
     formation history. Middle left: Input MS lifetime model. Middle right:
     Input IFMR model. Bottom left: Input cooling model showing the absolute
@@ -1133,16 +1133,20 @@ star formation history of a stellar population.
 % toggle for referee mode
 %\begin{figure}
 %    \centering
-%    \includegraphics[width=0.8\columnwidth]{wdlf_compare_sfr.png}
+%    \includegraphics[width=0.8\columnwidth]{fig_8_wdlf_compare_sfr.png}
 %    \caption{Comparing WDLFs with the three default types of star formation
 %    history from $2$ to $14\,$Gyr in increment of $2$\,Gyr.}
 %    \label{fig:compare_sfr_age_type}
 %\end{figure}
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{wdlf_compare_sfr.png}
+    \includegraphics[width=\columnwidth]{fig_08_wdlf_compare_sfr.png}
     \caption{Comparing WDLFs with the three default types of star formation
-    history from $2$ to $14\,$Gyr in increment of $2$\,Gyr.}
+    history from $2$ to $14\,$Gyr in increment of $2$\,Gyr. Top: constant star
+    formation since the labelled lookback time. Middle: a starburst in the 
+    first 100\,Myr since the labelled lookback time. Bottom: an exponentially
+    decaying star formation rate with a decay constant of 3\,Gyr since the
+    labelled lookback time.}
     \label{fig:compare_sfr_age_type}
 \end{figure}
 
@@ -1163,10 +1167,11 @@ by orders of magnitude.
 % toggle for referee mode
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\columnwidth]{wdlf_compare_imf.png}
-    \caption{Comparing WDLFs with different input IMFs relative to the C03
-    model. Due to the identical mass function above $1\,\msun$, only the
-    oldest populations show differences in the bright end of the WDLFs.}
+    \includegraphics[width=0.8\columnwidth]{fig_09_wdlf_compare_imf.png}
+    \caption{The initial mass functions are identical above $1\,\msun$, only the
+    oldest populations show differences in the bright end of the WDLFs. Due to
+    almost identical computed WDLFs, only the differences of the WDLFs
+    relative to the C03 are shown.}
     \label{fig:wdlf_compare_imf}
 \end{figure}
 %\begin{figure}
@@ -1209,7 +1214,7 @@ by the different IFMRs.
  
 \begin{figure*}
     \centering
-    \includegraphics[width=\textwidth]{wdlf_compare_ifmr.png}
+    \includegraphics[width=\textwidth]{fig_10_wdlf_compare_ifmr.png}
     \caption{Comparing WDLFs with different input IFMRs. Its effect on the WDLF
     is small because of the similarity between them. The large difference at
     the bright end is due to the relatively large difference in the cooling
@@ -1277,7 +1282,7 @@ cooling down.
 
 \begin{figure*}
     \centering
-    \includegraphics[width=\textwidth]{wdlf_compare_da_cooling_models.png}
+    \includegraphics[width=\textwidth]{fig_11_wdlf_compare_da_cooling_models.png}
     \caption{Comparing WDLFs with different input cooling models. See
     Table~\ref{tab:cooling_model_combination} for the choice of input models.
     The differences in the WDLFs are small down to $14$\,mag. After that, the

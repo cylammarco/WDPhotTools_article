@@ -16,6 +16,6 @@ plotter.plot_atmosphere_model(
     invert_yaxis=True,
     savefig=True,
     folder=".",
-    filename="DA_cooling_tracks_from_plotter",
+    filename="fig_01_DA_cooling_tracks_from_plotter",
     ext=['png', 'pdf'],
 )

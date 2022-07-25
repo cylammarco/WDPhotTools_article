@@ -30,5 +30,5 @@ plt.xlabel(r"Initial (ZAMS Mass) / M$_\odot$")
 plt.ylabel(r"Final (WD Mass) / M$_\odot$")
 
 plt.tight_layout()
-plt.savefig("ifmrs.png")
-plt.savefig("ifmrs.pdf")
+plt.savefig("fig_06_ifmrs.png")
+plt.savefig("fig_06_ifmrs.pdf")
