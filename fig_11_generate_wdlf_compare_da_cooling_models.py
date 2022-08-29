@@ -432,11 +432,11 @@ ax12.set_title("13 Gyr")
 ax15.set_title("15 Gyr")
 
 ax1.set_ylabel("log(no. density)")
-ax2.set_ylabel(r"log(n/n$_{Combination A}$)")
+ax2.set_ylabel(r"log(n/n$_{A}$)")
 ax4.set_ylabel("log(no. density)")
-ax5.set_ylabel(r"log(n/n$_{Combination A}$)")
+ax5.set_ylabel(r"log(n/n$_{A}$)")
 ax7.set_ylabel("log(no. density)")
-ax8.set_ylabel(r"log(n/n$_{Combination A}$)")
+ax8.set_ylabel(r"log(n/n$_{A}$)")
 
 fig1.supxlabel(r"M$_{\mathrm{bol}}$ / mag")
 
