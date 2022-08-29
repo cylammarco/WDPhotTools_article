@@ -591,6 +591,7 @@ a similar form to Equation~\ref{eq:chi2}:
 \end{equation}
 
 \subsection{Interstellar Reddening}
+\label{sec:interstellar_reddening}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 When interstellar reddening is included in the calculation, the $\chi^2$
 minimisation function becomes
@@ -669,7 +670,8 @@ negligible\footnote{\textcolor{red}{This effect becomes even more important
 when the distance is a free-parameter to be fitted. But it does not lead to
 degeneracy because the reddening is non-linear and the effect is
 unidirectional as a function of wavelength.}} (see also Section
-\textsection~6). Therefore, we convolve the filter profile with the DA
+\textsection~\ref{sec:interstellar_reddening} and \textsection~\ref{sec:utility}).
+Therefore, we convolve the filter profile with the DA
 spectra to provide a table of pre-computed extinction coefficient as a
 function of temperature and surface gravity to allow accurate reddening
 correction.}
@@ -1374,6 +1376,7 @@ cooling down.
 
 
 \section{Other utilities}
+\label{sec:utility}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 There are two modules used in the background, \texttt{reddening} and
 \texttt{util}; and one module, \texttt{plotter}, that could be useful for
