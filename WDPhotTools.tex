@@ -248,7 +248,8 @@ atmosphere models \textcolor{red}{(with the \texttt{WDLF} class)}.
 We host our source code on Github\footnote{\url{https://github.com/cylammarco/WDPhotTools}},
 which provides version control and other utilities to facilitate the
 development; the numbered releases are also deposited on Zenodo to allow
-referencing of a specific version\footnote{\url{https://doi.org/10.5281/zenodo.6595029}}. It offers issue and bug tracking, high-level project management,
+referencing of a specific version\footnote{\url{https://doi.org/10.5281/zenodo.6595029}}.
+It offers issue and bug tracking, high-level project management,
 automation with Github Actions upon each commit for:
 
 \begin{enumerate}
@@ -258,7 +259,7 @@ automation with Github Actions upon each commit for:
     \item generating test coverage report with Coveralls\footnote{\url{
     https://coveralls.io/github/cylammarco/WDPhotTools}}
     which identifies
-    lines in the script that are missed from the tests;
+    lines in the script that are missed \textcolor{red}{by} the tests;
     \item Continuous Deployment (CD) through \textsc{PyPI} that allows
     immediate availability of the latest software release; and
     \item generating application programming interface~(API) documentation
@@ -266,17 +267,16 @@ automation with Github Actions upon each commit for:
     Read the Docs\footnote{\url{https://wdphottools.readthedocs.io}}.
 \end{enumerate}
 
-
-The following is not serving as an API, it is only describing some of the key
+The following is not serving as an API, it is describing some of the key
 arguments and parameters, as well as the usage that may seem convoluted but
-\textcolor{red}{is} necessary to keep the structure simple without providing multiple methods to
-perform similar tasks with small adjustments. The model-readers are designed
-to read the files as they are downloaded from the source, such that the future
-updates of the models provided by the same research group should be a
-straightforward process in extending the model list. The materials that have
-gone into the classes and modules are described first, and towards the end of
-each of \textsection3 to \textsection6, the usage of those classes and modules
-are explained. We summarise this work in \textsection7.
+\textcolor{red}{is} necessary to keep the structure simple without providing
+multiple methods to perform similar tasks with small adjustments. The
+model-readers are designed to read the files as they are downloaded from the
+source, such that the future updates of the models provided by the same research
+group should be a straightforward process in extending the model list.
+\textcolor{red}{The materials that have gone into the classes and modules are
+described in \textsection3 to \textsection6 alongside with the usage of those
+classes and modules.} We summarise this work in \textsection7.
 
 \section{Formatters}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -290,10 +290,11 @@ different providers.
 \textcolor{red}{The publicly available Montreal models\footnote{\url{https://www.astro.umontreal.ca/~bergeron/CoolingModels/}},
 with synthetic photometry of WDs over a smooth grid of wide ranges of temperature
 and surface gravity.} The tables are provided with bolometric and absolute magnitudes
-on various photometric systems in pure hydrogen~(DA) and pure-helium~(DB) \textcolor{red}{atmospheres have} in the
-range of $\log(g)=7.0 - 9.0$, as well as the effective temperature and total
-cooling time~(though this grid is sparse compared to their complementary cooling
-model grids). \textcolor{red}{The photometric systems} include the Johnson-Kron-Cousins~($U, B, V, R\,\&\,I$),
+on various photometric systems in pure hydrogen~(DA) and pure-helium~(DB)
+\textcolor{red}{atmospheres have} in the range of $\log(g)=7.0 - 9.0$, as well as
+the effective temperature and total cooling time~(though this grid is sparse
+compared to their complementary cooling model grids). \textcolor{red}{The
+photometric systems} include the Johnson-Kron-Cousins~($U, B, V, R\,\&\,I$),
 Two Micron All Sky Survey~(2MASS) $J, H\,\&\,K_{s}$, Mauna Kea Observatory~(MKO)
 $Y, J, H\,\&\,K$, Wide-field Infrared Survey Explorer~(WISE) $W1, W2, W3\,\&\,W4$,
 Spitzer Space Telescope Infrared Array Camera~(IRAC)
@@ -304,16 +305,16 @@ Gaia $G, G_{\mathrm{BP}}\,\&\,G_{\mathrm{RP}}$, and Galaxy Evolution
 Explorer~(GALEX) $FUV$ and $NUV$.
 
 The stellar masses and cooling ages are based on the latest generation of
-evolutionary sequences~\citep{2020ApJ...901...93B} with the choices of
+evolution sequences~\citep{2020ApJ...901...93B} with the choices of
 thick~($q_H \equiv \frac{\mathcal{M}_H}{\mathcal{M}*} = 10^{-4}$) and thin~($q_H = 10^{-10}$)
-hydrogen layers for the pure-hydrogen and pure-helium model atmospheres,
-respectively. Details of the colour calculations are described in
-\citet{1995PASP..107.1047B} and \citet{2006AJ....132.1221H}. The DA grid covers
-a temperature range $T_{\mathrm{eff}} = 2\,500 - 150\,000$\,K while the DB grid
-covers $T_{\mathrm{eff}} = 3\,250 - 150\,000$\,K. Both model are computed with
-surface gravities $\log(g) = 7.0 - 9.0$~\citep{2018ApJ...863..184B,
-2020ApJ...901...93B, 2011ApJ...730..128T, 2011ApJ...737...28B,
-2006ApJ...651L.137K}.
+hydrogen layers \textcolor{red}{that are referred to as the pure-hydrogen and
+pure-helium model atmospheres, respectively.} Details of the colour calculations
+are described in \citet{1995PASP..107.1047B} and \citet{2006AJ....132.1221H}.
+The DA grid covers a temperature range $T_{\mathrm{eff}} = 2\,500 - 150\,000$\,K
+while the DB grid covers $T_{\mathrm{eff}} = 3\,250 - 150\,000$\,K. Both model
+are computed with surface gravities $\log(g) = 7.0 - 9.0$~\citep{
+2018ApJ...863..184B, 2020ApJ...901...93B, 2011ApJ...730..128T,
+2011ApJ...737...28B, 2006ApJ...651L.137K}.
 
 \subsection{Class: \texttt{AtmosphereModelReader}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -324,8 +325,8 @@ parameters and in various commonly used broadband filters. After initialisation,
 the method \verb+list_atmosphere_parameters()+ can be used to retrieve the
 parameters available for interpolation with \verb+interp_am()+. By default, it
 is initialised as a DA atmosphere interpolator providing the interpolated $G$
-band magnitudes in the Gaia DR3 photometric system (dependent), parameterised
-in \verb+logg+ and \verb+Mbol+ (independent). We name the arguments dependent
+band magnitudes in the Gaia DR3 photometric system~(dependent), parameterised
+in \verb+logg+ and \verb+Mbol+~(independent). We name the arguments dependent
 and independent using the common terminology in mathematical modelling and
 experimental science: the variables defining the axes of the interpolation are
 the \textit{independent} variables, and the variable being interpolated over
@@ -368,8 +369,9 @@ model name and parameter names, an interpolator can be built using the method
 \verb+interp_cm()+, which will use the appropriate formatter to read
 the model files already contained in the package. In this class, the same two
 interpolators, \verb+scipy.interpolator.CloughTocher2DInterpolator()+ and 
-\verb+scipy.interpolate.RBFInterpolator()+, are available for use. See \textcolor{red}{Table~\ref{tab:cooling_models}}
-for the complete listing of the available models.
+\verb+scipy.interpolate.RBFInterpolator()+, are available for use. See
+\textcolor{red}{Table~\ref{tab:cooling_models}} for the complete listing of the
+available models.
 
 \section{Photometric fitting}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -377,14 +379,14 @@ Photometric fitting with synthetic broadband photometry has been the common
 practice in getting the first guess of the atmospheric properties of white
 dwarf candidates, or any unknown astronomical source. Photometry from multiple
 filters and parallactic measurements can improve on the fitting accuracy.
-It may seem to become obsolete in the era of Gaia as most white dwarfs have
-measured parallaxes. However, the faint targets with respect to any survey
-are always going to remain a challenge as the uncertainties in all the
+\textcolor{red}{It may seem to become obsolete in the era of Gaia as most white
+dwarfs have measured parallaxes. However, the faint targets with respect to any
+survey are always going to remain a challenge as the uncertainties in all the
 observables are going to be significant. Hence, photometric fitting will
 continue to serve as a useful method in the future. Once VRO starts producing
 WD candidates at faint magnitudes, they would be way beyond the capabilities
 of most spectrographs and we have to rely on photometric method without
-any parallactic measurement.
+any parallactic measurement.}
 
 
 \subsection{Class: \texttt{WDFitter}}
@@ -397,7 +399,7 @@ fine-tuning can be performed by providing distance, extinction, independent
 variables\footnote{fitting using \texttt{Mbol} and \texttt{Teff} can give slightly
 different results due to interpolation.}, choice of interpolator and their
 fine-tuning parameters, minimisers and their fine-tuning parameters,
-solution refinement within a bounding box (only if \verb+emcee+ was used).
+solution refinement within a bounding box~(only if \verb+emcee+ was used).
 A few arguments are worth extra attention because of the similar terms used
 by different methods\textcolor{red}{. We} are only pointing out the potential confusion with
 the arguments, the detailed usage should be referred to the API document
@@ -407,15 +409,16 @@ itself:
     tabulated values from convolving the filter response function with DA
     spectra to compute the extinction corrected for the spectral shape.
     When it is set to \verb+False+, it interpolates the tabulated values
-    from \citet{2011ApJ...737..103S}
+    from \citet{2011ApJ...737..103S}.
     \item \verb+kind+ is the kind of interpolation for the extinction.
     \item \verb+logg+ is used if only one independent variable is
     provided.
     \item \verb+method+ sets the choice from the 3 minimizers.
-    \item There are 5 keyword arguments that can be used to do fine 
-    control over the minimizer and interpolator: \verb+kwargs_for_RBF+,
-    \verb+kwargs_for_CT+, \verb+kwargs_for_minimize+,
-    \verb+kwargs_for_least_squares+ and \verb+kwargs_for_emcee+.
+    \item There are 5 keyword arguments that can be used to
+    \textcolor{red}{perform} fine control over the minimizer and
+    interpolator: \verb+kwargs_for_RBF+, \verb+kwargs_for_CT+,
+    \verb+kwargs_for_minimize+, \verb+kwargs_for_least_squares+ and
+    \verb+kwargs_for_emcee+.
 \end{enumerate}
 
 This class also comes with two diagnostic plots. The first one,
@@ -425,11 +428,11 @@ data. The second one, \verb+show_corner_plot()+,
 shows the probability distribution functions from the MCMC
 sampling~\ref{fig:best_fit} which shows the differences when the distance
 is provided or not. It is clear from the fit that if the distance is not
-provided, then the temperature can still be recovered reasonably well because
-the SED only changes significantly with distance if the interstellar
-reddening is strong. This statement only holds under the assumption that
-the WD atmosphere type is typical, photometry is of good quality and a
-good number of filters are provided.
+provided, the temperature can still be recovered reasonably well because
+the SED only changes significantly with distance unless the interstellar
+reddening is very strong. This statement only holds under the assumption
+that the WD atmosphere type is typical, photometry is of good quality and
+a good number of filters are provided.
 
 % toggle for referee mode
 %\begin{figure}
@@ -454,17 +457,19 @@ supported by \verb+scipy.optimize.minimize()+,
 \verb+scipy.optimize.least_squares()+ or with a Markov chain Monte
 Carlo method powered by \texttt{emcee}~\citep{2013PASP..125..306F} with the
 option to refine the solution with \verb+minimize()+ at the end using the
-50-percentile as the initial guess and bounding the fit within N-sigmas
-uncertainty limit (user-defined). \textcolor{red}{At high temperatures
-($T_{\mathrm{eff}} \geq 11\,000$\,K), the differences in mass inferred from
-pure H or pure He models are of the order of $\sim$\,$0.1\,\msun$. However,
-the differences between the pure He and mixed H/He solutions in the same
-temperature range are completely negligible. At lower temperatures, the
-atmospheric \textcolor{red}{compositions} have much stronger effects. The average mass of a
-population drops when fitted with pure H model, pure He, and then to mixed
-H/He models. The \textcolor{red}{above-average-mass} WDs in the $6\,000\,-10\,000$\,K temperature range
-\textcolor{red}{have} an average mass above $0.7\,\msun$ under the assumption of pure hydrogen
-atmospheres, but this drops to $\sim$\,$0.6\,\msun$ when fitted with mixed
+50$^{\mathrm{th}}$-percentile as the initial guess and bounding the fit
+within N-sigmas uncertainty limit (user-defined). \textcolor{red}{At high
+temperatures ($T_{\mathrm{eff}} \geq 11\,000$\,K), the differences in mass
+inferred from pure H or pure He models are of the order of
+$\sim$\,$0.1\,\msun$. However, the differences between the pure He and mixed
+H/He solutions in the same temperature range are completely negligible. At
+lower temperatures, the atmospheric \textcolor{red}{compositions} have much
+stronger effects. The average mass of a population drops when fitted with
+pure H model, pure He, and then to mixed H/He models. The
+\textcolor{red}{above-average-mass} WDs in the $6\,000\,-10\,000$\,K
+temperature range \textcolor{red}{have} an average mass above $0.7\,\msun$
+under the assumption of pure hydrogen atmospheres, but this drops to
+$\sim$\,$0.6\,\msun$ when fitted with mixed
 H/He models~\citep{2019ApJ...876...67B}. Below $\sim$\,$6000$\,K,} optical
 spectra are not particularly useful in distinguishing the atmosphere
 type, because below $\sim$\,$5000$\,K, \textcolor{red}{hydrogen} absorption
@@ -474,10 +479,13 @@ broad spectral features, namely the collisionally induced absorption, in the
 infrared can distinguish the atmosphere type~(see Figure~12 of
 \citealt{2017ApJ...848...36B}). Therefore, readers are reminded to pay
 particular care when you arrive at a low temperature solution with only
-optical data. Since it is only possible to fit for $n-1$ variables, if there
+optical data.
+
+With $n$ observables, it is only possible to fit for $n-1$ variables, if there
 are only two photometric bands, \textcolor{red}{it is only possible to fit
-for one parameter if the distance is unknown. By combining 2-band photometry
-with distance, there is enough degree of freedom to fit an extra parameter.}
+for one parameter if the \textit{distance is unknown}. By combining 2-band
+photometry with distance, there is enough degree of freedom to fit two
+parameters.}
 
 This does not apply to fitting with or without interstellar reddening because
 it is merely a one-to-one lookup value, \textcolor{red}{which itself} is
