@@ -81,7 +81,7 @@ ax1.set_ylim(-3.75, 2.75)
 ax1.set_title("Constant")
 
 ax2.grid()
-ax2.set_ylabel("log(number density)")
+ax2.set_ylabel("log(no. density)")
 ax2.set_title("100 Myr Burst")
 
 ax3.grid()
