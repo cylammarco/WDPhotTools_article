@@ -628,10 +628,17 @@ the instructions in \citet{2011ApJ...737..103S}. We have pre-computed the
 extinction vector from $Rv = 2.1$ to $5.1$ in $0.5$ step increment, using the
 Fitzpatrick extinction law~\citep{1999PASP..111...63F}, for every theoretical
 spectrum available over all the filters available from the Montreal synthetic
-photometry table. The synthetic spectra do not cover some of the bluest filters,
-in such cases, we extend those spectra with blackbody profiles. The grid is
-stored in CSV format and is ready to be interpolated upon initialisation of
-this toolkit.
+photometry table (see Figure~\ref{fig:interstellar_reddening}. The synthetic
+spectra do not cover some of the bluest filters, in such cases, we extend
+those spectra with blackbody profiles. The grid is stored in CSV format and
+is ready to be interpolated upon initialisation of this toolkit.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{fig_12_reddening_filter.png}
+    \caption{Caption}
+    \label{fig:interstellar_reddening}
+\end{figure}
 
 \subsection{Fitting Distance}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
