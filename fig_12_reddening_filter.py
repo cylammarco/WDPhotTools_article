@@ -50,6 +50,18 @@ atm_key = np.array(
         "I",
     ]
 )
+atm_key_for_legend = np.array(
+    [
+        "U",
+        "B",
+        r"G3$_{\mathrm{BP}}$",
+        "V",
+        "G3",
+        "R",
+        r"G3$_{\mathrm{RP}}$",
+        "I",
+    ]
+)
 filter_key = np.array(
     [
         "Generic_Johnson.U",
@@ -143,9 +155,8 @@ for j, model in enumerate(model_filelist):
         ax1.plot(
             total_wave,
             total_flux,
-            color=str(0.6 - counter * 0.2),
-            label=str(t),
-            lw=2.5,
+            color=str(0.8 - counter * 0.3),
+            lw=3,
         )
         # they normalised at 10000.0 A
         A_1um_31 = _fitzpatrick99(10000.0, 3.1)
@@ -190,6 +201,11 @@ for j, model in enumerate(model_filelist):
                 )
 
 
+
+ax1.text(7400.0, 0.58, "T$_{\mathrm{eff}}=$5000 K", c="0.6")
+ax1.text(7400.0, 0.14, "T$_{\mathrm{eff}}=$10000 K", c="0.3")
+ax1.text(7400.0, 0.01, "T$_{\mathrm{eff}}=$30000 K", c="0.0")
+
 filter_response_list = {}
 
 for i in filter_filelist:
@@ -202,13 +218,13 @@ for i in filter_filelist:
         filter_response_list[current_filter] = {}
         filter_response_list[current_filter] = [f_wave, f_itp(f_wave)]
 
-for i in atm_key:
+for i, j in zip(atm_key, atm_key_for_legend):
     filte_response = filter_response_list[i]
     ax1.plot(
         filte_response[0],
         filte_response[1],
         color=filter_colours[filter_order[i]],
-        label=i,
+        label=j,
         lw=0.8,
     )
 
@@ -218,19 +234,19 @@ ax1.set_ylim(0, 1.05)
 ax1.set_ylabel("Arbitrary Flux and Filter Response")
 ax1.legend(loc="upper right")
 
-
+extinction_colour = "darkviolet"
 ax1b = ax1.twinx()
 _ext31 = _fitzpatrick99(total_wave, Rv=3.1)
-ax1b.plot(total_wave, _ext31, color="darkred", ls=":", lw=2)
-ax1b.text(7000.0, 1.7, "Rv=3.1", color="darkred")
+ax1b.plot(total_wave, _ext31, color=extinction_colour, ls=":", lw=2)
+ax1b.text(7000.0, 1.7, "Rv=3.1", color=extinction_colour)
 ax1b.set_ylim(0, 6.0)
-ax1b.set_ylabel("Kirkpatrick Extinction (mag / E(B - V))", color="darkred")
+ax1b.set_ylabel("Kirkpatrick Extinction (mag / E(B - V))", color=extinction_colour)
 
-ax1b.spines["right"].set_color("darkred")
-[t.set_color("darkred") for t in ax1b.yaxis.get_ticklines()]
-[t.set_color("darkred") for t in ax1b.yaxis.get_ticklabels()]
+ax1b.spines["right"].set_color(extinction_colour)
+[t.set_color(extinction_colour) for t in ax1b.yaxis.get_ticklines()]
+[t.set_color(extinction_colour) for t in ax1b.yaxis.get_ticklabels()]
 
-ax2.set_xlabel("Effective Wavelength / A")
+ax2.set_xlabel("(Effective) Wavelength / A")
 
 
 rv31_U = [
@@ -285,11 +301,6 @@ rv31_list = [
     rv31_I,
 ]
 
-for i, w in enumerate(pivot_wavelength):
-    ax2.scatter(
-        [w] * 3, rv31_list[i], color=filter_colours[i], alpha=[0.3, 0.65, 1.0]
-    )
-
 
 ax2.scatter(
     pivot_wavelength,
@@ -297,8 +308,14 @@ ax2.scatter(
     color="black",
     marker="+",
     s=50,
-    label="Tabulated values from Schlafly et al. 2012",
+    label="Tabulated",
+    zorder=20,
 )
+
+for i, w in enumerate(pivot_wavelength):
+    ax2.scatter(
+        [w] * 3, rv31_list[i], color=filter_colours[i], alpha=[0.3, 0.65, 1.0], label=atm_key_for_legend[i],
+    )
 
 ax2.grid()
 ax2.legend()
