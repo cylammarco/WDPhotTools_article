@@ -151,7 +151,6 @@ for j, model in enumerate(model_filelist):
         wave_mask = (total_wave > 2000.0) & (total_wave < 12000.0)
         total_wave = total_wave[wave_mask]
         total_flux = total_flux[wave_mask]
-        total_flux /= total_flux[np.argmin(abs(total_wave - 4200.0))] * 2
         ax1.plot(
             total_wave,
             total_flux,
@@ -201,10 +200,29 @@ for j, model in enumerate(model_filelist):
                 )
 
 
+ax1.set_xlim(3000, 10000)
+ax1.set_ylabel(r"Flux (erg cm$^{-2}$ s$^{-1}$ $\mathrm{\AA}^{-1}$)")
 
-ax1.text(7400.0, 0.58, "T$_{\mathrm{eff}}=$5000 K", c="0.6")
-ax1.text(7400.0, 0.14, "T$_{\mathrm{eff}}=$10000 K", c="0.3")
-ax1.text(7400.0, 0.01, "T$_{\mathrm{eff}}=$30000 K", c="0.0")
+ax1.set_yscale("log")
+ax1.set_ylim(1e4, 3e9)
+
+extinction_colour = "darkviolet"
+ax1b = ax1.twinx()
+_ext31 = _fitzpatrick99(total_wave, Rv=3.1)
+ax1b.plot(total_wave, _ext31, color=extinction_colour, ls=":", lw=2)
+ax1b.text(7000.0, 2.25, "Rv=3.1", color=extinction_colour)
+ax1b.text(7500.0, 2.85, "T$_{\mathrm{eff}}=$5000 K", c="0.6")
+ax1b.text(7500.0, 3.8, "T$_{\mathrm{eff}}=$10000 K", c="0.3")
+ax1b.text(7500.0, 4.6, "T$_{\mathrm{eff}}=$30000 K", c="0.0")
+ax1b.set_ylim(0, 6.0)
+ax1b.set_ylabel(
+    "Kirkpatrick Extinction (mag / E(B - V))", color=extinction_colour
+)
+
+ax1b.spines["right"].set_color(extinction_colour)
+[t.set_color(extinction_colour) for t in ax1b.yaxis.get_ticklines()]
+[t.set_color(extinction_colour) for t in ax1b.yaxis.get_ticklabels()]
+
 
 filter_response_list = {}
 
@@ -220,33 +238,24 @@ for i in filter_filelist:
 
 for i, j in zip(atm_key, atm_key_for_legend):
     filte_response = filter_response_list[i]
-    ax1.plot(
+    if i.startswith("G"):
+        ls = "solid"
+        multiplier = 1.7
+    else:
+        ls = "dashed"
+        multiplier = 1.7
+    ax1b.plot(
         filte_response[0],
-        filte_response[1],
+        filte_response[1] * multiplier,
         color=filter_colours[filter_order[i]],
         label=j,
-        lw=0.8,
+        ls=ls,
+        lw=1.5,
     )
 
+ax1b.legend(loc="upper right")
 
-ax1.set_xlim(3000, 10000)
-ax1.set_ylim(0, 1.05)
-ax1.set_ylabel("Arbitrary Flux and Filter Response")
-ax1.legend(loc="upper right")
-
-extinction_colour = "darkviolet"
-ax1b = ax1.twinx()
-_ext31 = _fitzpatrick99(total_wave, Rv=3.1)
-ax1b.plot(total_wave, _ext31, color=extinction_colour, ls=":", lw=2)
-ax1b.text(7000.0, 1.7, "Rv=3.1", color=extinction_colour)
-ax1b.set_ylim(0, 6.0)
-ax1b.set_ylabel("Kirkpatrick Extinction (mag / E(B - V))", color=extinction_colour)
-
-ax1b.spines["right"].set_color(extinction_colour)
-[t.set_color(extinction_colour) for t in ax1b.yaxis.get_ticklines()]
-[t.set_color(extinction_colour) for t in ax1b.yaxis.get_ticklabels()]
-
-ax2.set_xlabel("(Effective) Wavelength / A")
+ax2.set_xlabel("(Effective) Wavelength / $\mathrm{\AA}$")
 
 
 rv31_U = [
@@ -314,7 +323,11 @@ ax2.scatter(
 
 for i, w in enumerate(pivot_wavelength):
     ax2.scatter(
-        [w] * 3, rv31_list[i], color=filter_colours[i], alpha=[0.3, 0.65, 1.0], label=atm_key_for_legend[i],
+        [w] * 3,
+        rv31_list[i][::-1],
+        color=filter_colours[i],
+        alpha=[0.3, 0.65, 1.0][::-1],
+        label=atm_key_for_legend[i],
     )
 
 ax2.grid()
