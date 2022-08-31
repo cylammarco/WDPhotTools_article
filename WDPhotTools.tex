@@ -627,7 +627,7 @@ Observatory\footnote{\url{http://svo2.cab.inta-csic.es/theory/main/}} following
 the instructions in \citet{2011ApJ...737..103S}. We have pre-computed the
 extinction vector from $Rv = 2.1$ to $5.1$ in $0.5$ step increment, using the
 Fitzpatrick extinction law~\citep{1999PASP..111...63F} 
-\textcolor{red}{with the \texttt{extinction}
+\textcolor{red}{with the \texttt{extinction}\footnote{\url{https://github.com/kbarbary/extinction}}
 package~\citep{2016zndo....804967B},} for every theoretical
 spectrum available over all the filters available from the Montreal synthetic
 photometry table (see Figure~\ref{fig:interstellar_reddening}. The synthetic
@@ -638,7 +638,7 @@ is ready to be interpolated upon initialisation of this toolkit.
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{fig_12_reddening_filter.png}
-    \caption{Caption}
+    \caption{\textcolor{red}{\textit{Top}: The grey, dark-grey and black lines white dwarf spectra at T$_{\mathrm{eff}}=$5000, 10000, and 30000\,K. The solid coloured lines (sorted by wavelength) are the filter response function. All of them are normalised independently. The purple dotted line is the Fitzpatrick extinction law. \textit{Bottom}: The black crosses are the pre-computed values from~\citet{2011ApJ...737..103S} using a synthetic spectrum of a 7000\,K  $\log(Z) = -1$, and $\log(g) = 4.5$ star. The scattered points are extinction values obtained by convolving each of the filter profiles with the extinction curve and spectra. The shade of each colour follows the same shade as the temperature shading used in the upper plot: light grey at 5000\,K, medium grey at 10000\,K and black at 30000\,K. It is clear that when using Gaia filters, which are very broad, the difference in the extinction correct is non-negligible because the spectral energy distribution can vary significantly within the wavelength range of a filter.}}
     \label{fig:interstellar_reddening}
 \end{figure}
 
@@ -662,12 +662,16 @@ a free parameter to be fitted.
 \subsection{Comparison against EDR3 catalogue of WDs}
 \label{sec:gf21_comparison}
 The catalogue available from GF21 has presented an excellent sample of WDs for
-comparison \textcolor{red}{to validate our photometric fitting}. There is a
+comparison \textcolor{red}{to validate our photometric fitting. There is a
 slight difference between our photometric fitting methodology and that of GF21:
 in this work, we are correcting for the interstellar reddening at the
-instantaneous temperature in each iteration of the fit, as opposed to using
-a global average of the extinction per filter~($A_{G}=0.835A_{V}$,
-$A_{G_{\mathrm{BP}}}=0.6496A_{V}$, and $A_{G_{\mathrm{RP}}}=1.13894A_{V}$).
+instantaneous temperature and surface gravity} in each iteration of the fit,
+as opposed to using a global average of the extinction per
+filter~($A_{G}=0.835A_{V}$, $A_{G_{\mathrm{BP}}}=0.6496A_{V}$, and
+$A_{G_{\mathrm{RP}}}=1.13894A_{V}$). \textcolor{red}{The underlying models
+also differ slightly as the code base diverged slightly with
+time\footnote{\url{https://www.astro.umontreal.ca/~bergeron/CoolingModels/}
+and \url{https://warwick.ac.uk/fac/sci/physics/research/astro/people/tremblay/modelgrids}}}.
 
 \textcolor{red}{
 As the spectral energy distribution function changes in the flux density
@@ -680,10 +684,14 @@ when the distance is a free-parameter to be fitted. But it does not lead to
 degeneracy because the reddening is non-linear and the effect is
 unidirectional as a function of wavelength.}} (see also Section
 \textsection~\ref{sec:interstellar_reddening} and \textsection~\ref{sec:utility}).
-Therefore, we convolve the filter profile with the DA
-spectra to provide a table of pre-computed extinction coefficient as a
-function of temperature and surface gravity to allow accurate reddening
-correction.}
+It is clearly shown in Figure~\ref{fig:interstellar_reddening} that the
+differences in the extinction in the Gaia filters are much larger than
+those in the UBVRI filters that are narrower. The effect is also slightly
+stronger in the blue end because of the larger change in the spectral
+shape as temperature changes from 30000\,K to 5000\,K. Therefore, we
+convolve the filter profile with the DA spectra to provide a table of
+pre-computed extinction coefficient as a function of temperature and
+surface gravity to allow more accurate reddening correction.}
 
 \textcolor{red}{For the above reasons}, some scatter is expected when the
 fitted values from the two works are compared against each other.
@@ -706,7 +714,7 @@ criteria when publishing their catalogue.
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{fig_03_compare_fusillo_edr3.png}
-    \caption{Comparison of the effective temperature fitting against GF21. The blue scattered points show all the fitted \textcolor{red}{temperatures} using our preferred reddening treatment adopting the interpolated reddening computed for each filter at each temperature available from the collection from \citet{2010MmSAI..81..921K}. The red points \textcolor{red}{compares} when the reddening is interpolated directly using the table from \citet{2011ApJ...737..103S} computed for a blackbody source at $7000$\,K. The colour lines show the density of scattered points that cannot be resolved, each level of inter-contour space contains $5\%$ of the total data. \textcolor{red}{The identity line is plotted as a visual guide.} The contour lines appear skewed due to the use of log-axes.}
+    \caption{Comparison of the effective temperature fitting against GF21. The blue scattered points show all the fitted \textcolor{red}{temperatures} using our preferred reddening treatment adopting the interpolated reddening computed for each filter at each temperature available from the collection from \citet{2010MmSAI..81..921K}. The red points \textcolor{red}{compares} when the reddening is interpolated directly using the table from \citet{2011ApJ...737..103S} computed using a synthetic spectrum of a 7000\,K  $\log(Z) = -1$, and $\log(g) = 4.5$ star. The colour lines show the density of scattered points that cannot be resolved, each level of inter-contour space contains $5\%$ of the total data. \textcolor{red}{The identity line is plotted as a visual guide.} The contour lines appear skewed due to the use of log-axes.}
     \label{fig:comparison}
 \end{figure}
 
@@ -730,6 +738,7 @@ independent view of the past star formation history revealed by only the
 WD populations, where they are most useful in deriving the SFH of old
 stellar populations~\citep{2011MNRAS.417...93R, 2017ASPC..509...25L}.
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The mathematical construction of a WDLF is intuitively straightforward: stars
 were formed in a distribution of mass~($\mathcal{M}_i$), described by the initial
@@ -752,13 +761,16 @@ both susceptible to significant rounding errors given the huge dynamic ranges
 the variables cover.} For example, in the case of a simple starburst of
 \textcolor{red}{the order of }$10^6$\,yrs, it requires a relative error
 tolerance of $10^{-10}$ in order to integrate properly for an old population.
-\textcolor{red}{It is also known that binary WD mergers has an effect on the
-``apparent age'' of the WDs, hence they lead to contribution of density at the
-``wrong magnitude'' in a WDLF assumed to be contributed solely by singly evolved
-WDs~\citep{2020A&A...636A..31T}}.
+\textcolor{red}{It is also known that binary WD mergers lead to an underestimation
+of the age of the WDs, hence they lead to contribution of density at the
+``wrong magnitude'' in a WDLF assumed to be attributed solely by singly evolved
+WDs~\citep{2020A&A...636A..31T}}. Another limitation is that this work does not
+account for the WDs escaped from clusters and have since drifted into the
+few-hundred-pc of the solar neighbourhood~(e.g.\ \citealt{2013ApJ...770..140Z,2022ApJ...926..132H, 2022ApJ...926L..24M}).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-The integral for a WDLF when parameterised with \textcolor{red}{bolometric magnitude~($M_\mathrm{bol}$, as opposed to luminosity)} can be written as
+The integral for a WDLF when parameterised with \textcolor{red}{bolometric
+magnitude~($M_\mathrm{bol}$, as opposed to luminosity)} can be written as
 
 \begin{equation}
     n(M_{\mathrm{bol}}) = \int_{\mathcal{M}_l}^{\mathcal{M}_u}
@@ -1455,9 +1467,9 @@ Union’s Horizon 2020 research and innovation program (grant agreement number
 833031).
 
 MCL thanks Dr. N. Hambly and Dr. N. Rowell for their supports and guidance over
-the years, as well as Dr. R. Smith, Prof \L{} Wyrzykowski and Dr. I. Arcavi
-for their supports to keep this research going over the recent difficult
-situation around the globe.
+the years, as well as Dr. R. Smith, Prof \L{} Wyrzykowski, Dr. I. Arcavi,
+and Prof. Dan Maoz for their supports to keep this research going over the
+recent difficult situation around the globe.
 
 MCL thanks Dr. P.-E. Tremblay and Dr. N. Gentile-Fusillo for cross-checking
 some data.
