@@ -248,12 +248,18 @@ for i, j in zip(atm_key, atm_key_for_legend):
         filte_response[0],
         filte_response[1] * multiplier,
         color=filter_colours[filter_order[i]],
-        label=j,
         ls=ls,
         lw=1.5,
     )
 
-ax1b.legend(loc="upper right")
+ax1b.text(3500.0, 1.75, "U", color=filter_colours[0])
+ax1b.text(4200.0, 1.75, "B", color=filter_colours[1])
+ax1b.text(4800.0, 1.75, r"G3$_{\mathrm{BP}}$", color=filter_colours[2])
+ax1b.text(5350.0, 1.75, "V", color=filter_colours[3])
+ax1b.text(6100.0, 1.75, "G3", color=filter_colours[4])
+ax1b.text(6500.0, 1.75, "R", color=filter_colours[5])
+ax1b.text(7000.0, 1.75, r"G3$_{\mathrm{RP}}$", color=filter_colours[6])
+ax1b.text(7600.0, 1.75, "I", color=filter_colours[7])
 
 ax2.set_xlabel("(Effective) Wavelength / $\mathrm{\AA}$")
 
